@@ -3,7 +3,7 @@
     <div
       class="full-width action-tab"
       style="position:sticky; top: 55px; z-index: 2005; background: white"
-      @mouseleave.native="selected_tab = ''"
+      @mouseleave="selected_tab = ''"
     >
       <q-tabs
         v-model="selected_tab"
