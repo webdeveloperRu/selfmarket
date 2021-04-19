@@ -1,6 +1,10 @@
 <template>
   <q-page class="front-page" style="position:relative">
-    <div class="full-width action-tab" style="position:sticky; top: 55px; z-index: 2005; background: white" @mouseleave.nativ="selected_tab = ''">
+    <div
+      class="full-width action-tab"
+      style="position:sticky; top: 55px; z-index: 2005; background: white"
+      @mouseleave.nativ="selected_tab = ''"
+    >
       <q-tabs
         v-model="selected_tab"
         class="text-teal q-pt-sm"
@@ -48,45 +52,36 @@
           @mouseover.native="selected_tab = 'utility'"
         />
       </q-tabs>
-      <q-separator/>
+      <q-separator />
 
-      <q-tab-panels v-model="selected_tab" style="position: absolute" class="full-width shadow-2" >
+      <q-tab-panels
+        v-model="selected_tab"
+        style="position: absolute"
+        class="full-width shadow-2"
+      >
         <q-tab-panel name="new">
-          <div>
-          <div class="text-h5">New Collections</div>
-          <div>
-            Every week, developers, creators, artists, and influencers are launching brand new collections on OpenSea. If you’d like to create your own collection, visit the collection manager page.
-          </div>
-          </div>
+          <NewCollection></NewCollection>
         </q-tab-panel>
         <q-tab-panel name="art">
-          <div class="text-h6">Art</div>
-          Art
+          <Art></Art>
         </q-tab-panel>
         <q-tab-panel name="domain_names">
-          <div class="text-h6">Domain Names</div>
-          Domain Names
+          <DomainNames></DomainNames>
         </q-tab-panel>
         <q-tab-panel name="trading_cards">
-          <div class="text-h6">Trading Cards</div>
-          Trading Cards
+          <TradingCards></TradingCards>
         </q-tab-panel>
         <q-tab-panel name="virtual_world">
-          <div class="text-h6">Virtual World</div>
-          Virtual World
+          <VirtualWorlds></VirtualWorlds>
         </q-tab-panel>
         <q-tab-panel name="collectibles">
-          <div class="text-h6">collectibles</div>
-          collectibles
+          <Collectibles></Collectibles>
         </q-tab-panel>
         <q-tab-panel name="sports">
-          <div class="text-h6">sports</div>
-          sports
+          <Sports></Sports>
         </q-tab-panel>
-
         <q-tab-panel name="utility">
-          <div class="text-h6">utility</div>
-          utility
+          <Utility></Utility>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -260,46 +255,56 @@
             Empowering developers and designers with easy-to-use, powerful tools
           </div>
           <div class="content">
-             <q-card
-              class="item-card"
-              flat
-            >
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" class="q-px-xl"/>
+            <q-card class="item-card" flat>
+              <img
+                src="https://cdn.quasar.dev/img/mountains.jpg"
+                class="q-px-xl"
+              />
 
               <q-card-section>
-                <div class="text-h6 text-center">Create your own marketplace</div>
+                <div class="text-h6 text-center">
+                  Create your own marketplace
+                </div>
                 <div class="text-center text-grey text-subtitle1">
-                  Build a beautiful marketplace for your ERC721 or ERC1155 assets for free, and earn revenue on every secondary sale of your items.
+                  Build a beautiful marketplace for your ERC721 or ERC1155
+                  assets for free, and earn revenue on every secondary sale of
+                  your items.
                 </div>
               </q-card-section>
             </q-card>
-             <q-card
-              class="item-card"
-              flat
-            >
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" class="q-px-xl"/>
+            <q-card class="item-card" flat>
+              <img
+                src="https://cdn.quasar.dev/img/mountains.jpg"
+                class="q-px-xl"
+              />
 
               <q-card-section>
-                <div class="text-h6 text-center">Pull market data from our digital asset API</div>
+                <div class="text-h6 text-center">
+                  Pull market data from our digital asset API
+                </div>
                 <div class="text-center text-grey text-subtitle1">
-                  Automatically show your users their own collectibles, and become an OpenSea affiliate to monetize your user base
+                  Automatically show your users their own collectibles, and
+                  become an OpenSea affiliate to monetize your user base
                 </div>
               </q-card-section>
             </q-card>
-             <q-card
-              class="item-card"
-              flat
-            >
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" class="q-px-xl"/>
+            <q-card class="item-card" flat>
+              <img
+                src="https://cdn.quasar.dev/img/mountains.jpg"
+                class="q-px-xl"
+              />
 
               <q-card-section>
-                <div class="text-h6 text-center">Collaborate with OpenSea Studios</div>
+                <div class="text-h6 text-center">
+                  Collaborate with OpenSea Studios
+                </div>
                 <div class="text-center text-grey text-subtitle1">
-                  Building a game? Need a blockchain-powered marketplace? We'll do the heavy lifting for you. Check out Ethmoji for an example.
+                  Building a game? Need a blockchain-powered marketplace? We'll
+                  do the heavy lifting for you. Check out Ethmoji for an
+                  example.
                 </div>
               </q-card-section>
             </q-card>
-          </div>
           </div>
         </div>
       </div>
@@ -308,8 +313,27 @@
 </template>
 
 <script>
+import NewCollection from "components/homepage/NewCollection.vue";
+import Collectibles from "components/homepage/Collectibles.vue";
+import DomainNames from "components/homepage/DomainNames.vue";
+import Sports from "components/homepage/Sports.vue";
+import TradingCards from "components/homepage/TradingCards.vue";
+import Utility from "components/homepage/Utility.vue";
+import Art from "components/homepage/Art.vue";
+import VirtualWorlds from "components/homepage/VirtualWorlds.vue";
+
 export default {
   name: "HomePage",
+  components: {
+    NewCollection,
+    Collectibles,
+    DomainNames,
+    Sports,
+    TradingCards,
+    Utility,
+    Art,
+    VirtualWorlds
+  },
   data() {
     return {
       selected_tab: 0,
@@ -379,7 +403,6 @@ export default {
           min-width: 320px;
           width: 100%;
           margin: 5px;
-
         }
       }
     }
@@ -387,10 +410,10 @@ export default {
       .content {
         display: flex;
         overflow-x: auto;
-         .item-card{
-            margin: 10px;
-            min-width: 320px;
-          }
+        .item-card {
+          margin: 10px;
+          min-width: 320px;
+        }
       }
     }
   }
