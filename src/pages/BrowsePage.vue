@@ -5,120 +5,139 @@
         v-model="drawerLeft"
         show-if-above
         :width="350"
-        :breakpoint="920"
+        :breakpoint="1150"
         elevated
       >
         <q-scroll-area class="fit">
           <q-expansion-item
             expand-separator
-            icon="perm_identity"
-            label="Account settings"
-            caption="John Doe"
+            icon="star"
+            label="Status"
+            class="text-subtitle1 text-bold"
           >
-            <q-card>
-              <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quidem, eius reprehenderit eos corrupti commodi magni quaerat ex
-                numquam, dolorum officiis modi facere maiores architecto
-                suscipit iste eveniet doloribus ullam aliquid.
-              </q-card-section>
-            </q-card>
+            <q-separator />
+            <div class="q-pa-md q-gutter-sm justify-around flex">
+              <q-btn
+                label="Buy Now"
+                outline
+                style="width: 130px"
+                aria-label="Buy Now"
+              />
+              <q-btn
+                label="On Auction"
+                style="width: 130px"
+                outline
+                aria-label="On Auction"
+              />
+              <q-btn
+                label="New"
+                outline
+                style="width: 130px"
+                aria-label="New"
+              />
+              <q-btn
+                label="Has Offers"
+                style="width: 130px"
+                outline
+                aria-label="Has Offers"
+              />
+            </div>
           </q-expansion-item>
           <q-separator />
           <q-expansion-item
             expand-separator
-            icon="perm_identity"
-            label="Account settings"
-            caption="John Doe"
+            icon="view_comfy"
+            label="Collections"
+            class="text-subtitle1 text-bold"
           >
-            <q-card>
-              <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quidem, eius reprehenderit eos corrupti commodi magni quaerat ex
-                numquam, dolorum officiis modi facere maiores architecto
-                suscipit iste eveniet doloribus ullam aliquid.
-              </q-card-section>
-            </q-card>
+            <q-separator />
+            <div class="q-pa-md  justify-around flex">
+              <q-input
+                dense
+                outlined
+                v-model="filterCollectionText"
+                input-class="text-left"
+                placeholder="Filter"
+                class="q-ml-md"
+                style="width: 100%"
+              >
+                <template v-slot:append>
+                  <q-icon v-if="filterCollectionText === ''" name="search" />
+                  <q-icon
+                    v-else
+                    name="clear"
+                    class="cursor-pointer"
+                    @click="filterCollectionText = ''"
+                  />
+                </template>
+              </q-input>
+              <div v-for="(item, index) in items" :key="index" class="caption">
+                <q-item clickable v-ripple class="full-width">
+                  <q-item-section avatar>
+                    <q-icon color="primary" name="bluetooth" />
+                  </q-item-section>
+
+                  <q-item-section>Icon as avatar</q-item-section>
+                </q-item>
+              </div>
+            </div>
           </q-expansion-item>
           <q-separator />
           <q-expansion-item
             expand-separator
-            icon="perm_identity"
-            label="Account settings"
-            caption="John Doe"
+            icon="local_offer"
+            label="On Sale in"
+            class="text-subtitle1 text-bold"
           >
-            <q-card>
-              <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quidem, eius reprehenderit eos corrupti commodi magni quaerat ex
-                numquam, dolorum officiis modi facere maiores architecto
-                suscipit iste eveniet doloribus ullam aliquid.
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-          <q-separator />
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Account settings"
-            caption="John Doe"
-          >
-            <q-card>
-              <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quidem, eius reprehenderit eos corrupti commodi magni quaerat ex
-                numquam, dolorum officiis modi facere maiores architecto
-                suscipit iste eveniet doloribus ullam aliquid.
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-          <q-separator />
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Account settings"
-            caption="John Doe"
-          >
-            <q-card>
-              <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quidem, eius reprehenderit eos corrupti commodi magni quaerat ex
-                numquam, dolorum officiis modi facere maiores architecto
-                suscipit iste eveniet doloribus ullam aliquid.
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-          <q-separator />
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Account settings"
-            caption="John Doe"
-          >
-            <q-card>
-              <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quidem, eius reprehenderit eos corrupti commodi magni quaerat ex
-                numquam, dolorum officiis modi facere maiores architecto
-                suscipit iste eveniet doloribus ullam aliquid.
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-          <q-separator />
-          <q-expansion-item
-            expand-separator
-            icon="perm_identity"
-            label="Account settings"
-            caption="John Doe"
-          >
-            <q-card>
-              <q-card-section>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Quidem, eius reprehenderit eos corrupti commodi magni quaerat ex
-                numquam, dolorum officiis modi facere maiores architecto
-                suscipit iste eveniet doloribus ullam aliquid.
-              </q-card-section>
-            </q-card>
+            <q-separator />
+            <div class="q-pa-md  justify-around flex">
+              <q-input
+                dense
+                outlined
+                v-model="filterSaleText"
+                input-class="text-left"
+                placeholder="Filter"
+                class="q-ml-md"
+                style="width: 100%"
+              >
+                <template v-slot:append>
+                  <q-icon v-if="filterSaleText === ''" name="search" />
+                  <q-icon
+                    v-else
+                    name="clear"
+                    class="cursor-pointer"
+                    @click="filterSaleText = ''"
+                  />
+                </template>
+              </q-input>
+              <div class="q-pa-md text-subtitle1">
+                <q-checkbox
+                  v-model="ethFilterCheck"
+                  label="ETH"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="wethFilterCheck"
+                  label="WETH"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="btFilterCheck"
+                  label="0xBTC"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="mtFilterCheck"
+                  label="1MT"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="xdnFilterCheck"
+                  label="2XDN"
+                  class="full-width"
+                />
+              </div>
+            </div>
           </q-expansion-item>
           <q-separator />
         </q-scroll-area>
@@ -133,6 +152,7 @@
               label="Art"
               style="min-width: 150px;"
               color="secondary"
+              aria-label="Art"
             />
             <q-btn
               flat
@@ -140,6 +160,7 @@
               icon="domain"
               label="Domain Names"
               style="min-width: 200px;"
+              aria-label="Domain Names"
             />
             <q-btn
               flat
@@ -147,6 +168,7 @@
               icon="travel_explorer"
               label="Virtual Worlds"
               style="min-width: 200px;"
+              aria-label="Virtual Worlds"
             />
             <q-btn
               flat
@@ -154,6 +176,7 @@
               icon="card_travel"
               label="Trading Cards"
               style="min-width: 200px;"
+              aria-label="Trading Cards"
             />
             <q-btn
               flat
@@ -161,6 +184,7 @@
               icon="collections"
               label="Collectibles"
               style="min-width: 200px;"
+              aria-label="Collectibles"
             />
             <q-btn
               flat
@@ -168,6 +192,7 @@
               icon="sports"
               label="Sports"
               style="min-width: 150px;"
+              aria-label="Sports"
             />
             <q-btn
               flat
@@ -175,6 +200,7 @@
               label="Utility"
               style="min-width: 150px;"
               color="secondary"
+              aria-label="Utility"
             />
           </div>
           <q-separator />
@@ -196,30 +222,11 @@
             </div>
             <div class="row">
               <div
-                class="col-xl-2 col-lg-3 col-md-4 col-sm-12 q-pa-sm"
+                class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
                 v-for="item in 50"
                 v-bind:key="item"
               >
-                <q-card class="item-card cursor-pointer q-hoverable">
-                  <span class="q-focus-helper"></span>
-                  <div class="float-right q-mx-md">
-                    <q-btn
-                      flat
-                      round
-                      icon="favorite_border"
-                      aria-label="favorite-item"
-                    />
-                    <span class="text-subtitle1">4</span>
-                  </div>
-                  <img
-                    src="https://cdn.quasar.dev/img/mountains.jpg"
-                    alt="card-item"
-                  />
-
-                  <q-card-section>
-                    <div class="text-h6">Our Changing Planet</div>
-                  </q-card-section>
-                </q-card>
+                <DataPackageCard></DataPackageCard>
               </div>
             </div>
           </div>
@@ -232,6 +239,9 @@
 <script>
 export default {
   name: "BrowsePage",
+  components: {
+    DataPackageCard: () => import("../components/DataPackageCard")
+  },
   data() {
     return {
       drawerLeft: false,
@@ -249,8 +259,26 @@ export default {
         "Most Viewed",
         "Most Favorited",
         "Oldest"
-      ]
+      ],
+      filterCollectionText: "",
+      items: [{}, {}, {}, {}, {}, {}, {}],
+      filterSaleText: "",
+      ethFilterCheck: false,
+      wethFilterCheck: false,
+      btFilterCheck: false,
+      mtFilterCheck: false,
+      xdnFilterCheck: false
     };
+  },
+  methods: {
+    onLoad(index, done) {
+      setTimeout(() => {
+        if (this.items) {
+          this.items.push({}, {}, {}, {}, {}, {}, {});
+          done();
+        }
+      }, 2000);
+    }
   }
 };
 </script>

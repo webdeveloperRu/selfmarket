@@ -2,7 +2,7 @@
   <q-page class="front-page" style="position:relative">
     <div
       class="full-width action-tab"
-      style="position:sticky; top: 55px; z-index: 2005; background: white"
+      style="position:sticky; top: 60px; z-index: 2005; background: white"
       @mouseleave="selected_tab = ''"
     >
       <q-tabs
@@ -15,41 +15,49 @@
           name="new"
           label="New"
           @mouseover.native="selected_tab = 'new'"
+          @click.native="navigatePage('/rankings')"
         />
         <q-tab
           name="art"
           label="Art"
           @mouseover.native="selected_tab = 'art'"
+          @click.native="navigatePage('/collection/art')"
         />
         <q-tab
           name="domain_names"
           label="Domain Names"
           @mouseover.native="selected_tab = 'domain_names'"
+          @click.native="navigatePage('/collection/domain-names')"
         />
         <q-tab
           name="virtual_world"
           label="Virtual Worlds"
           @mouseover.native="selected_tab = 'virtual_world'"
+          @click.native="navigatePage('/collection/virtual-worlds')"
         />
         <q-tab
           name="trading_cards"
           label="Trading Cards"
           @mouseover.native="selected_tab = 'trading_cards'"
+          @click.native="navigatePage('/collection/trading-cards')"
         />
         <q-tab
           name="collectibles"
           label="Collectibles"
           @mouseover.native="selected_tab = 'collectibles'"
+          @click.native="navigatePage('/collection/collectibles')"
         />
         <q-tab
           name="sports"
           label="Sports"
           @mouseover.native="selected_tab = 'sports'"
+          @click.native="navigatePage('/collection/sports')"
         />
         <q-tab
           name="utility"
           label="Utility"
           @mouseover.native="selected_tab = 'utility'"
+          @click.native="navigatePage('/collection/utility')"
         />
       </q-tabs>
       <q-separator />
@@ -182,21 +190,10 @@
           </div>
           <q-separator />
           <div class="digital-art__items q-ma-sm">
-            <q-card
-              class="item-card"
+            <DataPackageCard
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-              v-bind:key="item"
-            >
-              <div class="float-right q-mx-md">
-                <q-btn flat round icon="favorite_border" />
-                <span class="text-subtitle1">4</span>
-              </div>
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" />
-
-              <q-card-section>
-                <div class="text-h6">Our Changing Planet</div>
-              </q-card-section>
-            </q-card>
+              v-bind:key="'digital' + item"
+            ></DataPackageCard>
           </div>
         </div>
         <div class="virtual-world q-px-sm">
@@ -206,21 +203,10 @@
           </div>
           <q-separator />
           <div class="virtual-world__items q-ma-sm">
-            <q-card
-              class="item-card"
+            <DataPackageCard
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-              v-bind:key="item"
-            >
-              <div class="float-right q-mx-md">
-                <q-btn flat round icon="favorite_border" />
-                <span class="text-subtitle1">4</span>
-              </div>
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" />
-
-              <q-card-section>
-                <div class="text-h6">Our Changing Planet</div>
-              </q-card-section>
-            </q-card>
+              v-bind:key="'virtual' + item"
+            ></DataPackageCard>
           </div>
         </div>
         <div class="collectibles q-px-sm">
@@ -230,21 +216,10 @@
           </div>
           <q-separator />
           <div class="collectibles__items q-ma-sm">
-            <q-card
-              class="item-card"
+            <DataPackageCard
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-              v-bind:key="item"
-            >
-              <div class="float-right q-mx-md">
-                <q-btn flat round icon="favorite_border" />
-                <span class="text-subtitle1">4</span>
-              </div>
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" />
-
-              <q-card-section>
-                <div class="text-h6">Our Changing Planet</div>
-              </q-card-section>
-            </q-card>
+              v-bind:key="'collectibles' + item"
+            ></DataPackageCard>
           </div>
         </div>
         <div class="selfmarket-developers q-mx-sm">
@@ -332,13 +307,20 @@ export default {
     TradingCards,
     Utility,
     Art,
-    VirtualWorlds
+    VirtualWorlds,
+    DataPackageCard: () => import("../components/DataPackageCard")
   },
   data() {
     return {
       selected_tab: 0,
       slide: 1
     };
+  },
+  methods: {
+    navigatePage(path) {
+      this.selected_tab = "";
+      this.$router.push(path).catch(() => {});
+    }
   }
 };
 </script>
