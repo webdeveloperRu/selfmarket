@@ -104,8 +104,7 @@ export default {
     return {
       email: "",
       password: "",
-      confirmPassword: "",
-      email: ""
+      confirmPassword: ""
     };
   },
   computed: {
