@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 import auth from "./auth";
 
@@ -11,8 +12,14 @@ const Store = new Vuex.Store({
   state: {
     notificationText: "",
     notificationType: "",
-    inRequest: false
+    inRequest: false,
+    requestSuccess: false
   },
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage
+    })
+  ],
   mutations: {
     REQUEST_FAILED(state, error) {
       state.inRequest = false;
@@ -46,7 +53,8 @@ const Store = new Vuex.Store({
   getters: {
     notificationText: state => state.notificationText,
     inRequest: state => state.inRequest,
-    notificationType: state => state.notificationType
+    notificationType: state => state.notificationType,
+    requestSuccess: state => state.requestSuccess
   },
 
   // enable strict mode (adds overhead!)

@@ -17,3 +17,11 @@ export function twofaLogged(state) {
 export function emailResetPassword(state) {
   return state.emailResetPassword;
 }
+
+export function loginUserInfo(state) {
+  return state.loginUserInfo;
+}
+
+export function twoFaKey(state) {
+  return state.twoFaKey;
+}

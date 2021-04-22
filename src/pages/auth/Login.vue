@@ -7,7 +7,7 @@
         </q-card-section>
         <q-card-section>
           <q-form
-            class="q-px-sm q-pt-xl q-pb-sm"
+            class="q-px-sm q-pt-md q-pb-sm"
             @submit.prevent.stop="onSubmit"
           >
             <q-input
@@ -50,14 +50,24 @@
               aria-label="Login"
               :loading="inRequest"
             />
-            <q-checkbox
-              v-model="rememberMe"
-              label="Remember Me"
-              class="q-pt-sm"
-            />
+            <div class="flex justify-between">
+              <q-checkbox
+                v-model="rememberMe"
+                label="Remember Me"
+                class="q-pt-sm"
+              />
+              <q-btn
+                flat
+                label="Forgot Password"
+                to="/forgot-password"
+                aria-label="Forgot Password"
+                color="primary"
+                class="q-pt-sm"
+              />
+            </div>
           </q-form>
         </q-card-section>
-        <q-card-section class="text-right q-py-sm q-px-lg">
+        <q-card-section class="text-right q-px-lg">
           <q-btn
             unelevated
             color="primary"
@@ -88,7 +98,9 @@ export default {
     ...mapGetters({
       inRequest: "inRequest",
       notificationText: "notificationText",
-      notificationType: "notificationType"
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn"
     })
   },
   methods: {
@@ -108,11 +120,17 @@ export default {
         password: this.password
       };
       this.$store.dispatch("auth/login", [user, this.rememberMe]).then(() => {
-        this.$q.notify({
-          type: this.notificationType,
-          message: this.notificationText
-        });
-        this.$router.push("/profile");
+        if (this.loggedIn) this.$router.push("/profile");
+        else {
+          if (this.notification_text == "otp code is requested") {
+            this.$router.push("./twofactor-auth");
+          } else {
+            this.$q.notify({
+              type: this.notificationType,
+              message: this.notificationText
+            });
+          }
+        }
       });
     }
   }

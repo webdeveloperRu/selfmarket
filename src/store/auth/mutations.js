@@ -4,9 +4,10 @@ export function loginSuccess(state, res) {
   state.loggedIn = true;
   state.user = res.data;
   state.twofa_login = false;
-  state.login_userinfo = null;
+  state.loginUserInfo = null;
   Store.state.notificationText = "User successfully logged in";
   Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
 }
 
 export function loginFailed(state, error) {
@@ -15,6 +16,7 @@ export function loginFailed(state, error) {
   state.user = null;
   Store.state.notificationText = error.data.message;
   Store.state.notificationType = "negative";
+  Store.state.requestSuccess = false;
 }
 
 export function logoutSuccess(state) {
@@ -23,6 +25,7 @@ export function logoutSuccess(state) {
   state.user = null;
   Store.state.notificationText = "";
   Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
 }
 
 export function logoutFailed(state) {
@@ -31,6 +34,7 @@ export function logoutFailed(state) {
   state.user = null;
   Store.state.notificationText = "";
   Store.state.notificationType = "negative";
+  Store.state.requestSuccess = false;
 }
 
 export function registerSuccess(state, user) {
@@ -39,6 +43,7 @@ export function registerSuccess(state, user) {
   state.user = user;
   Store.state.notificationText = "User successfully registered!";
   Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
 }
 
 export function forgotPasswordSuccess(state, [res, useremail]) {
@@ -48,6 +53,7 @@ export function forgotPasswordSuccess(state, [res, useremail]) {
   state.emailResetPassword = useremail;
   Store.state.notificationText = "";
   Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
 }
 
 export function forgotPasswordFailed(state, error) {
@@ -55,6 +61,7 @@ export function forgotPasswordFailed(state, error) {
   Store.state.notificationText = error.data.message;
   Store.state.notificationType = "negative";
   state.emailResetPassword = "";
+  Store.state.requestSuccess = false;
 }
 
 export function resetPasswordSuccess(state) {
@@ -63,6 +70,7 @@ export function resetPasswordSuccess(state) {
   state.emailResetPassword = "";
   Store.state.notificationText = "Password successfully reset!";
   Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
 }
 
 export function resetPasswordFailed(state, error) {
@@ -71,12 +79,14 @@ export function resetPasswordFailed(state, error) {
   state.emailResetPassword = "";
   Store.state.notificationText = error.data.message;
   Store.state.notificationType = "negative";
+  Store.state.requestSuccess = false;
 }
 
 export function changePasswordSuccess() {
   Store.state.inRequest = false;
   Store.state.notificationText = "password changed successfuly";
   Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
 }
 
 export function updateUserSuccess(state, res) {
@@ -84,11 +94,32 @@ export function updateUserSuccess(state, res) {
   Store.state.notificationText = "User successfully updated!";
   Store.state.notificationType = "positive";
   state.user.data = res.data;
+  Store.state.requestSuccess = true;
   if (state.remeberMe) {
     localStorage.setItem("user", JSON.stringify(res.data));
   }
 }
+export function getTwoFactorSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.requestSuccess = true;
+  state.twoFaKey = res.data.twoFAKey;
+  Store.state.notificationText = "Success to get two factor key";
+  Store.state.notificationType = "positive";
+}
 
+export function deleteTwoFactorSuccess(state) {
+  Store.state.inRequest = false;
+  Store.state.notificationType = "positive";
+  Store.state.notificationText = "success to delete twofa key";
+  state.twofaLogged = false;
+}
+
+export function setTwoFactorSuccess(state) {
+  Store.state.inRequest = false;
+  Store.state.notificationType = "positive";
+  Store.state.notificationText = "success to set two factor log in";
+  state.twofaLogged = true;
+}
 export function RESET_MODULE(state) {
   Object.assign(state, initialState);
 }
@@ -98,6 +129,6 @@ export function userLogSuccess() {}
 export function userLogFailed() {}
 
 export function setTwoFactorLogIn(state, { user, remeberMe }) {
-  state.login_userinfo = user;
+  state.loginUserInfo = user;
   state.remeberMe = remeberMe;
 }

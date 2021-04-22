@@ -3,7 +3,7 @@
     <div class="full-width q-pa-lg" style="max-width: 500px">
       <q-card square class="shadow-24">
         <q-card-section class="bg-primary">
-          <h4 class="text-h5 text-white q-my-md">Registration</h4>
+          <h4 class="text-h5 text-white q-my-md">Reset Password</h4>
         </q-card-section>
         <q-card-section>
           <q-form
@@ -56,13 +56,25 @@
                 <q-icon name="lock" />
               </template>
             </q-input>
+            <q-input
+              square
+              v-model="emailCode"
+              class="q-py-sm"
+              ref="confirmPassword"
+              label="Email Code"
+              readonly
+            >
+              <template v-slot:prepend>
+                <q-icon name="code" />
+              </template>
+            </q-input>
             <q-btn
               unelevated
               size="lg"
               color="primary"
               class="full-width text-white q-ma-lg q-mt-xl"
-              label="Register"
-              aria-label="Register"
+              label="Reset Password"
+              aria-label="Reset Password"
               type="submit"
               :loading="inRequest"
             />
@@ -87,12 +99,13 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Register",
+  name: "ResetPassword",
   data() {
     return {
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      email: ""
     };
   },
   computed: {
@@ -100,8 +113,13 @@ export default {
       inRequest: "inRequest",
       notificationText: "notificationText",
       notificationType: "notificationType",
-      requestSuccess: "requestSuccess"
+      emailCode: "auth/emailCode",
+      requestSuccess: "requestSuccess",
+      emailResetPassword: "auth/emailResetPassword"
     })
+  },
+  created() {
+    this.email = this.emailResetPassword;
   },
   methods: {
     navigateLogin() {
@@ -121,15 +139,17 @@ export default {
         this.$refs.email.hasError
       )
         return;
-      let user = {
+      let data = {
         email: this.email,
-        password: this.password
+        newpassword: this.password,
+        "email-code": this.emailCode
       };
-      this.$store.dispatch("auth/register", user).then(() => {
+      this.$store.dispatch("auth/resetPassword", data).then(() => {
         this.$q.notify({
           type: this.notificationType,
           message: this.notificationText
         });
+        if (this.requestSuccess) this.$router.push("/login");
       });
     }
   }

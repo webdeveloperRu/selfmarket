@@ -1,5 +1,5 @@
 <template>
-  <q-footer elevated>
+  <q-footer elevated class="bg-cyan-7">
     <div class="row q-mx-sm q-mt-xl">
       <div class="col-12 col-md-6">
         <div class="text-h4 text-white text-center ">

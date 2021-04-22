@@ -105,6 +105,7 @@
         class="q-px-lg q-py-xs"
         style="width: 200px"
         aria-label="Explorer"
+        to="/assets"
       />
       <q-btn
         color="primary"
@@ -114,6 +115,7 @@
         class="q-px-lg q-py-xs"
         style="width: 200px"
         aria-label="Create Button"
+        to="/my-collection"
       />
     </div>
     <div class="home-content full-width">

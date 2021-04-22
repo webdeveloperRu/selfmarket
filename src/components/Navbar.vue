@@ -135,7 +135,10 @@
             "
           >
             <q-menu v-model="accountMenu" self="top right" anchor="bottom end">
-              <q-list style="min-width: 100px" @mouseleave="createMenu = false">
+              <q-list
+                style="min-width: 100px"
+                @mouseleave="accountMenu = false"
+              >
                 <q-item clickable v-close-popup>
                   <q-item-section>
                     <div @click="navigatePage('/profile')">
@@ -177,6 +180,18 @@
                         class="q-pr-sm"
                       />
                       Transfer
+                    </div></q-item-section
+                  >
+                </q-item>
+                <q-item clickable v-close-popup>
+                  <q-item-section>
+                    <div @click="navigatePage('/twofactor-setup')">
+                      <q-icon
+                        name="add_moderator"
+                        size="28px"
+                        class="q-pr-sm"
+                      />
+                      TwoFactor Setup
                     </div></q-item-section
                   >
                 </q-item>
@@ -233,7 +248,77 @@
             :key="link.title"
             v-bind="link"
           />
+          <q-item clickable @click="createDrawerOpen = true">
+            <q-item-section avatar>
+              <q-icon name="control_point" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Create</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable @click="accountDrawerOpen = true">
+            <q-item-section avatar>
+              <q-icon name="account_circle" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Account</q-item-label>
+            </q-item-section>
+          </q-item>
         </q-list>
+      </div>
+    </q-drawer>
+
+    <q-drawer
+      v-model="accountDrawerOpen"
+      bordered
+      content-class="bg-grey-1"
+      :show-if-above="false"
+      behavior="mobile"
+    >
+      <div class="q-my-lg">
+        <q-item clickable @click="accountDrawerOpen = false">
+          <q-item-section avatar>
+            <q-icon name="arrow_back_ios" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="text-h6">Account</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <EssentialLink
+          v-for="link in accountMenuList"
+          :key="link.title"
+          v-bind="link"
+        />
+      </div>
+    </q-drawer>
+
+    <q-drawer
+      v-model="createDrawerOpen"
+      bordered
+      content-class="bg-grey-1"
+      :show-if-above="false"
+      behavior="mobile"
+    >
+      <div class="q-my-lg">
+        <q-item clickable @click="createDrawerOpen = false">
+          <q-item-section avatar>
+            <q-icon name="arrow_back_ios" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="text-h6">Create</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <EssentialLink
+          v-for="link in createMenuList"
+          :key="link.title"
+          v-bind="link"
+        />
       </div>
     </q-drawer>
   </div>
@@ -256,11 +341,60 @@ const linksData = [
     title: "Rankings",
     link: "/rankings",
     icon: "thumb_up"
+  }
+];
+const createMenuList = [
+  {
+    title: "My Collections",
+    link: "/my-collection",
+    icon: "store"
   },
   {
-    title: "Create",
+    title: "Develop with us",
+    link: "/develop",
+    icon: "code"
+  },
+  {
+    title: "Submit NFTs",
+    link: "/submit",
+    icon: "assignment_returned"
+  },
+  {
+    title: "Docs",
+    link: "/docs",
+    icon: "description"
+  }
+];
+const accountMenuList = [
+  {
+    title: "My Profile",
+    link: "/profile",
+    icon: "face"
+  },
+  {
+    title: "W-ETH station",
+    link: "/station",
+    icon: "code"
+  },
+  {
+    title: "Sell",
+    link: "/sell",
+    icon: "create_new_folder"
+  },
+  {
+    title: "Transfer",
+    link: "/transfer",
+    icon: "card_giftcard"
+  },
+  {
+    title: "TwoFactor Setup",
+    link: "/twofactor-setup",
+    icon: "add_moderator"
+  },
+  {
+    title: "Account Settings",
     link: "/account-settings",
-    icon: "add_circle_outline"
+    icon: "settings_applications"
   }
 ];
 export default {
@@ -270,11 +404,15 @@ export default {
     return {
       leftDrawerOpen: false,
       essentialLinks: linksData,
+      createMenuList: createMenuList,
+      accountMenuList: accountMenuList,
       tab: "",
       createMenu: false,
       accountMenu: false,
       walletMenu: false,
-      filter_text: ""
+      filter_text: "",
+      createDrawerOpen: false,
+      accountDrawerOpen: false
     };
   },
   methods: {

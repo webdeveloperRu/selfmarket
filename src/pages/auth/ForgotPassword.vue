@@ -1,9 +1,9 @@
 <template>
   <q-page class="window-height window-width row justify-center items-center">
-    <div class="full-width q-pa-lg" style="max-width: 500px">
+    <div class=" full-width q-pa-lg" style="max-width: 500px">
       <q-card square class="shadow-24">
         <q-card-section class="bg-primary">
-          <h4 class="text-h5 text-white q-my-md">Registration</h4>
+          <h4 class="text-h5 text-white q-my-md">Forgot Password</h4>
         </q-card-section>
         <q-card-section>
           <q-form
@@ -15,67 +15,38 @@
               v-model="email"
               type="email"
               label="Email"
-              ref="email"
               class="q-py-sm"
               :rules="[
                 val => !!val || 'Field requrired',
                 val => validEmail(val) || 'invalid Email'
               ]"
+              ref="email"
             >
               <template v-slot:prepend>
                 <q-icon name="email" />
               </template>
             </q-input>
 
-            <q-input
-              square
-              v-model="password"
-              type="password"
-              label="Password"
-              class="q-py-sm"
-              ref="password"
-              :rules="[val => !!val || 'Field is required']"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock" />
-              </template>
-            </q-input>
-            <q-input
-              square
-              v-model="confirmPassword"
-              type="password"
-              label="Confirm Password"
-              class="q-py-sm"
-              :rules="[
-                val => !!val || 'Field is required',
-                val => val == password || 'password mismatching'
-              ]"
-              ref="confirmPassword"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock" />
-              </template>
-            </q-input>
             <q-btn
               unelevated
               size="lg"
               color="primary"
-              class="full-width text-white q-ma-lg q-mt-xl"
-              label="Register"
-              aria-label="Register"
+              class="full-width text-white q-mt-xl"
+              label="Send"
               type="submit"
+              aria-label="Send Email"
               :loading="inRequest"
             />
           </q-form>
         </q-card-section>
-        <q-card-section class="text-right q-pa-lg">
+        <q-card-section class="text-right q-py-sm q-px-lg">
           <q-btn
             unelevated
             color="primary"
             label="login"
             @click="navigateLogin"
-            outline
             aria-label="Return Login"
+            outline
           />
         </q-card-section>
       </q-card>
@@ -87,12 +58,10 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Register",
+  name: "ForgotPassword",
   data() {
     return {
-      email: "",
-      password: "",
-      confirmPassword: ""
+      email: ""
     };
   },
   computed: {
@@ -112,24 +81,18 @@ export default {
       return re.test(email);
     },
     onSubmit() {
-      this.$refs.password.validate();
-      this.$refs.confirmPassword.validate();
       this.$refs.email.validate();
-      if (
-        this.$refs.password.hasError ||
-        this.$refs.confirmPassword.hasError ||
-        this.$refs.email.hasError
-      )
-        return;
-      let user = {
-        email: this.email,
-        password: this.password
+      if (this.$refs.email.hasError) return;
+      let email = {
+        email: this.email
       };
-      this.$store.dispatch("auth/register", user).then(() => {
-        this.$q.notify({
-          type: this.notificationType,
-          message: this.notificationText
-        });
+      this.$store.dispatch("auth/forgotPassword", email).then(() => {
+        if (this.requestSuccess) this.$router.push("/reset-password");
+        else
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
       });
     }
   }

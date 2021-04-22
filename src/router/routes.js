@@ -5,7 +5,7 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/HomePage.vue") },
+      { path: "", component: () => import("src/pages/HomePage.vue") },
       {
         path: "/login",
         component: () => import("src/pages/auth/Login.vue")
@@ -13,6 +13,30 @@ const routes = [
       {
         path: "/register",
         component: () => import("src/pages/auth/Register.vue")
+      },
+      {
+        path: "/forgot-password",
+        component: () => import("src/pages/auth/ForgotPassword.vue")
+      },
+      {
+        path: "/reset-password",
+        component: () => import("src/pages/auth/ResetPassword.vue")
+      },
+      {
+        path: "/twofactor-auth",
+        component: () => import("src/pages/auth/TwoFactorAuth.vue"),
+        beforeEnter: (to, from, next) => {
+          if (Store.state.auth.loggedIn) next();
+          else next("/login");
+        }
+      },
+      {
+        path: "/twofactor-setup",
+        component: () => import("src/pages/auth/TwoFactorAuthSetup.vue"),
+        beforeEnter: (to, from, next) => {
+          if (Store.state.auth.loggedIn) next();
+          else next("/login");
+        }
       },
       {
         path: "/account-settings",
@@ -72,7 +96,7 @@ const routes = [
       },
       {
         path: "/my-collection",
-        component: () => import("src/pages/create/Collection.vue"),
+        component: () => import("src/pages/create/MyCollection.vue"),
         beforeEnter: (to, from, next) => {
           if (Store.state.auth.loggedIn) next();
           else next("/login");
@@ -88,7 +112,7 @@ const routes = [
       },
       {
         path: "/collection/:id",
-        component: () => import("src/pages/create/Collection.vue")
+        component: () => import("src/pages/Collection.vue")
       }
     ]
   },

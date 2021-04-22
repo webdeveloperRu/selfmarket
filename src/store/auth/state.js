@@ -7,7 +7,9 @@ export default function() {
         emailCode: "",
         emailResetPassword: "",
         twofaLogged: false,
-        remeberMe: false
+        loginUserInfo: null,
+        remeberMe: false,
+        twoFaKey: ""
       }
     : {
         loggedIn: false,
@@ -15,7 +17,9 @@ export default function() {
         emailCode: "",
         emailResetPassword: "",
         twofaLogged: false,
-        remeberMe: false
+        loginUserInfo: null,
+        remeberMe: false,
+        twoFaKey: ""
       };
   return initialState;
 }
