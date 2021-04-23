@@ -233,10 +233,7 @@
           </div>
           <div class="content">
             <q-card class="item-card" flat>
-              <img
-                src="../assets/mountains.jpg"
-                class="q-px-xl"
-              />
+              <img src="../assets/mountains.jpg" class="q-px-xl" />
 
               <q-card-section>
                 <div class="text-h6 text-center">
@@ -250,10 +247,7 @@
               </q-card-section>
             </q-card>
             <q-card class="item-card" flat>
-              <img
-                src="../assets/parallax2.jpg"
-                class="q-px-xl"
-              />
+              <img src="../assets/mountains.jpg" class="q-px-xl" />
 
               <q-card-section>
                 <div class="text-h6 text-center">
@@ -266,11 +260,7 @@
               </q-card-section>
             </q-card>
             <q-card class="item-card" flat>
-              <img
-                                src="../assets/mountains.jpg"
-
-                class="q-px-xl"
-              />
+              <img src="../assets/mountains.jpg" class="q-px-xl" />
 
               <q-card-section>
                 <div class="text-h6 text-center">
