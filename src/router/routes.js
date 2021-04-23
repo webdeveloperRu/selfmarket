@@ -113,6 +113,10 @@ const routes = [
       {
         path: "/collection/:id",
         component: () => import("src/pages/Collection.vue")
+      },
+      {
+        path: "/assets/:product_id",
+        component: () => import("pages/ProductDetails.vue")
       }
     ]
   },
@@ -121,6 +125,7 @@ const routes = [
     component: () => import("layouts/SecondaryLayout.vue"),
     children: [
       { path: "/assets", component: () => import("pages/BrowsePage.vue") },
+
       { path: "/activity", component: () => import("pages/ActivityPage.vue") },
       { path: "/rankings", component: () => import("pages/RankingsPage.vue") }
     ]

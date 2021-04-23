@@ -53,7 +53,7 @@
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="text-h6 text-white text-center ">
-            Join the OpenSea Community
+            Join the Selfmarket Community
           </div>
           <div class="text-white text-subtitle1 q-py-lg q-px-sm text-center">
             Stay up-to-date with our features, meet other OpenSea enthusiasts,

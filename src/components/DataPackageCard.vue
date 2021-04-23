@@ -1,5 +1,8 @@
 <template>
-  <q-card class="item-card cursor-pointer q-hoverable">
+  <q-card
+    class="item-card cursor-pointer q-hoverable"
+    @click="navigateProductDetails"
+  >
     <span class="q-focus-helper"></span>
     <div class="float-right q-mx-md">
       <q-btn flat round icon="favorite_border" aria-label="favorite-item" />
@@ -21,3 +24,19 @@
     </q-card-section>
   </q-card>
 </template>
+,
+<script>
+export default {
+  name: "DataPackageCard",
+  data() {
+    return {
+      product_id: 30
+    };
+  },
+  methods: {
+    navigateProductDetails() {
+      this.$router.push("/assets/" + this.product_id);
+    }
+  }
+};
+</script>

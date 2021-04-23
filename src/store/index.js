@@ -3,11 +3,12 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
 import auth from "./auth";
-
+import manage from "./manage";
 Vue.use(Vuex);
 const Store = new Vuex.Store({
   modules: {
-    auth
+    auth,
+    manage
   },
   state: {
     notificationText: "",
