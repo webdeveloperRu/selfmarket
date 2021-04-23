@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-header elevated style="z-index: 3000;">
+    <q-header style="z-index: 3000;box-shadow: #0e0e0e40 0px 0px 8px 0px">
       <q-toolbar class="bg-white text-black " style=" height: 60px">
         <!-- <q-avatar>
           <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
@@ -14,14 +14,14 @@
         <q-input
           dense
           outlined
-          rounded
           v-model="filter_text"
+          color="grey-3"
           input-class="text-left"
-          label="search items, collections and accounts"
+          placeholder="search items, collections and accounts"
           class="q-ml-md"
-          style="width: 100%"
+          style="width: 100%; max-width: 800px"
         >
-          <template v-slot:append>
+          <template v-slot:prepend>
             <q-icon v-if="filter_text === ''" name="search" />
             <q-icon
               v-else
@@ -31,6 +31,8 @@
             />
           </template>
         </q-input>
+        <q-space />
+
         <div class="desktop-menu q-ml-md">
           <q-btn
             name="browse"
