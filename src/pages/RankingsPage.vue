@@ -97,7 +97,7 @@
           <template v-slot:body-cell-item="props">
             <q-td :props="props">
               <q-avatar rounded>
-                <img src="https://cdn.quasar.dev/img/avatar.png" />
+                <img src="../assets/avatar.png" />
               </q-avatar>
               {{ props.row.item }}
             </q-td>
@@ -105,7 +105,7 @@
           <template v-slot:body-cell-from="props">
             <q-td :props="props">
               <q-avatar size="30px">
-                <img src="https://cdn.quasar.dev/img/avatar.png" />
+                <img src="../assets/avatar.png" />
               </q-avatar>
               {{ props.row.from.name }}
             </q-td>
@@ -113,7 +113,7 @@
           <template v-slot:body-cell-to="props">
             <q-td :props="props">
               <q-avatar size="30px">
-                <img src="https://cdn.quasar.dev/img/avatar.png" />
+                <img src="../assets/avatar.png" />
               </q-avatar>
               {{ props.row.to.name }}
             </q-td>

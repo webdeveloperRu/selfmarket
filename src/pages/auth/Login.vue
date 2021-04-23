@@ -48,7 +48,7 @@
               label="login"
               type="submit"
               aria-label="Login"
-              :loading="inRequest"
+              :loading="sendingRequest"
             />
             <div class="flex justify-between">
               <q-checkbox
@@ -91,7 +91,8 @@ export default {
     return {
       email: "",
       password: "",
-      rememberMe: false
+      rememberMe: false,
+      sendingRequest: false
     };
   },
   computed: {
@@ -119,6 +120,7 @@ export default {
         email: this.email,
         password: this.password
       };
+      this.sendingRequest = true;
       this.$store.dispatch("auth/login", [user, this.rememberMe]).then(() => {
         if (this.loggedIn) this.$router.push("/profile");
         else {
@@ -131,6 +133,7 @@ export default {
             });
           }
         }
+        this.sendingRequest = false;
       });
     }
   }

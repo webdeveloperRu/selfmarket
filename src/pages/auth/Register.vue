@@ -64,7 +64,7 @@
               label="Register"
               aria-label="Register"
               type="submit"
-              :loading="inRequest"
+              :loading="sendingRequest"
             />
           </q-form>
         </q-card-section>
@@ -92,7 +92,8 @@ export default {
     return {
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      sendingRequest: false
     };
   },
   computed: {
@@ -125,11 +126,13 @@ export default {
         email: this.email,
         password: this.password
       };
+      this.sendingRequest = true;
       this.$store.dispatch("auth/register", user).then(() => {
         this.$q.notify({
           type: this.notificationType,
           message: this.notificationText
         });
+        this.sendingRequest = false;
       });
     }
   }

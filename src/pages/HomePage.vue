@@ -12,56 +12,48 @@
         mobile-arrows
       >
         <q-tab
-          class="q-mx-sm"
           name="new"
           label="New"
           @mouseover.native="selected_tab = 'new'"
           @click.native="navigatePage('/rankings')"
         />
         <q-tab
-          class="q-mx-sm"
           name="art"
           label="Art"
           @mouseover.native="selected_tab = 'art'"
           @click.native="navigatePage('/collection/art')"
         />
         <q-tab
-          class="q-mx-sm"
           name="domain_names"
           label="Domain Names"
           @mouseover.native="selected_tab = 'domain_names'"
           @click.native="navigatePage('/collection/domain-names')"
         />
         <q-tab
-          class="q-mx-sm"
           name="virtual_world"
           label="Virtual Worlds"
           @mouseover.native="selected_tab = 'virtual_world'"
           @click.native="navigatePage('/collection/virtual-worlds')"
         />
         <q-tab
-          class="q-mx-sm"
           name="trading_cards"
           label="Trading Cards"
           @mouseover.native="selected_tab = 'trading_cards'"
           @click.native="navigatePage('/collection/trading-cards')"
         />
         <q-tab
-          class="q-mx-sm"
           name="collectibles"
           label="Collectibles"
           @mouseover.native="selected_tab = 'collectibles'"
           @click.native="navigatePage('/collection/collectibles')"
         />
         <q-tab
-          class="q-mx-sm"
           name="sports"
           label="Sports"
           @mouseover.native="selected_tab = 'sports'"
           @click.native="navigatePage('/collection/sports')"
         />
         <q-tab
-          class="q-mx-sm"
           name="utility"
           label="Utility"
           @mouseover.native="selected_tab = 'utility'"
@@ -147,7 +139,7 @@
               >
                 <q-img
                   class="rounded-borders full-height"
-                  src="https://cdn.quasar.dev/img/mountains.jpg"
+                  src="../assets/mountains.jpg"
                 />
               </div>
             </q-carousel-slide>
@@ -157,7 +149,7 @@
               >
                 <q-img
                   class="rounded-borders full-height"
-                  src="https://cdn.quasar.dev/img/parallax2.jpg"
+                  src="../assets/parallax2.jpg"
                 />
               </div>
             </q-carousel-slide>
@@ -167,7 +159,7 @@
               >
                 <q-img
                   class="rounded-borders full-height"
-                  src="https://cdn.quasar.dev/img/parallax2.jpg"
+                  src="../assets/mountains.jpg"
                 />
               </div>
             </q-carousel-slide>
@@ -185,7 +177,7 @@
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
               v-bind:key="item"
             >
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" />
+              <img src="../assets/mountains.jpg" />
 
               <q-card-section>
                 <div class="text-h6">Our Changing Planet</div>
@@ -242,7 +234,7 @@
           <div class="content">
             <q-card class="item-card" flat>
               <img
-                src="https://cdn.quasar.dev/img/mountains.jpg"
+                src="../assets/mountains.jpg"
                 class="q-px-xl"
               />
 
@@ -259,7 +251,7 @@
             </q-card>
             <q-card class="item-card" flat>
               <img
-                src="https://cdn.quasar.dev/img/mountains.jpg"
+                src="../assets/parallax2.jpg"
                 class="q-px-xl"
               />
 
@@ -275,7 +267,8 @@
             </q-card>
             <q-card class="item-card" flat>
               <img
-                src="https://cdn.quasar.dev/img/mountains.jpg"
+                                src="../assets/mountains.jpg"
+
                 class="q-px-xl"
               />
 
@@ -414,7 +407,7 @@ export default {
   display: block;
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 950px) {
   .tab-panel {
     display: none;
   }

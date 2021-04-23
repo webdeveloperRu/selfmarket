@@ -35,7 +35,7 @@
               label="Send"
               type="submit"
               aria-label="Send Email"
-              :loading="inRequest"
+              :loading="sendingRequest"
             />
           </q-form>
         </q-card-section>
@@ -61,7 +61,8 @@ export default {
   name: "ForgotPassword",
   data() {
     return {
-      email: ""
+      email: "",
+      sendingRequest: false
     };
   },
   computed: {
@@ -86,6 +87,7 @@ export default {
       let email = {
         email: this.email
       };
+      this.sendingRequest = true;
       this.$store.dispatch("auth/forgotPassword", email).then(() => {
         if (this.requestSuccess) this.$router.push("/reset-password");
         else
@@ -93,6 +95,7 @@ export default {
             type: this.notificationType,
             message: this.notificationText
           });
+        this.sendingRequest = false;
       });
     }
   }
