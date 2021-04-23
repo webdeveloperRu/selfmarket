@@ -25,7 +25,7 @@
     <q-separator vertical class="q-ma-sm" />
 
     <div class="col-6 q-pa-sm">
-      <span class="text-h5">Top Collections</span>
+      <div class="text-h5 q-my-md">Top Collections</div>
       <div class="row">
         <div class="col-4">
           <q-btn
