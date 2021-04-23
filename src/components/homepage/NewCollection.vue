@@ -13,7 +13,7 @@
       <div class="text-h4 q-mb-md">
         New Collections
       </div>
-      <div class="text-subtitle1">
+      <div class="text-subtitle2 ">
         Every week, developers, creators, artists, and influencers are launching
         brand new collections on OpenSea. If you’d like to create your own
         collection, visit the collection manager page.
@@ -28,44 +28,44 @@
       <span class="text-h5">Top Collections</span>
       <div class="row">
         <div class="col-4">
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             CyberKongz
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             MICK JAGGER X EXTRAWEG
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             Morgan Heritage Digital Collectibles
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             Proximity x Mohammed Omran x Lacza x The Pyramid Watch
           </div>
         </div>
         <div class="col-4">
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             CyberKongz
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             MICK JAGGER X EXTRAWEG
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             Morgan Heritage Digital Collectibles
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             Proximity x Mohammed Omran x Lacza x The Pyramid Watch
           </div>
         </div>
         <div class="col-4">
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             CyberKongz
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             MICK JAGGER X EXTRAWEG
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             Morgan Heritage Digital Collectibles
           </div>
-          <div class="text-subtitle1 q-pa-sm">
+          <div class="text-subtitle2 text-grey q-pa-sm">
             Proximity x Mohammed Omran x Lacza x The Pyramid Watch
           </div>
         </div>

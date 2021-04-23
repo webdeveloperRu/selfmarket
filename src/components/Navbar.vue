@@ -212,7 +212,7 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <!-- <q-btn
+          <q-btn
             icon="account_balance_wallet"
             flat
             aria-label="Wallet Menu"
@@ -222,8 +222,9 @@
                 accountMenu = false;
               }
             "
+            @click="walletDrawerOpen = true"
           >
-          </q-btn> -->
+          </q-btn>
         </div>
         <q-btn
           flat
@@ -266,6 +267,15 @@
 
             <q-item-section>
               <q-item-label>Account</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable @click="walletDrawerOpen = true">
+            <q-item-section avatar>
+              <q-icon name="account_balance_wallet" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>My Wallet</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -322,6 +332,84 @@
           v-bind="link"
         />
       </div>
+    </q-drawer>
+
+    <q-drawer
+      side="right"
+      v-model="walletDrawerOpen"
+      bordered
+      content-class="bg-grey-1"
+      :show-if-above="false"
+      behavior="mobile"
+      :width="350"
+    >
+      <q-scroll-area class="fit ">
+        <div
+          class="text-subtitle1 q-pa-md flex justify-between items-center"
+          style="font-weight: 500"
+        >
+          <div>My Wallet</div>
+          <q-btn
+            no-caps
+            rounded
+            icon="arrow_back_ios"
+            @click="walletDrawerOpen = false"
+            >Back</q-btn
+          >
+        </div>
+        <q-separator />
+        <div class="q-pa-md text-subtitle1">
+          Connect with one of our available
+          <span class="text-blue cursor-pointer">
+            <q-icon name="info" style="font-size: 1.5rem"></q-icon>wallet
+            <q-tooltip content-class="bg-black">
+              <div style="font-size: 14px; max-width: 250px;" class="q-pa-sm">
+                A crypto wallet is an application or hardware deice that allows
+                individuals to store and retrieve digital assets.
+              </div>
+            </q-tooltip>
+          </span>
+          info providers or create a new one.
+        </div>
+        <q-list bordered separator round class="q-ma-md">
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="signal_wifi_off" />
+            </q-item-section>
+
+            <q-item-section>Meta Mask</q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="signal_wifi_off" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Bitski</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="signal_wifi_off" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Formatic</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="signal_wifi_off" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Wallet Connect</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
   </div>
 </template>
@@ -414,7 +502,8 @@ export default {
       walletMenu: false,
       filter_text: "",
       createDrawerOpen: false,
-      accountDrawerOpen: false
+      accountDrawerOpen: false,
+      walletDrawerOpen: false
     };
   },
   methods: {
@@ -439,7 +528,7 @@ export default {
 .desktop-menu {
   display: flex;
 }
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1050px) {
   .mobile-list-menu {
     display: block;
   }

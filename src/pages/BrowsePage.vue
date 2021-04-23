@@ -270,15 +270,9 @@ export default {
       xdnFilterCheck: false
     };
   },
-  methods: {
-    onLoad(index, done) {
-      setTimeout(() => {
-        if (this.items) {
-          this.items.push({}, {}, {}, {}, {}, {}, {});
-          done();
-        }
-      }, 2000);
-    }
-  }
+  created() {
+    this.$store.dispatch("manage/getProducts");
+  },
+  methods: {}
 };
 </script>
