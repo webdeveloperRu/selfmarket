@@ -14,7 +14,7 @@
               />
               <span class="text-subtitle1">4</span>
             </div>
-            <img src="../assets/product-demo.png" alt="card-item" />
+            <img src="../assets/images/product-demo.png" alt="card-item" />
           </q-card>
           <q-list bordered class="rounded-borders q-my-md">
             <q-card flat>
@@ -29,7 +29,7 @@
               <q-separator />
               <q-card-section>
                 <q-avatar size="30px">
-                  <img src="../assets/avatar.png" />
+                  <img src="../assets/images/avatar.png" />
                 </q-avatar>
                 Created by
                 <q-btn flat color="primary" no-caps rounded>Dr burry </q-btn>
@@ -169,7 +169,7 @@
           </div>
           <div>
             <q-avatar size="30px">
-              <img src="../assets/avatar.png" />
+              <img src="../assets/images/avatar.png" />
             </q-avatar>
             Owned by
             <q-btn flat color="primary" no-caps rounded>Dr burry </q-btn>
@@ -239,7 +239,7 @@
                   <div class="row full-width q-pa-sm">
                     <div class="col-4 col-sm-3">
                       <q-avatar size="30px">
-                        <img src="../assets/avatar.png" />
+                        <img src="../assets/images/avatar.png" />
                       </q-avatar>
                       <span class="q-px-sm text-subtitle1">jacke</span>
                     </div>
@@ -295,7 +295,7 @@
                 <div class="row full-width q-pa-sm">
                   <div class="col-4 col-sm-3">
                     <q-avatar size="30px">
-                      <img src="../assets/avatar.png" />
+                      <img src="../assets/images/avatar.png" />
                     </q-avatar>
                     <span class="q-px-sm text-subtitle1">jacke</span>
                   </div>
@@ -360,7 +360,7 @@
                 <template v-slot:body-cell-item="props">
                   <q-td :props="props">
                     <q-avatar rounded>
-                      <img src="../assets/avatar.png" />
+                      <img src="../assets/images/avatar.png" />
                     </q-avatar>
                     {{ props.row.item }}
                   </q-td>
@@ -368,7 +368,7 @@
                 <template v-slot:body-cell-from="props">
                   <q-td :props="props">
                     <q-avatar size="30px">
-                      <img src="../assets/avatar.png" />
+                      <img src="../assets/images/avatar.png" />
                     </q-avatar>
                     {{ props.row.from.name }}
                   </q-td>
@@ -376,7 +376,7 @@
                 <template v-slot:body-cell-to="props">
                   <q-td :props="props">
                     <q-avatar size="30px">
-                      <img src="../assets/avatar.png" />
+                      <img src="../assets/images/avatar.png" />
                     </q-avatar>
                     {{ props.row.to.name }}
                   </q-td>

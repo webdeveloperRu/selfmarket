@@ -2,18 +2,13 @@
   <div class="row ">
     <div class="col-1"></div>
     <div class="col-3 q-pa-sm">
-      <q-avatar
-        size="70px"
-        font-size="52px"
-        color="teal"
-        text-color="white"
-        icon="directions"
-        class="q-mb-md"
-      />
-      <div class="text-h4 q-mb-md">
+      <q-avatar size="70px" font-size="52px" text-color="white" class="q-mb-md">
+        <q-img src="../../assets/images/categories/collectibles.png"></q-img>
+      </q-avatar>
+      <div class="text-h4 q-mb-sm text-grey-9" style="font-size: 30px">
         Collectibles
       </div>
-      <div class="text-subtitle2 ">
+      <div class="text-subtitle2 text-grey-9" style="font-weight: 400">
         The way we understand value is changing before our eyes. From breedable
         kittens to cryptographic stamps, our innate desire to collect is going
         digital.
@@ -33,7 +28,7 @@
             class="text-subtitle2 text-grey"
             flat
             no-caps
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
           >
             <div class="ellipsis">
               CyberKongz
@@ -44,7 +39,7 @@
             align="left"
             flat
             no-caps
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
           >
             <div class="ellipsis">
               MICK JAGGER X EXTRAWEG
@@ -53,7 +48,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -64,7 +59,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -77,7 +72,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -88,7 +83,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -99,7 +94,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -110,7 +105,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -123,7 +118,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -134,7 +129,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -145,7 +140,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -156,7 +151,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >

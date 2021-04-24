@@ -1,36 +1,44 @@
 <template>
   <div>
     <q-header style="z-index: 3000;box-shadow: #0e0e0e40 0px 0px 8px 0px">
-      <q-toolbar class="bg-white text-black " style=" height: 60px">
+      <q-toolbar class="bg-white text-black " style=" height: 72px">
         <!-- <q-avatar>
           <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
         </q-avatar> -->
         <q-avatar @click="navigateHomePage" style="cursor:pointer">
-          <img src="../assets/selfmarket-logo.png" alt="logo" />
+          <img src="../assets/images/selfmarket-logo.png" alt="logo" />
         </q-avatar>
-        <div class="text-h5 q-pa-sm logo-title" @click="navigateHomePage">
+        <div
+          class="text-h5 q-pa-sm logo-title"
+          @click="navigateHomePage"
+          style="font-size: 20px"
+        >
           Self Market
         </div>
-        <q-input
-          dense
-          outlined
-          v-model="filter_text"
-          color="grey-3"
-          input-class="text-left"
-          placeholder="search items, collections and accounts"
-          class="q-ml-md"
-          style="width: 100%; max-width: 800px"
+        <div
+          style="width: 100%; max-width: 800px; border: solid 1px #aaa"
+          class="rounded-borders q-px-sm"
         >
-          <template v-slot:prepend>
-            <q-icon v-if="filter_text === ''" name="search" />
-            <q-icon
-              v-else
-              name="clear"
-              class="cursor-pointer"
-              @click="filter_text = ''"
-            />
-          </template>
-        </q-input>
+          <q-input
+            dense
+            borderless
+            v-model="filter_text"
+            color="grey-6"
+            input-class="text-left"
+            placeholder="Search items, collections and accounts"
+            class="q-ml-md full-width"
+          >
+            <template v-slot:prepend>
+              <q-icon v-if="filter_text === ''" name="search" />
+              <q-icon
+                v-else
+                name="clear"
+                class="cursor-pointer"
+                @click="filter_text = ''"
+              />
+            </template>
+          </q-input>
+        </div>
         <q-space />
 
         <div class="desktop-menu q-ml-md">
@@ -40,6 +48,9 @@
             to="/assets"
             aria-label="Browse Menu"
             flat
+            no-caps
+            class="text-grey-9"
+            style="font-size: 16px; font-weight: 400"
             @mouseover.native="
               () => {
                 createMenu = false;
@@ -53,6 +64,9 @@
             label="Activity"
             aria-label="Activity Menu"
             to="/activity"
+            no-caps
+            class="text-grey-9"
+            style="font-size: 16px; font-weight: 400"
             @mouseover.native="
               () => {
                 createMenu = false;
@@ -64,6 +78,9 @@
             name="rankings"
             label="Rankings"
             to="/rankings"
+            no-caps
+            class="text-grey-9"
+            style="font-size: 16px; font-weight: 400"
             aria-label="Rankings Menu"
             flat
             @mouseover.native="
@@ -77,6 +94,10 @@
             label="Cteate"
             aria-label="Create Menu"
             flat
+            no-caps
+            class="text-grey-9"
+            style="font-size: 16px; font-weight: 400"
+            @click="createMenu = false"
             @mouseover.native="
               () => {
                 createMenu = true;
@@ -86,7 +107,7 @@
           >
             <q-menu v-model="createMenu" self="top right" anchor="bottom end">
               <q-list style="min-width: 100px" @mouseleave="createMenu = false">
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/my-collection')">
                       <q-icon name="store" size="28px" class="q-pr-sm" />My
@@ -94,7 +115,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section
                     ><div @click="navigatePage('/develop')">
                       <q-icon name="code" size="28px" class="q-pr-sm" />
@@ -102,7 +123,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/submit')">
                       <q-icon
@@ -114,7 +135,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/docs')">
                       <q-icon name="description" size="28px" class="q-pr-sm" />
@@ -128,6 +149,7 @@
           <q-btn
             icon="account_circle"
             aria-label="Account Menu"
+            class="text-grey-9"
             flat
             @mouseover.native="
               () => {
@@ -135,13 +157,14 @@
                 accountMenu = true;
               }
             "
+            @click="accountMenu = false"
           >
             <q-menu v-model="accountMenu" self="top right" anchor="bottom end">
               <q-list
                 style="min-width: 100px"
                 @mouseleave="accountMenu = false"
               >
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/profile')">
                       <q-icon name="face" size="28px" class="q-pr-sm" />My
@@ -149,7 +172,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section
                     ><div @click="navigatePage('/station')">
                       <q-icon
@@ -161,7 +184,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/sell')">
                       <q-icon
@@ -173,7 +196,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/transfer')">
                       <q-icon
@@ -185,7 +208,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/twofactor-setup')">
                       <q-icon
@@ -197,7 +220,7 @@
                     </div></q-item-section
                   >
                 </q-item>
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup class="text-grey-9">
                   <q-item-section>
                     <div @click="navigatePage('/account-settings')">
                       <q-icon
@@ -216,6 +239,7 @@
             icon="account_balance_wallet"
             flat
             aria-label="Wallet Menu"
+            class="text-grey-9"
             @mouseover.native="
               () => {
                 createMenu = false;
@@ -351,6 +375,8 @@
           <div>My Wallet</div>
           <q-btn
             no-caps
+            class="text-grey-9"
+            style="font-size: 16px; font-weight: 400"
             rounded
             icon="arrow_back_ios"
             @click="walletDrawerOpen = false"

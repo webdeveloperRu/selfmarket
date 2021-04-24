@@ -12,7 +12,7 @@
               <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section side>
                   <q-avatar size="100px">
-                    <img src="../../assets/avatar.png" />
+                    <img src="../../assets/images/avatar.png" />
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>

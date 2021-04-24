@@ -2,18 +2,14 @@
   <div class="row ">
     <div class="col-1"></div>
     <div class="col-3 q-pa-sm">
-      <q-avatar
-        size="70px"
-        font-size="52px"
-        color="teal"
-        text-color="white"
-        icon="directions"
-        class="q-mb-md"
-      />
-      <div class="text-h4 q-mb-md">
+      <q-avatar size="70px" font-size="52px" text-color="white" class="q-mb-md">
+        <q-img src="../../assets/images/categories/virtual-worlds.png"></q-img>
+      </q-avatar>
+
+      <div class="text-h4 q-mb-sm text-grey-9" style="font-size: 30px">
         Virtual Worlds
       </div>
-      <div class="text-subtitle2">
+      <div class="text-subtitle2 text-grey-9" style="font-weight: 400">
         Virtual worlds allow users to create and trade valuable
         blockchain-backed NFTs in ever-evolving digital realities. These online
         public spaces are built and maintained by the crypto community.
@@ -33,7 +29,7 @@
             class="text-subtitle2 text-grey"
             flat
             no-caps
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
           >
             <div class="ellipsis">
               CyberKongz
@@ -44,7 +40,7 @@
             align="left"
             flat
             no-caps
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
           >
             <div class="ellipsis">
               MICK JAGGER X EXTRAWEG
@@ -53,7 +49,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -64,7 +60,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -77,7 +73,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -88,7 +84,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -99,7 +95,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -110,7 +106,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -123,7 +119,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -134,7 +130,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -145,7 +141,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >
@@ -156,7 +152,7 @@
           <q-btn
             class="text-subtitle2 text-grey"
             align="left"
-            style="width: 100%"
+            style="width: 100%; font-weight: 300"
             flat
             no-caps
           >

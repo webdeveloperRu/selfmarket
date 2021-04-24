@@ -8,7 +8,7 @@
       <q-btn flat round icon="favorite_border" aria-label="favorite-item" />
       <span class="text-subtitle1">4</span>
     </div>
-    <img src="../assets/mountains.jpg" alt="card-item" />
+    <img src="../assets/images/mountains.jpg" alt="card-item" />
 
     <q-card-section>
       <div class="flex justify-between">

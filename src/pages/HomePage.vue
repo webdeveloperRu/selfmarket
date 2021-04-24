@@ -2,58 +2,66 @@
   <q-page class="front-page" style="position:relative">
     <div
       class="full-width action-tab"
-      style="position:sticky; top: 60px; z-index: 2005; background: white"
+      style="position:sticky; top: 72px; z-index: 2005; background: white"
       @mouseleave="selected_tab = ''"
     >
       <q-tabs
         v-model="selected_tab"
-        class="text-teal q-pt-sm"
+        class="text-primary q-pt-sm categories-tab "
         outside-arrows
         mobile-arrows
       >
         <q-tab
+          no-caps
           name="new"
           label="New"
           @mouseover.native="selected_tab = 'new'"
           @click.native="navigatePage('/rankings')"
         />
         <q-tab
+          no-caps
           name="art"
           label="Art"
           @mouseover.native="selected_tab = 'art'"
           @click.native="navigatePage('/collection/art')"
         />
         <q-tab
+          no-caps
           name="domain_names"
           label="Domain Names"
           @mouseover.native="selected_tab = 'domain_names'"
           @click.native="navigatePage('/collection/domain-names')"
         />
         <q-tab
+          no-caps
           name="virtual_world"
           label="Virtual Worlds"
           @mouseover.native="selected_tab = 'virtual_world'"
           @click.native="navigatePage('/collection/virtual-worlds')"
         />
         <q-tab
+          no-caps
           name="trading_cards"
           label="Trading Cards"
           @mouseover.native="selected_tab = 'trading_cards'"
           @click.native="navigatePage('/collection/trading-cards')"
         />
         <q-tab
+          no-caps
           name="collectibles"
           label="Collectibles"
           @mouseover.native="selected_tab = 'collectibles'"
           @click.native="navigatePage('/collection/collectibles')"
         />
         <q-tab
+          no-caps
           name="sports"
           label="Sports"
           @mouseover.native="selected_tab = 'sports'"
           @click.native="navigatePage('/collection/sports')"
         />
         <q-tab
+          no-caps
           name="utility"
           label="Utility"
           @mouseover.native="selected_tab = 'utility'"
@@ -139,7 +147,7 @@
               >
                 <q-img
                   class="rounded-borders full-height"
-                  src="../assets/mountains.jpg"
+                  src="../assets/images/mountains.jpg"
                 />
               </div>
             </q-carousel-slide>
@@ -149,7 +157,7 @@
               >
                 <q-img
                   class="rounded-borders full-height"
-                  src="../assets/parallax2.jpg"
+                  src="../assets/images/parallax2.jpg"
                 />
               </div>
             </q-carousel-slide>
@@ -159,7 +167,7 @@
               >
                 <q-img
                   class="rounded-borders full-height"
-                  src="../assets/mountains.jpg"
+                  src="../assets/images/mountains.jpg"
                 />
               </div>
             </q-carousel-slide>
@@ -177,7 +185,7 @@
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
               v-bind:key="item"
             >
-              <img src="../assets/mountains.jpg" />
+              <img src="../assets/images/mountains.jpg" />
 
               <q-card-section>
                 <div class="text-h6">Our Changing Planet</div>
@@ -233,7 +241,7 @@
           </div>
           <div class="content">
             <q-card class="item-card" flat>
-              <img src="../assets/mountains.jpg" class="q-px-xl" />
+              <img src="../assets/images/mountains.jpg" class="q-px-xl" />
 
               <q-card-section>
                 <div class="text-h6 text-center">
@@ -247,7 +255,7 @@
               </q-card-section>
             </q-card>
             <q-card class="item-card" flat>
-              <img src="../assets/mountains.jpg" class="q-px-xl" />
+              <img src="../assets/images/mountains.jpg" class="q-px-xl" />
 
               <q-card-section>
                 <div class="text-h6 text-center">
@@ -260,7 +268,7 @@
               </q-card-section>
             </q-card>
             <q-card class="item-card" flat>
-              <img src="../assets/mountains.jpg" class="q-px-xl" />
+              <img src="../assets/images/mountains.jpg" class="q-px-xl" />
 
               <q-card-section>
                 <div class="text-h6 text-center">
@@ -319,7 +327,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .front-page {
-  background-image: url("../assets/frontpage-background.webp");
+  background-image: url("../assets/images/frontpage-background.webp");
   background-position: center 300px;
   background-repeat: no-repeat;
   background-size: contain;

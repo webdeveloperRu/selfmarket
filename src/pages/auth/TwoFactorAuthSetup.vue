@@ -29,7 +29,7 @@
                   target="”_blank”"
                   class="m-2"
                   ><img
-                    src="../../assets/logo/google-play-badge.png"
+                    src="../../assets/images/logo/google-play-badge.png"
                     alt="Google play logo"
                     style="width: 160px;"
                 /></a>
@@ -38,7 +38,7 @@
                   target="”_blank”"
                   class="m-2"
                   ><img
-                    src="../../assets/logo/app-store-badge.png"
+                    src="../../assets/images/logo/app-store-badge.png"
                     alt="Google play logo"
                     style="width: 160px;"
                 /></a>
