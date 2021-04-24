@@ -1,6 +1,8 @@
 <template>
   <q-card
-    class="item-card cursor-pointer q-hoverable"
+    class="item-card cursor-pointer"
+    flat
+    bordered
     @click="navigateProductDetails"
   >
     <span class="q-focus-helper"></span>
@@ -40,3 +42,11 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.item-card {
+  &:hover {
+    top: -3px;
+    box-shadow: #aaa 0px 0px 5px 0px !important;
+  }
+}
+</style>

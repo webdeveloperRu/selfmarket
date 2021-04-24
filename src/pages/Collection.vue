@@ -7,7 +7,7 @@
     >
       <q-tabs
         v-model="selected_tab"
-        class="text-primary categories-tab"
+        class="text-grey-7 categories-tab"
         outside-arrows
         mobile-arrows
       >
@@ -127,7 +127,7 @@
     <div
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
-      <div class=" full-width" style="max-width: 80%">
+      <div class=" full-width" style="max-width: 90%;">
         <div class="title flex full-width">
           <q-icon
             name="timelapse"
@@ -152,7 +152,7 @@
     <div
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
-      <div class=" full-width" style="max-width: 80%">
+      <div class=" full-width" style="max-width: 90%;">
         <div class="title flex full-width">
           <q-icon
             name="timelapse"
@@ -177,7 +177,7 @@
     <div
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
-      <div class=" full-width" style="max-width: 80%">
+      <div class=" full-width" style="max-width: 90%;">
         <div class="title flex full-width">
           <q-icon name="whatshot" class="text-black" style="font-size: 2rem;" />
           <div class="text-h6">
@@ -199,7 +199,7 @@
     <div
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
-      <div class=" full-width" style="max-width: 80%">
+      <div class=" full-width" style="max-width: 90%;">
         <div class="title flex full-width">
           <q-icon name="insights" class="text-black" style="font-size: 2rem;" />
           <div class="text-h6">

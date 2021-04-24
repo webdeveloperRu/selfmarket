@@ -17,7 +17,7 @@
         </div>
         <div
           style="width: 100%; max-width: 800px; border: solid 1px #aaa"
-          class="rounded-borders q-px-sm"
+          class="rounded-borders q-px-sm q-ml-sm"
         >
           <q-input
             dense

@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-sm justify-center flex">
-    <div class="full-width" style="max-width: 1280px">
+    <div class="full-width" style="max-width: 90%;">
       <div class="row q-mt-md full-width">
         <div class="col-12 col-md-5 q-pa-sm">
           <q-card class="item-card cursor-pointer q-hoverable full-width">
