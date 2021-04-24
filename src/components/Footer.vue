@@ -131,7 +131,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-8 link-menus q-px-xl q-py-md">
+          <div class="col-12 col-md-8 link-menus q-px-xl q-py-xl">
             <div class="row">
               <div class="col-6 col-sm-3">
                 <div class="text-h6" style="color: white; font-size: 16px; ">
