@@ -6,7 +6,7 @@
         show-if-above
         :width="350"
         :breakpoint="1150"
-        elevated
+        bordered
       >
         <q-scroll-area class="fit">
           <q-expansion-item

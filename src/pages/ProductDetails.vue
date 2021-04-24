@@ -32,7 +32,9 @@
                   <img src="../assets/images/avatar.png" />
                 </q-avatar>
                 Created by
-                <q-btn flat color="primary" no-caps rounded>Dr burry </q-btn>
+                <q-btn flat color="primary" no-caps rounded to="/accounts/30"
+                  >Dr burry
+                </q-btn>
                 <div class="text-subtitle1 q-mt-sm text-grey">
                   EtherMushroom #20 - # MEDIUM space
                 </div>
@@ -141,42 +143,47 @@
               </q-tooltip>
             </q-btn>
 
-            <q-btn-group flat class="border">
-              <q-btn icon="refresh" outline color="primary">
+            <q-btn-group flat>
+              <q-btn icon="refresh" color="grey-7" outline>
                 <q-tooltip content-class="bg-black">
                   <div style="font-size: 14px">Refresh meta data</div>
                 </q-tooltip>
               </q-btn>
-              <q-btn icon="open_in_new" outline color="primary">
+              <q-btn icon="open_in_new" color="grey-7" outline>
                 <q-tooltip content-class="bg-black">
                   <div style="font-size: 14px">View on the Sandbox</div>
                 </q-tooltip>
               </q-btn>
-              <q-btn icon="share" outline color="primary">
+              <q-btn icon="share" color="grey-7" outline>
                 <q-tooltip content-class="bg-black">
                   <div style="font-size: 14px">Share</div>
                 </q-tooltip>
               </q-btn>
-              <q-btn icon="more_vert" outline color="primary">
+              <q-btn icon="more_vert" color="grey-7" outline>
                 <q-tooltip content-class="bg-black">
                   <div style="font-size: 14px">More</div>
                 </q-tooltip>
               </q-btn>
             </q-btn-group>
           </div>
-          <div class="text-h4 q-py-md">
-            LAND (30,50)
+          <div
+            class="text-h4 q-py-md text-grey-9"
+            style="font-size: 30px; font-weight: 500"
+          >
+            Land (30,50)
           </div>
           <div>
             <q-avatar size="30px">
               <img src="../assets/images/avatar.png" />
             </q-avatar>
             Owned by
-            <q-btn flat color="primary" no-caps rounded>Dr burry </q-btn>
+            <q-btn flat color="primary" no-caps rounded to="/accounts/30"
+              >Dr burry
+            </q-btn>
             <q-icon
               name="visibility"
               style="font-size: 1.5rem"
-              color="primary"
+              color="grey"
               class="q-px-sm"
             ></q-icon>
             <span class="text-subtitle1 text-grey">26 views</span>
@@ -193,7 +200,12 @@
               </div>
             </q-card-section>
             <q-card-section class="flex items-center">
-              <div class="text-h4">Ξ 0.48</div>
+              <div
+                class="text-h4 text-grey-9"
+                style="font-size: 28px; font-weight: 500"
+              >
+                Ξ 0.48
+              </div>
               <div class="text-subtitle1 text-grey q-px-sm">($1,077.20)</div>
             </q-card-section>
 

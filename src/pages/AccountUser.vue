@@ -1,6 +1,84 @@
 <template>
-  <div>
-    <q-layout view="hHh Lpr lff" container style="height: 93vh">
+  <q-page>
+    <div class="banner">
+      <q-img src="../assets/images/collection-banner.webp" height="200px" />
+    </div>
+    <div class="full-width account-header">
+      <div class="avatar full-width flex justify-center">
+        <div style="border-radius: 50%; border: solid 3px white; z-index: 10">
+          <q-avatar size="130px">
+            <q-img src="../assets/images/avatar.png" />
+          </q-avatar>
+        </div>
+      </div>
+      <div class="text-h4 text-grey-10 text-center" style="font-weight: 500">
+        KKOFFICIAL
+      </div>
+      <div
+        class="text-center full-width flex justify-center items-center q-mt-sm"
+      >
+        <div
+          style="width: 100px; font-size: 16px "
+          class="ellipsis text-grey-7 q-mx-sm"
+        >
+          0x3424242948590348508503
+        </div>
+        <q-btn
+          icon="content_copy"
+          color="grey-8"
+          flat
+          style="font-size: 12px"
+        ></q-btn>
+      </div>
+      <div class="full-width" style="margin-top: -130px;">
+        <q-btn icon="share" class="float-right q-mx-md" outline color="grey-7">
+        </q-btn>
+      </div>
+      <div class="menus row q-pa-sm" style="margin-top: 150px">
+        <q-btn
+          unelevated
+          class="q-ma-sm"
+          label="In Wallet"
+          icon="loyalty"
+          :color="currentTab == 0 ? 'grey-4' : 'white'"
+          :text-color="currentTab == 0 ? 'black' : 'grey'"
+          @click="currentTab = 0"
+          no-caps
+        ></q-btn>
+        <q-btn
+          class="q-ma-sm"
+          icon="history"
+          flat
+          label="Acitity"
+          :color="currentTab == 1 ? 'grey-4' : 'white'"
+          no-caps
+          :text-color="currentTab == 1 ? 'black' : 'grey'"
+          @click="currentTab = 1"
+        ></q-btn>
+        <q-btn
+          class="q-ma-sm"
+          icon="redeem"
+          label="Offers"
+          flat
+          no-caps
+          :color="currentTab == 2 ? 'grey-4' : 'white'"
+          :text-color="currentTab == 2 ? 'black' : 'grey'"
+          @click="currentTab = 2"
+        ></q-btn>
+        <q-btn
+          class="q-ma-sm"
+          icon="favorites"
+          label="Favorites"
+          flat
+          no-caps
+          :color="currentTab == 3 ? 'grey-4' : 'white'"
+          :text-color="currentTab == 3 ? 'black' : 'grey'"
+          @click="currentTab = 3"
+        ></q-btn>
+      </div>
+    </div>
+    <q-separator />
+    <q-layout class="q-pa-sm">
       <q-drawer
         v-model="drawerLeft"
         show-if-above
@@ -142,114 +220,83 @@
           <q-separator />
         </q-scroll-area>
       </q-drawer>
-
-      <q-page-container>
-        <q-page padding>
-          <div class="q-pa-md" style="overflow-x:auto;  display: flex">
-            <q-btn
-              flat
-              icon="mail"
-              label="Art"
-              style="min-width: 150px;"
-              color="secondary"
-              aria-label="Art"
+      <q-page-container class="margin-left: 350px">
+        <div class="flex justify-between items-center">
+          <div
+            style="width: 100%; max-width: 400px;border: solid 1px #aaa"
+            class="rounded-borders q-px-sm q-ml-sm"
+          >
+            <q-input
+              dense
+              borderless
+              v-model="filter_text"
+              color="grey-6"
+              input-class="text-left"
+              placeholder="Search items, collections and accounts"
+              class="q-ml-md full-width"
+            >
+              <template v-slot:prepend>
+                <q-icon v-if="filter_text === ''" name="search" />
+                <q-icon
+                  v-else
+                  name="clear"
+                  class="cursor-pointer"
+                  @click="filter_text = ''"
+                />
+              </template>
+            </q-input>
+          </div>
+          <q-space />
+          <div class="flex float-right">
+            <q-select
+              filled
+              v-model="item_filter"
+              :options="item_options"
+              class="q-pa-md"
+              dense
             />
-            <q-btn
-              flat
-              color="secondary"
-              icon="domain"
-              label="Domain Names"
-              style="min-width: 200px;"
-              aria-label="Domain Names"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="travel_explorer"
-              label="Virtual Worlds"
-              style="min-width: 200px;"
-              aria-label="Virtual Worlds"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="card_travel"
-              label="Trading Cards"
-              style="min-width: 200px;"
-              aria-label="Trading Cards"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="collections"
-              label="Collectibles"
-              style="min-width: 200px;"
-              aria-label="Collectibles"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="sports"
-              label="Sports"
-              style="min-width: 150px;"
-              aria-label="Sports"
-            />
-            <q-btn
-              flat
-              icon="mail"
-              label="Utility"
-              style="min-width: 150px;"
-              color="secondary"
-              aria-label="Utility"
+            <q-select
+              filled
+              v-model="sort_filter"
+              :options="sort_options"
+              class="q-pa-md"
+              dense
             />
           </div>
-          <q-separator />
-          <div class="q-pa-md flex justify-between align-center">
-            <div class="q-pa-md">14,198 results</div>
-            <div class="flex">
-              <q-select
-                filled
-                v-model="item_filter"
-                :options="item_options"
-                class="q-pa-md"
-              />
-              <q-select
-                filled
-                v-model="sort_filter"
-                :options="sort_options"
-                class="q-pa-md"
-              />
-            </div>
-            <div class="row">
-              <div
-                class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
-                v-for="item in 50"
-                v-bind:key="item"
-              >
-                <DataPackageCard></DataPackageCard>
-              </div>
-            </div>
+        </div>
+        <div class="row">
+          <div
+            class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
+            v-for="item in 50"
+            v-bind:key="item"
+          >
+            <DataPackageCard></DataPackageCard>
           </div>
-        </q-page>
+        </div>
       </q-page-container>
     </q-layout>
-  </div>
+  </q-page>
 </template>
-
 <script>
 export default {
-  name: "BrowsePage",
+  name: "AccountUser",
   components: {
     DataPackageCard: () => import("../components/DataPackageCard")
   },
   data() {
     return {
+      currentTab: 0,
       drawerLeft: false,
-      item_filter: "Single Items",
-      sort_filter: "Recently Listed",
+      ethFilterCheck: false,
+      mtFilterCheck: false,
+      xdnFilterCheck: false,
+      btFilterCheck: false,
+      wethFilterCheck: false,
+      filterSaleText: "",
+      filterCollectionText: "",
+      items: [{}, {}, {}, {}, {}, {}, {}],
       item_options: ["Single Items", "Bundles"],
       sort_options: [
-        "Recently Listed",
         "Recently Listed",
         "Recently Sold",
         "Ending Soon",
@@ -260,19 +307,17 @@ export default {
         "Most Favorited",
         "Oldest"
       ],
-      filterCollectionText: "",
-      items: [{}, {}, {}, {}, {}, {}, {}],
-      filterSaleText: "",
-      ethFilterCheck: false,
-      wethFilterCheck: false,
-      btFilterCheck: false,
-      mtFilterCheck: false,
-      xdnFilterCheck: false
+      item_filter: "Single Items",
+      sort_filter: "Recently Listed",
+      filter_text: ""
     };
-  },
-  created() {
-    this.$store.dispatch("manage/getProducts");
-  },
-  methods: {}
+  }
 };
 </script>
+<style lang="scss" scoped>
+.account-header {
+  .avatar {
+    margin-top: -65px !important;
+  }
+}
+</style>

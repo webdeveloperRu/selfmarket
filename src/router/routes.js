@@ -127,7 +127,11 @@ const routes = [
       { path: "/assets", component: () => import("pages/BrowsePage.vue") },
 
       { path: "/activity", component: () => import("pages/ActivityPage.vue") },
-      { path: "/rankings", component: () => import("pages/RankingsPage.vue") }
+      { path: "/rankings", component: () => import("pages/RankingsPage.vue") },
+      {
+        path: "/accounts/:id",
+        component: () => import("pages/AccountUser.vue")
+      }
     ]
   },
 
