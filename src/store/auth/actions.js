@@ -80,7 +80,7 @@ export async function forgotPassword(context, email) {
     })
     .catch(err => {
       if (err.response) {
-        context.commit("forgotPasswordFailed", response.response);
+        context.commit("forgotPasswordFailed", err.response);
       } else if (err.request) {
         context.commit("NETWORK_ERROR", null, {
           root: true
@@ -106,7 +106,7 @@ export async function resetPassword(context, data) {
     })
     .catch(err => {
       if (err.response) {
-        context.commit("resetPasswordFailed", response.response);
+        context.commit("resetPasswordFailed", err.response);
       } else if (err.request) {
         context.commit("NETWORK_ERROR", null, {
           root: true
@@ -130,7 +130,7 @@ export async function getTwoFactor(context) {
     })
     .catch(err => {
       if (err.response) {
-        context.commit("REQUEST_FAILED", response.response, {
+        context.commit("REQUEST_FAILED", err.response, {
           root: true
         });
       } else if (err.request) {
@@ -155,7 +155,7 @@ export async function deleteTwoFactor(context) {
     })
     .catch(err => {
       if (err.response) {
-        context.commit("REQUEST_FAILED", response.response, {
+        context.commit("REQUEST_FAILED", err.response, {
           root: true
         });
       } else if (err.request) {
@@ -186,7 +186,7 @@ export async function setTwoFactor(context, otp) {
     })
     .catch(err => {
       if (err.response) {
-        context.commit("REQUEST_FAILED", response.response, {
+        context.commit("REQUEST_FAILED", err.response, {
           root: true
         });
       } else if (err.request) {
@@ -220,7 +220,7 @@ export async function updateUser(context, user) {
     })
     .catch(err => {
       if (err.response) {
-        context.commit("REQUEST_FAILED", response.response, {
+        context.commit("REQUEST_FAILED", err.response, {
           root: true
         });
       } else if (err.request) {
@@ -252,8 +252,9 @@ export async function changePassword(context, [password, newpassword]) {
       }
     })
     .catch(err => {
+      console.log(err);
       if (err.response) {
-        context.commit("REQUEST_FAILED", response.response, {
+        context.commit("REQUEST_FAILED", err.response, {
           root: true
         });
       } else if (err.request) {
