@@ -351,8 +351,6 @@ export default {
     handleScroll(event) {
       let positionUserID = this.$refs["userID"].getBoundingClientRect();
 
-      console.log(event);
-
       if (positionUserID.y < 15) {
         this.$refs.menus.style.position = "fixed";
         this.$refs.menus.style.top = "-80px";
@@ -365,8 +363,6 @@ export default {
         this.$refs.menus.style.top = "unset";
         this.$refs.contentForm.style = "margin-top: 0px;";
       }
-
-      // console.log(this.$refs.menus.clientTop.getBoundingClientRect().x);
     }
   }
 };

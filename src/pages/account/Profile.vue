@@ -5,51 +5,67 @@
         <q-card class="card-bg " style="max-width: 700px">
           <q-card-section class="text-h6 ">
             <div class="text-h6">Edit Profile</div>
-            <div class="text-subtitle2">Complete your profile</div>
           </q-card-section>
-          <q-card-section class="q-pa-sm">
+          <q-card-section class="flex justify-center">
+            <q-avatar size="150px">
+              <img :src="avatarImageUrl" v-if="avatarImageUrl != ''" />
+              <q-icon
+                name="account_circle"
+                color="grey-5"
+                size="150px"
+                v-else
+              ></q-icon>
+            </q-avatar>
+          </q-card-section>
+          <q-card-section>
+            <div class="q-gutter-md float-right">
+              <q-input
+                ref="myFileInput"
+                style="display:none"
+                v-model="avatarFile"
+                type="file"
+                label="Standard"
+                @change="onSelectUserAvatar"
+              ></q-input>
+              <q-btn
+                round
+                color="primary"
+                icon="cloud_upload"
+                @click="getAvatarFile"
+              ></q-btn>
+            </div>
+          </q-card-section>
+          <q-card-section class="q-pa-sm q-mt-lg">
             <q-list class="row">
-              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <q-item-section side>
-                  <q-avatar size="100px">
-                    <img src="../../assets/images/avatar.png" />
-                  </q-avatar>
-                </q-item-section>
+              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
-                  <q-btn
-                    label="Add Photo"
-                    class="text-capitalize"
-                    rounded
-                    color="info"
-                    style="max-width: 120px"
-                  ></q-btn>
+                  <q-input v-model="userName" label="User Name" />
+                </q-item-section>
+              </q-item>
+              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <q-input v-model="userEmail" label="Email Address" />
+                </q-item-section>
+              </q-item>
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <q-input v-model="fullName" label="Full Name" />
+                </q-item-section>
+              </q-item>
+              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <q-item-section>
+                  <q-select
+                    v-model="timeZone"
+                    :options="timeZoneList"
+                    use-input
+                    label="statndard"
+                    @filter="filterTimeZone"
+                  >
+                  </q-select>
                 </q-item-section>
               </q-item>
 
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input v-model="user_details.user_name" label="User Name" />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input v-model="user_details.email" label="Email Address" />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    v-model="user_details.first_name"
-                    label="First Name"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input v-model="user_details.last_name" label="Last Name" />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <q-item-section>
                   <q-input
                     autogrow
@@ -57,8 +73,8 @@
                     label="Address"
                   />
                 </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              </q-item> -->
+              <!-- <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <q-item-section>
                   <q-input v-model="user_details.city" label="City" />
                 </q-item-section>
@@ -79,11 +95,14 @@
                     label="About"
                   />
                 </q-item-section>
-              </q-item>
+              </q-item> -->
             </q-list>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize bg-primary text-white"
+            <q-btn
+              class="text-capitalize bg-primary text-white"
+              @click="updateUser"
+              :loading="updatingUser"
               >Update User Info</q-btn
             >
           </q-card-actions>
@@ -107,7 +126,7 @@
                   type="password"
                   outlined
                   round
-                  v-model="password_dict.current_password"
+                  v-model="currentPassword"
                   label="Current Password"
                 />
               </q-item-section>
@@ -123,7 +142,7 @@
                   type="password"
                   outlined
                   round
-                  v-model="password_dict.new_password"
+                  v-model="newPassword"
                   label="New Password"
                 />
               </q-item-section>
@@ -139,14 +158,18 @@
                   type="password"
                   outlined
                   round
-                  v-model="password_dict.confirm_new_password"
+                  ref="confirmNewPassword"
+                  v-model="confirmNewPassword"
                   label="Confirm New Password"
                 />
               </q-item-section>
             </q-item>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn class="text-capitalize bg-primary text-white"
+            <q-btn
+              class="text-capitalize bg-primary text-white"
+              @click="changePassword"
+              :loading="updatingUserPassword"
               >Change Password</q-btn
             >
           </q-card-actions>
@@ -157,13 +180,145 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import timeZone from "./time_zone";
 export default {
   name: "MyProfile",
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      user: "auth/user"
+    })
+  },
+
   data() {
     return {
-      user_details: {},
-      password_dict: {}
+      timeZoneList: timeZone.time_zones,
+      timeZone: null,
+      userName: "",
+      fullName: "",
+      userEmail: "",
+      avatarImageUrl: "",
+      avatarFile: null,
+      accountHeader: null,
+      updatingUser: false,
+      currentPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
+      updatingUserPassword: false
     };
+  },
+
+  created() {
+    this.timeZone = this.user.data.tz;
+    this.userName = this.user.data.username;
+    this.fullName = this.user.data.full_name;
+    this.userEmail = this.user.data.email;
+    this.avatarImageUrl = this.user.data.avatar;
+  },
+
+  methods: {
+    filterTimeZone(val, update) {
+      if (val === "") {
+        update(() => {
+          this.timeZoneList = timeZone.time_zones;
+
+          // with Quasar v1.7.4+
+          // here you have access to "ref" which
+          // is the Vue reference of the QSelect
+        });
+        return;
+      }
+
+      update(() => {
+        const needle = val.toLowerCase();
+        this.timeZoneList = timeZone.time_zones.filter(
+          v => v.label.toLowerCase().indexOf(needle) > -1
+        );
+      });
+    },
+    getAvatarFile() {
+      this.$refs.myFileInput.$el.click();
+    },
+    onSelectUserAvatar(e) {
+      let image = e.target.files[0];
+      if (image !== undefined) {
+        this.createImage(image);
+        this.avatarFile = image;
+      }
+    },
+    createImage(file) {
+      var reader = new FileReader();
+      reader.onload = e => {
+        this.avatarImageUrl = e.target.result;
+        // this.cssProfileImageUrl = "url(" + this.profileImageUrl + ")";
+      };
+      reader.readAsDataURL(file);
+    },
+    updateUser() {
+      let user = {
+        email: this.userEmail,
+        full_name: this.fullName,
+        tz: this.timeZone,
+        avatar: this.avatarFile,
+        account_header: this.accountHeader
+      };
+      this.updatingUser = true;
+      this.$store
+        .dispatch("auth/updateUser", user)
+        .then(() => {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+
+          this.updatingUser = false;
+        })
+        .catch(() => {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+
+          this.updatingUser = false;
+        });
+    },
+
+    changePassword() {
+      if (this.newPassword != this.confirmNewPassword) {
+        this.$q.notify({
+          type: "negative",
+          message: "password mismatching"
+        });
+        return;
+      }
+      this.updatingUserPassword = true;
+
+      this.$store
+        .dispatch("auth/changePassword", [
+          this.currentPassword,
+          this.newPassword
+        ])
+        .then(() => {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+          this.updatingUserPassword = false;
+        })
+        .catch(() => {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+
+          this.updatingUserPassword = false;
+        });
+    }
   }
 };
 </script>

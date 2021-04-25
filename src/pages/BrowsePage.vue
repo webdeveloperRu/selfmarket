@@ -309,7 +309,7 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("manage/getProducts");
+    // this.$store.dispatch("manage/getProducts");
   },
   methods: {}
 };

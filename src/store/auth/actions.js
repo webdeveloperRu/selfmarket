@@ -1,6 +1,7 @@
 import axios from "axios";
 import apiurl from "../baseApiUrl";
 import { authHeader } from "../authHeader";
+import { authHeaderFormData } from "../authHeaderFormData";
 const API_URL_AUTH = apiurl.API_URL + "auth/";
 export async function login(context, [user, remeberMe]) {
   context.commit("SET_IN_REQUEST", true, {
@@ -14,23 +15,27 @@ export async function login(context, [user, remeberMe]) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
       }
-      if (response.status == 200) {
-        context.commit("loginSuccess", response);
-      } else if (
-        response.response.status == 401 &&
-        response.response.data.message == "otp code is requested"
-      ) {
-        context.commit("setTwoFactorLogIn", {
-          user,
-          remeberMe
-        });
-        context.commit("loginFailed", response.response);
-      } else {
-        context.commit("loginFailed", response.response);
-      }
+      context.commit("loginSuccess", response);
     })
     .catch(err => {
-      context.commit("loginFailed", err.response);
+      if (err.response) {
+        if (
+          err.response.status == 401 &&
+          err.response.data.message == "otp code is requested"
+        ) {
+          context.commit("setTwoFactorLogIn", {
+            user,
+            remeberMe
+          });
+          context.commit("loginFailed", err.response);
+        } else {
+          context.commit("loginFailed", err.response);
+        }
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -41,23 +46,18 @@ export async function register(context, user) {
   await axios
     .post(API_URL_AUTH + "register", user)
     .then(response => {
-      if (response.status == 200) {
-        context.commit("registerSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-      }
+      context.commit("registerSuccess", response);
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -76,12 +76,16 @@ export async function forgotPassword(context, email) {
     .then(response => {
       if (response.status == 200) {
         context.commit("forgotPasswordSuccess", [response, email.email]);
-      } else {
-        context.commit("forgotPasswordFailed", response.response);
       }
     })
     .catch(err => {
-      context.commit("forgotPasswordFailed", err.response);
+      if (err.response) {
+        context.commit("forgotPasswordFailed", response.response);
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -98,12 +102,16 @@ export async function resetPassword(context, data) {
     .then(response => {
       if (response.status == 200) {
         context.commit("resetPasswordSuccess", [response, email.email]);
-      } else {
-        context.commit("resetPasswordFailed", response.response);
       }
     })
     .catch(err => {
-      context.commit("resetPasswordFailed", err.response);
+      if (err.response) {
+        context.commit("resetPasswordFailed", response.response);
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -118,22 +126,18 @@ export async function getTwoFactor(context) {
     .then(response => {
       if (response.status == 200) {
         context.commit("getTwoFactorSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", response.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 export async function deleteTwoFactor(context) {
@@ -147,22 +151,18 @@ export async function deleteTwoFactor(context) {
     .then(response => {
       if (response.status == 200) {
         context.commit("deleteTwoFactorSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", response.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 export async function setTwoFactor(context, otp) {
@@ -182,21 +182,84 @@ export async function setTwoFactor(context, otp) {
     .then(response => {
       if (response.status == 200) {
         context.commit("setTwoFactorSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", response.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function updateUser(context, user) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  var FormData = require("form-data");
+  var data = new FormData();
+
+  data.append("email", user.email);
+  data.append("full_name", user.full_name);
+  data.append("tz", user.tz);
+  data.append("avatar", user.avatar);
+  data.append("account_header", user.account_header);
+  await axios
+    .put(API_URL_AUTH + "me", data, {
+      headers: authHeaderFormData()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("updateUserSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", response.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function changePassword(context, [password, newpassword]) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .put(
+      API_URL_AUTH + "change-password",
+      {
+        password: password,
+        new_password: newpassword
+      },
+      {
+        headers: authHeader()
+      }
+    )
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("changePasswordSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", response.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
