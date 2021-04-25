@@ -23,49 +23,49 @@
           name="art"
           label="Art"
           @mouseover.native="selected_tab = 'art'"
-          @click.native="navigatePage('/collection/art')"
+          @click.native="navigatePage('/categories/art')"
         />
         <q-tab
           no-caps
           name="domain_names"
           label="Domain Names"
           @mouseover.native="selected_tab = 'domain_names'"
-          @click.native="navigatePage('/collection/domain-names')"
+          @click.native="navigatePage('/categories/domain-names')"
         />
         <q-tab
           no-caps
           name="virtual_world"
           label="Virtual Worlds"
           @mouseover.native="selected_tab = 'virtual_world'"
-          @click.native="navigatePage('/collection/virtual-worlds')"
+          @click.native="navigatePage('/categories/virtual-worlds')"
         />
         <q-tab
           no-caps
           name="trading_cards"
           label="Trading Cards"
           @mouseover.native="selected_tab = 'trading_cards'"
-          @click.native="navigatePage('/collection/trading-cards')"
+          @click.native="navigatePage('/categories/trading-cards')"
         />
         <q-tab
           no-caps
           name="collectibles"
           label="Collectibles"
           @mouseover.native="selected_tab = 'collectibles'"
-          @click.native="navigatePage('/collection/collectibles')"
+          @click.native="navigatePage('/categories/collectibles')"
         />
         <q-tab
           no-caps
           name="sports"
           label="Sports"
           @mouseover.native="selected_tab = 'sports'"
-          @click.native="navigatePage('/collection/sports')"
+          @click.native="navigatePage('/categories/sports')"
         />
         <q-tab
           no-caps
           name="utility"
           label="Utility"
           @mouseover.native="selected_tab = 'utility'"
-          @click.native="navigatePage('/collection/utility')"
+          @click.native="navigatePage('/categories/utility')"
         />
       </q-tabs>
       <q-separator />

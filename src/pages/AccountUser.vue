@@ -16,6 +16,7 @@
       </div>
       <div
         class="text-center full-width flex justify-center items-center q-mt-sm"
+        ref="userID"
       >
         <div
           style="width: 100px; font-size: 16px "
@@ -34,59 +35,84 @@
         <q-btn icon="share" class="float-right q-mx-md" outline color="grey-7">
         </q-btn>
       </div>
-      <div class="menus row q-pa-sm" style="margin-top: 150px">
-        <q-btn
-          unelevated
-          class="q-ma-sm"
-          label="In Wallet"
-          icon="loyalty"
-          :color="currentTab == 0 ? 'grey-4' : 'white'"
-          :text-color="currentTab == 0 ? 'black' : 'grey'"
-          @click="currentTab = 0"
-          no-caps
-        ></q-btn>
-        <q-btn
-          class="q-ma-sm"
-          icon="history"
-          flat
-          label="Acitity"
-          :color="currentTab == 1 ? 'grey-4' : 'white'"
-          no-caps
-          :text-color="currentTab == 1 ? 'black' : 'grey'"
-          @click="currentTab = 1"
-        ></q-btn>
-        <q-btn
-          class="q-ma-sm"
-          icon="redeem"
-          label="Offers"
-          flat
-          no-caps
-          :color="currentTab == 2 ? 'grey-4' : 'white'"
-          :text-color="currentTab == 2 ? 'black' : 'grey'"
-          @click="currentTab = 2"
-        ></q-btn>
-        <q-btn
-          class="q-ma-sm"
-          icon="favorites"
-          label="Favorites"
-          flat
-          no-caps
-          :color="currentTab == 3 ? 'grey-4' : 'white'"
-          :text-color="currentTab == 3 ? 'black' : 'grey'"
-          @click="currentTab = 3"
-        ></q-btn>
+      <div class="menus row q-pa-sm" style="margin-top: 150px" ref="menus">
+        <div class="desktop-menu">
+          <q-btn
+            unelevated
+            class="q-ma-sm"
+            label="In Wallet"
+            icon="loyalty"
+            :text-color="currentTab == 0 ? 'primary' : 'grey'"
+            @click="currentTab = 0"
+            no-caps
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="history"
+            flat
+            label="Acitity"
+            no-caps
+            :text-color="currentTab == 1 ? 'primary' : 'grey'"
+            @click="currentTab = 1"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="redeem"
+            label="Offers"
+            flat
+            no-caps
+            :text-color="currentTab == 2 ? 'primary' : 'grey'"
+            @click="currentTab = 2"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="favorites"
+            label="Favorites"
+            flat
+            no-caps
+            :text-color="currentTab == 3 ? 'primary' : 'grey'"
+            @click="currentTab = 3"
+          ></q-btn>
+        </div>
+        <div class="mobile-menu">
+          <q-btn
+            unelevated
+            class="q-ma-sm"
+            icon="loyalty"
+            :text-color="currentTab == 0 ? 'primary' : 'grey'"
+            @click="currentTab = 0"
+            no-caps
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="history"
+            flat
+            no-caps
+            :text-color="currentTab == 1 ? 'primary' : 'grey'"
+            @click="currentTab = 1"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="redeem"
+            flat
+            no-caps
+            :text-color="currentTab == 2 ? 'primary' : 'grey'"
+            @click="currentTab = 2"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="favorites"
+            flat
+            no-caps
+            :text-color="currentTab == 3 ? 'primary' : 'grey'"
+            @click="currentTab = 3"
+          ></q-btn>
+        </div>
       </div>
     </div>
-    <q-separator />
-    <q-layout class="q-pa-sm">
-      <q-drawer
-        v-model="drawerLeft"
-        show-if-above
-        :width="350"
-        :breakpoint="1150"
-        bordered
-      >
-        <q-scroll-area class="fit">
+    <div class="flex justify-between contentForm" ref="contentForm">
+      <div style="width: 350px" class="side-bar" ref="sideBar">
+        <div style="position: sticky; top: 140px">
           <q-expansion-item
             expand-separator
             icon="star"
@@ -218,13 +244,13 @@
             </div>
           </q-expansion-item>
           <q-separator />
-        </q-scroll-area>
-      </q-drawer>
-      <q-page-container class="margin-left: 350px">
-        <div class="flex justify-between items-center">
+        </div>
+      </div>
+      <div class="content-list">
+        <div class="flex justify-between items-center q-mt-sm q-pa-sm">
           <div
-            style="width: 100%; max-width: 400px;border: solid 1px #aaa"
-            class="rounded-borders q-px-sm q-ml-sm"
+            style="border: solid 1px #aaa;"
+            class="rounded-borders q-px-sm  filter-input"
           >
             <q-input
               dense
@@ -247,12 +273,13 @@
             </q-input>
           </div>
           <q-space />
-          <div class="flex float-right">
+          <div class="flex float-right justify-center filter-select">
             <q-select
               filled
               v-model="item_filter"
               :options="item_options"
               class="q-pa-md"
+              style="width: 220px"
               dense
             />
             <q-select
@@ -260,11 +287,12 @@
               v-model="sort_filter"
               :options="sort_options"
               class="q-pa-md"
+              style="width: 220px"
               dense
             />
           </div>
         </div>
-        <div class="row">
+        <div class="row ">
           <div
             class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
             v-for="item in 50"
@@ -273,8 +301,8 @@
             <DataPackageCard></DataPackageCard>
           </div>
         </div>
-      </q-page-container>
-    </q-layout>
+      </div>
+    </div>
   </q-page>
 </template>
 <script>
@@ -283,6 +311,13 @@ export default {
   components: {
     DataPackageCard: () => import("../components/DataPackageCard")
   },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
+
   data() {
     return {
       currentTab: 0,
@@ -311,6 +346,28 @@ export default {
       sort_filter: "Recently Listed",
       filter_text: ""
     };
+  },
+  methods: {
+    handleScroll(event) {
+      let positionUserID = this.$refs["userID"].getBoundingClientRect();
+
+      console.log(event);
+
+      if (positionUserID.y < 15) {
+        this.$refs.menus.style.position = "fixed";
+        this.$refs.menus.style.top = "-80px";
+        this.$refs.contentForm.style = "margin-top: 220px;";
+        this.$refs.sideBar.position = "absolute";
+      } else {
+        this.$refs.contentForm.style = "margin-top: 20px;";
+        this.$refs.menus.style.position = "relative";
+
+        this.$refs.menus.style.top = "unset";
+        this.$refs.contentForm.style = "margin-top: 0px;";
+      }
+
+      // console.log(this.$refs.menus.clientTop.getBoundingClientRect().x);
+    }
   }
 };
 </script>
@@ -318,6 +375,64 @@ export default {
 .account-header {
   .avatar {
     margin-top: -65px !important;
+  }
+}
+.menus {
+  width: 100%;
+  z-index: 100;
+  background: white;
+  border-bottom: solid 1px $grey-4;
+  .desktop-menu {
+    display: block;
+  }
+  .mobile-menu {
+    display: none;
+  }
+}
+
+.content-list {
+  $width: 350px;
+  width: calc(100% - #{$width});
+}
+.filter-input {
+  $width: 450px;
+  width: calc(100% - #{$width});
+}
+.side-bar {
+  display: block;
+  border-right: solid 1px $grey-4;
+}
+.contentForm {
+  position: relative;
+}
+.filter-select {
+  width: 450px;
+}
+@media only screen and (max-width: 1200px) {
+  .side-bar {
+    display: none;
+  }
+  .content-list {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .filter-input {
+    width: 100%;
+  }
+  .filter-select {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .menus {
+    .desktop-menu {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
   }
 }
 </style>

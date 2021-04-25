@@ -30,6 +30,7 @@
             flat
             no-caps
             style="width: 100%; font-weight: 300"
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               CyberKongz
@@ -41,6 +42,7 @@
             flat
             no-caps
             style="width: 100%; font-weight: 300"
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               MICK JAGGER X EXTRAWEG
@@ -52,6 +54,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               Morgan Heritage Digital Collectibles
@@ -63,6 +66,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               Proximity x Mohammed Omran x Lacza x The Pyramid Watch
@@ -76,6 +80,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               CyberKongz
@@ -87,6 +92,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               MICK JAGGER X EXTRAWEG
@@ -98,6 +104,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               Morgan Heritage Digital Collectibles
@@ -109,6 +116,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               Proximity x Mohammed Omran x Lacza x The Pyramid Watch
@@ -122,6 +130,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               CyberKongz
@@ -133,6 +142,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               MICK JAGGER X EXTRAWEG
@@ -144,6 +154,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               Morgan Heritage Digital Collectibles
@@ -155,6 +166,7 @@
             style="width: 100%; font-weight: 300"
             flat
             no-caps
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
           >
             <div class="ellipsis">
               Proximity x Mohammed Omran x Lacza x The Pyramid Watch

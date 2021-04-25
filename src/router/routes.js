@@ -111,12 +111,16 @@ const routes = [
         }
       },
       {
-        path: "/collection/:id",
-        component: () => import("src/pages/Collection.vue")
+        path: "/categories/:id",
+        component: () => import("src/pages/CategoryPage.vue")
       },
       {
         path: "/assets/:product_id",
         component: () => import("pages/ProductDetails.vue")
+      },
+      {
+        path: "/collection/:collection_name",
+        component: () => import("pages/CollectionDetail.vue")
       }
     ]
   },

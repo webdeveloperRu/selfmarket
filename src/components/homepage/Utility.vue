@@ -27,6 +27,7 @@
             align="left"
             class="text-subtitle2 text-grey"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
             style="width: 100%; font-weight: 300"
           >
@@ -38,6 +39,7 @@
             class="text-subtitle2 text-grey"
             align="left"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
             style="width: 100%; font-weight: 300"
           >
@@ -50,6 +52,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -61,6 +64,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -74,6 +78,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -85,6 +90,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -96,6 +102,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -107,6 +114,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -120,6 +128,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -131,6 +140,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -142,6 +152,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">
@@ -153,6 +164,7 @@
             align="left"
             style="width: 100%; font-weight: 300"
             flat
+            to="/collection/MICK-JAGGER-X-EXTRAWEG"
             no-caps
           >
             <div class="ellipsis">

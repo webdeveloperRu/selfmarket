@@ -7,7 +7,7 @@
     >
       <q-tabs
         v-model="selected_tab"
-        class="text-grey-7 categories-tab"
+        class="text-primary categories-tab"
         outside-arrows
         mobile-arrows
       >
@@ -24,49 +24,49 @@
           name="art"
           label="Art"
           @mouseover.native="selected_tab = 'art'"
-          @click.native="navigatePage('/collection/art')"
+          @click.native="navigatePage('/categories/art')"
         />
         <q-tab
           no-caps
           name="domain_names"
           label="Domain Names"
           @mouseover.native="selected_tab = 'domain_names'"
-          @click.native="navigatePage('/collection/domain-names')"
+          @click.native="navigatePage('/categories/domain-names')"
         />
         <q-tab
           no-caps
           name="virtual_world"
           label="Virtual Worlds"
           @mouseover.native="selected_tab = 'virtual_world'"
-          @click.native="navigatePage('/collection/virtual-worlds')"
+          @click.native="navigatePage('/categories/virtual-worlds')"
         />
         <q-tab
           no-caps
           name="trading_cards"
           label="Trading Cards"
           @mouseover.native="selected_tab = 'trading_cards'"
-          @click.native="navigatePage('/collection/trading-cards')"
+          @click.native="navigatePage('/categories/trading-cards')"
         />
         <q-tab
           no-caps
           name="collectibles"
           label="Collectibles"
           @mouseover.native="selected_tab = 'collectibles'"
-          @click.native="navigatePage('/collection/collectibles')"
+          @click.native="navigatePage('/categories/collectibles')"
         />
         <q-tab
           no-caps
           name="sports"
           label="Sports"
           @mouseover.native="selected_tab = 'sports'"
-          @click.native="navigatePage('/collection/sports')"
+          @click.native="navigatePage('/categories/sports')"
         />
         <q-tab
           no-caps
           name="utility"
           label="Utility"
           @mouseover.native="selected_tab = 'utility'"
-          @click.native="navigatePage('/collection/utility')"
+          @click.native="navigatePage('/categories/utility')"
         />
       </q-tabs>
       <q-separator />
@@ -128,13 +128,13 @@
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
       <div class=" full-width" style="max-width: 90%;">
-        <div class="title flex full-width">
+        <div class="title flex full-width items-center">
           <q-icon
             name="timelapse"
             class="text-black"
-            style="font-size: 2rem;"
+            style="font-size: 1.5rem;"
           />
-          <div class="text-h6">
+          <div class="q-ml-sm" style="font-size: 14px; font-weight: 700">
             Trending Collections
           </div>
         </div>
@@ -153,13 +153,13 @@
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
       <div class=" full-width" style="max-width: 90%;">
-        <div class="title flex full-width">
+        <div class="title flex full-width items-center">
           <q-icon
             name="timelapse"
             class="text-black"
-            style="font-size: 2rem;"
+            style="font-size: 1.5rem;"
           />
-          <div class="text-h6">
+          <div class="q-ml-sm" style="font-size: 14px; font-weight: 700">
             RECENTLY LISTED
           </div>
         </div>
@@ -178,9 +178,13 @@
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
       <div class=" full-width" style="max-width: 90%;">
-        <div class="title flex full-width">
-          <q-icon name="whatshot" class="text-black" style="font-size: 2rem;" />
-          <div class="text-h6">
+        <div class="title flex full-width items-center">
+          <q-icon
+            name="whatshot"
+            class="text-black"
+            style="font-size: 1.5rem;"
+          />
+          <div class="q-ml-sm" style="font-size: 14px; font-weight: 700">
             NEWLY MINTED
           </div>
         </div>
@@ -200,9 +204,13 @@
       class="trending-collections q-pa-sm full-width flex justify-center q-mt-lg"
     >
       <div class=" full-width" style="max-width: 90%;">
-        <div class="title flex full-width">
-          <q-icon name="insights" class="text-black" style="font-size: 2rem;" />
-          <div class="text-h6">
+        <div class="title flex full-width items-center">
+          <q-icon
+            name="insights"
+            class="text-black"
+            style="font-size: 1.5rem;"
+          />
+          <div class="q-ml-sm" style="font-size: 14px; font-weight: 700">
             ON AUCTION
           </div>
         </div>

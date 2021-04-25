@@ -209,12 +209,14 @@
             <div class="flex">
               <q-select
                 filled
+                dense
                 v-model="item_filter"
                 :options="item_options"
                 class="q-pa-md"
               />
               <q-select
                 filled
+                dense
                 v-model="sort_filter"
                 :options="sort_options"
                 class="q-pa-md"
@@ -249,7 +251,6 @@ export default {
       sort_filter: "Recently Listed",
       item_options: ["Single Items", "Bundles"],
       sort_options: [
-        "Recently Listed",
         "Recently Listed",
         "Recently Sold",
         "Ending Soon",
