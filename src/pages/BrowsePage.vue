@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-layout view="hHh Lpr lff" container style="height: 93vh">
+    <q-layout view="hHh Lpr lff" container style="height: 92vh">
       <q-drawer
         v-model="drawerLeft"
         show-if-above
@@ -146,62 +146,98 @@
       <q-page-container>
         <q-page padding>
           <div class="q-pa-md" style="overflow-x:auto;  display: flex">
-            <q-btn
-              flat
-              icon="mail"
-              label="Art"
-              style="min-width: 150px;"
-              color="secondary"
-              aria-label="Art"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="domain"
-              label="Domain Names"
-              style="min-width: 200px;"
-              aria-label="Domain Names"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="travel_explorer"
-              label="Virtual Worlds"
-              style="min-width: 200px;"
-              aria-label="Virtual Worlds"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="card_travel"
-              label="Trading Cards"
-              style="min-width: 200px;"
-              aria-label="Trading Cards"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="collections"
-              label="Collectibles"
-              style="min-width: 200px;"
-              aria-label="Collectibles"
-            />
-            <q-btn
-              flat
-              color="secondary"
-              icon="sports"
-              label="Sports"
-              style="min-width: 150px;"
-              aria-label="Sports"
-            />
-            <q-btn
-              flat
-              icon="mail"
-              label="Utility"
-              style="min-width: 150px;"
-              color="secondary"
-              aria-label="Utility"
-            />
+            <div
+              class="tab-button"
+              :class="currentTab == 0 ? 'active' : ''"
+              @click="currentTab = 0"
+            >
+              <img
+                src="../assets/images/categories/art-small.png"
+                height="30"
+              />
+              <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
+                Art
+              </div>
+            </div>
+            <div
+              class="tab-button"
+              :class="currentTab == 1 ? 'active' : ''"
+              @click="currentTab = 1"
+            >
+              <img
+                src="../assets/images/categories/domain-small.png"
+                height="30"
+              />
+              <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
+                Domain Names
+              </div>
+            </div>
+            <div
+              class="tab-button"
+              :class="currentTab == 2 ? 'active' : ''"
+              @click="currentTab = 2"
+            >
+              <img
+                src="../assets/images/categories/virtual-worlds-small.png"
+                height="30"
+              />
+              <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
+                Virtual Worlds
+              </div>
+            </div>
+
+            <div
+              class="tab-button"
+              :class="currentTab == 3 ? 'active' : ''"
+              @click="currentTab = 3"
+            >
+              <img
+                src="../assets/images/categories/trading-cards-small.png"
+                height="30"
+              />
+              <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
+                Trading Cards
+              </div>
+            </div>
+            <div
+              class="tab-button"
+              :class="currentTab == 4 ? 'active' : ''"
+              @click="currentTab = 4"
+            >
+              <img
+                src="../assets/images/categories/collectibles-small.png"
+                height="30"
+              />
+              <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
+                Collectibles
+              </div>
+            </div>
+            <div
+              class="tab-button"
+              :class="currentTab == 5 ? 'active' : ''"
+              @click="currentTab = 5"
+            >
+              <img
+                src="../assets/images/categories/sports-small.png"
+                height="30"
+              />
+              <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
+                Sports
+              </div>
+            </div>
+            <div
+              class="tab-button"
+              :class="currentTab == 6 ? 'active' : ''"
+              @click="currentTab = 6"
+            >
+              <img
+                src="../assets/images/categories/utility-small.png"
+                height="30"
+              />
+              <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
+                Utility
+              </div>
+            </div>
           </div>
           <q-separator />
           <div class="q-pa-md flex justify-between align-center">
@@ -268,7 +304,8 @@ export default {
       wethFilterCheck: false,
       btFilterCheck: false,
       mtFilterCheck: false,
-      xdnFilterCheck: false
+      xdnFilterCheck: false,
+      currentTab: 0
     };
   },
   created() {
@@ -277,3 +314,25 @@ export default {
   methods: {}
 };
 </script>
+<style lang="scss" scoped>
+.tab-button {
+  display: flex;
+  align-items: center;
+  color: $grey-7;
+  cursor: pointer;
+  border-radius: 5px;
+  justify-content: center;
+  padding: 5px 15px;
+  margin: 0px 10px;
+  white-space: nowrap;
+
+  &:hover {
+    background: $grey-4;
+    color: $grey-10;
+  }
+}
+.tab-button.active {
+  background: $grey-4;
+  color: $grey-10;
+}
+</style>
