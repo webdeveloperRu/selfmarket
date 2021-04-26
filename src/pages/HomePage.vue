@@ -696,6 +696,10 @@ export default {
       slide: 1
     };
   },
+
+  created() {
+    this.$store.dispatch("manage/getCategories");
+  },
   methods: {
     navigatePage(path) {
       this.selected_tab = "";
