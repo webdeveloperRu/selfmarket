@@ -214,7 +214,7 @@ export default {
       collectionDescription: "",
       productMediaFile: null,
       collectionID: 30,
-      productUrl: "",
+      productUrl: ""
     };
   },
   methods: {
