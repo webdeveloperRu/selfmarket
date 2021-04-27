@@ -133,7 +133,7 @@
 export default {
   name: "MyCollection",
   components: {
-    ProductPackageCard: () => import("../../components/ProductPackageCard")
+    // ProductPackageCard: () => import("../../components/ProductPackageCard")
   },
 
   data() {
@@ -146,9 +146,7 @@ export default {
       collectionDescription: "",
       collectionLogoFile: null,
       collectionID: 30,
-      collectionName: "",
       collectionUrl: "",
-      collectionDescription: ""
     };
   },
   methods: {

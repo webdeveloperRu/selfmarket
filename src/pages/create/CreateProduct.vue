@@ -201,7 +201,7 @@
 export default {
   name: "MyCollection",
   components: {
-    ProductPackageCard: () => import("../../components/ProductPackageCard")
+    // ProductPackageCard: () => import("../../components/ProductPackageCard")
   },
 
   data() {
@@ -214,9 +214,7 @@ export default {
       collectionDescription: "",
       productMediaFile: null,
       collectionID: 30,
-      productName: "",
       productUrl: "",
-      collectionDescription: ""
     };
   },
   methods: {
