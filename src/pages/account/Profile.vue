@@ -1,326 +1,516 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12 col-sm-12 justify-center flex">
-        <q-card class="card-bg " style="max-width: 700px">
-          <q-card-section class="text-h6 ">
-            <div class="text-h6">Edit Profile</div>
-          </q-card-section>
-          <q-card-section class="flex justify-center">
-            <q-avatar size="150px">
-              <img :src="avatarImageUrl" v-if="avatarImageUrl != ''" />
-              <q-icon
-                name="account_circle"
-                color="grey-5"
-                size="150px"
-                v-else
-              ></q-icon>
-            </q-avatar>
-          </q-card-section>
-          <q-card-section>
-            <div class="q-gutter-md float-right">
-              <q-input
-                ref="myFileInput"
-                style="display:none"
-                v-model="avatarFile"
-                type="file"
-                label="Standard"
-                @change="onSelectUserAvatar"
-              ></q-input>
-              <q-btn
-                round
-                color="primary"
-                icon="cloud_upload"
-                @click="getAvatarFile"
-              ></q-btn>
-            </div>
-          </q-card-section>
-          <q-card-section class="q-pa-sm q-mt-lg">
-            <q-list class="row">
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input v-model="userName" label="User Name" />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input v-model="userEmail" label="Email Address" />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input v-model="fullName" label="Full Name" />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-select
-                    v-model="timeZone"
-                    :options="timeZoneList"
-                    use-input
-                    label="statndard"
-                    @filter="filterTimeZone"
-                  >
-                  </q-select>
-                </q-item-section>
-              </q-item>
-
-              <!-- <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    autogrow
-                    v-model="user_details.address"
-                    label="Address"
-                  />
-                </q-item-section>
-              </q-item> -->
-              <!-- <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input v-model="user_details.city" label="City" />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    v-model="user_details.post_code"
-                    label="Postal Code"
-                  />
-                </q-item-section>
-              </q-item>
-              <q-item class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <q-item-section>
-                  <q-input
-                    type="textarea"
-                    v-model="user_details.about"
-                    label="About"
-                  />
-                </q-item-section>
-              </q-item> -->
-            </q-list>
-          </q-card-section>
-          <q-card-actions align="right">
-            <q-btn
-              class="text-capitalize bg-primary text-white"
-              @click="updateUser"
-              :loading="updatingUser"
-              >Update User Info</q-btn
-            >
-          </q-card-actions>
-        </q-card>
+  <q-page>
+    <div class="banner">
+      <q-img src="../../assets/images/collection-banner.webp" height="200px" />
+      <div class="q-gutter-md float-right edit-banner-button">
+        <q-input
+          ref="bannerFileInput"
+          style="display:none"
+          v-model="bannerFile"
+          type="file"
+          label="Standard"
+          @change="onSelectBannerImage"
+        ></q-input>
+        <q-btn
+          round
+          color="white"
+          text-color="grey"
+          icon="edit"
+          @click="getBannerFile"
+        ></q-btn>
       </div>
-
-      <div class=" col-xs-12 col-sm-12 justify-center flex q-mt-md">
-        <q-card class="" style="max-width: 700px">
-          <q-card-section class="text-h6 q-pa-sm">
-            <div class="text-h6">Change Password</div>
-          </q-card-section>
-          <q-card-section class="q-pa-sm row">
-            <q-item class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <q-item-section>
-                Current Password
-              </q-item-section>
-            </q-item>
-            <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-              <q-item-section>
-                <q-input
-                  type="password"
-                  outlined
-                  round
-                  v-model="currentPassword"
-                  label="Current Password"
-                />
-              </q-item-section>
-            </q-item>
-            <q-item class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <q-item-section>
-                New Password
-              </q-item-section>
-            </q-item>
-            <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-              <q-item-section>
-                <q-input
-                  type="password"
-                  outlined
-                  round
-                  v-model="newPassword"
-                  label="New Password"
-                />
-              </q-item-section>
-            </q-item>
-            <q-item class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <q-item-section>
-                Confirm New Password
-              </q-item-section>
-            </q-item>
-            <q-item class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-              <q-item-section>
-                <q-input
-                  type="password"
-                  outlined
-                  round
-                  ref="confirmNewPassword"
-                  v-model="confirmNewPassword"
-                  label="Confirm New Password"
-                />
-              </q-item-section>
-            </q-item>
-          </q-card-section>
-          <q-card-actions align="right">
+    </div>
+    <div class="full-width account-header">
+      <div class="avatar full-width flex justify-center">
+        <div
+          style="border-radius: 50%; border: solid 3px white; z-index: 10; position:relative"
+          @click="getAvatarFile"
+        >
+          <q-avatar size="130px">
+            <q-img src="../../assets/images/avatar.png" />
+          </q-avatar>
+          <div class="q-gutter-md edit-avatar">
+            <q-input
+              ref="avatarFileInput"
+              style="display:none"
+              v-model="avatarFile"
+              type="file"
+              label="Standard"
+              @change="onSelectAvatarImage"
+            ></q-input>
             <q-btn
-              class="text-capitalize bg-primary text-white"
-              @click="changePassword"
-              :loading="updatingUserPassword"
-              >Change Password</q-btn
+              padding="0px"
+              class="q-px-xl"
+              label="edit"
+              size="sm"
+              color="secondary"
+              text-color="white"
+            ></q-btn>
+          </div>
+        </div>
+      </div>
+      <div class="text-h4 text-grey-10 text-center" style="font-weight: 500">
+        KKOFFICIAL
+      </div>
+      <div
+        class="text-center full-width flex justify-center items-center q-mt-sm"
+        ref="userID"
+      >
+        <div
+          style="width: 100px; font-size: 16px "
+          class="ellipsis text-grey-7 q-mx-sm"
+        >
+          0x3424242948590348508503
+        </div>
+        <q-btn
+          icon="content_copy"
+          color="grey-8"
+          flat
+          style="font-size: 12px"
+        ></q-btn>
+      </div>
+      <div class="full-width" style="margin-top: -130px;">
+        <div class="float-right flex">
+          <q-btn
+            icon="settings"
+            class="q-mr-sm"
+            outline
+            color="grey-7"
+            padding="10px"
+          >
+          </q-btn>
+
+          <q-btn
+            icon="share"
+            class="q-mr-md"
+            outline
+            color="grey-7"
+            padding="10px"
+          >
+          </q-btn>
+        </div>
+      </div>
+      <div class="menus row q-pa-sm" style="margin-top: 150px" ref="menus">
+        <div class="desktop-menu">
+          <q-btn
+            unelevated
+            class="q-ma-sm"
+            label="In Wallet"
+            icon="loyalty"
+            :text-color="currentTab == 0 ? 'primary' : 'grey'"
+            @click="currentTab = 0"
+            no-caps
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="history"
+            flat
+            label="Acitity"
+            no-caps
+            :text-color="currentTab == 1 ? 'primary' : 'grey'"
+            @click="currentTab = 1"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="redeem"
+            label="Offers"
+            flat
+            no-caps
+            :text-color="currentTab == 2 ? 'primary' : 'grey'"
+            @click="currentTab = 2"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="favorites"
+            label="Favorites"
+            flat
+            no-caps
+            :text-color="currentTab == 3 ? 'primary' : 'grey'"
+            @click="currentTab = 3"
+          ></q-btn>
+        </div>
+        <div class="mobile-menu">
+          <q-btn
+            unelevated
+            class="q-ma-sm"
+            icon="loyalty"
+            :text-color="currentTab == 0 ? 'primary' : 'grey'"
+            @click="currentTab = 0"
+            no-caps
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="history"
+            flat
+            no-caps
+            :text-color="currentTab == 1 ? 'primary' : 'grey'"
+            @click="currentTab = 1"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="redeem"
+            flat
+            no-caps
+            :text-color="currentTab == 2 ? 'primary' : 'grey'"
+            @click="currentTab = 2"
+          ></q-btn>
+          <q-btn
+            class="q-ma-sm"
+            icon="favorites"
+            flat
+            no-caps
+            :text-color="currentTab == 3 ? 'primary' : 'grey'"
+            @click="currentTab = 3"
+          ></q-btn>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-between contentForm" ref="contentForm">
+      <div style="width: 350px" class="side-bar" ref="sideBar">
+        <div style="position: sticky; top: 140px">
+          <q-expansion-item
+            expand-separator
+            icon="star"
+            label="Status"
+            class="text-subtitle1 text-bold"
+          >
+            <q-separator />
+            <div class="q-pa-md q-gutter-sm justify-around flex">
+              <q-btn
+                label="Buy Now"
+                outline
+                style="width: 130px"
+                aria-label="Buy Now"
+              />
+              <q-btn
+                label="On Auction"
+                style="width: 130px"
+                outline
+                aria-label="On Auction"
+              />
+              <q-btn
+                label="New"
+                outline
+                style="width: 130px"
+                aria-label="New"
+              />
+              <q-btn
+                label="Has Offers"
+                style="width: 130px"
+                outline
+                aria-label="Has Offers"
+              />
+            </div>
+          </q-expansion-item>
+          <q-separator />
+          <q-expansion-item
+            expand-separator
+            icon="view_comfy"
+            label="Collections"
+            class="text-subtitle1 text-bold"
+          >
+            <q-separator />
+            <div class="q-pa-md  justify-around flex">
+              <q-input
+                dense
+                outlined
+                v-model="filterCollectionText"
+                input-class="text-left"
+                placeholder="Filter"
+                class="q-ml-md"
+                style="width: 100%"
+              >
+                <template v-slot:append>
+                  <q-icon v-if="filterCollectionText === ''" name="search" />
+                  <q-icon
+                    v-else
+                    name="clear"
+                    class="cursor-pointer"
+                    @click="filterCollectionText = ''"
+                  />
+                </template>
+              </q-input>
+              <div v-for="(item, index) in items" :key="index" class="caption">
+                <q-item clickable v-ripple class="full-width">
+                  <q-item-section avatar>
+                    <q-icon color="primary" name="bluetooth" />
+                  </q-item-section>
+
+                  <q-item-section>Icon as avatar</q-item-section>
+                </q-item>
+              </div>
+            </div>
+          </q-expansion-item>
+          <q-separator />
+          <q-expansion-item
+            expand-separator
+            icon="local_offer"
+            label="On Sale in"
+            class="text-subtitle1 text-bold"
+          >
+            <q-separator />
+            <div class="q-pa-md  justify-around flex">
+              <q-input
+                dense
+                outlined
+                v-model="filterSaleText"
+                input-class="text-left"
+                placeholder="Filter"
+                class="q-ml-md"
+                style="width: 100%"
+              >
+                <template v-slot:append>
+                  <q-icon v-if="filterSaleText === ''" name="search" />
+                  <q-icon
+                    v-else
+                    name="clear"
+                    class="cursor-pointer"
+                    @click="filterSaleText = ''"
+                  />
+                </template>
+              </q-input>
+              <div class="q-pa-md text-subtitle1">
+                <q-checkbox
+                  v-model="ethFilterCheck"
+                  label="ETH"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="wethFilterCheck"
+                  label="WETH"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="btFilterCheck"
+                  label="0xBTC"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="mtFilterCheck"
+                  label="1MT"
+                  class="full-width"
+                />
+                <q-checkbox
+                  v-model="xdnFilterCheck"
+                  label="2XDN"
+                  class="full-width"
+                />
+              </div>
+            </div>
+          </q-expansion-item>
+          <q-separator />
+        </div>
+      </div>
+      <div class="content-list">
+        <div class="flex justify-between items-center q-mt-sm q-pa-sm">
+          <div
+            style="border: solid 1px #aaa;"
+            class="rounded-borders q-px-sm  filter-input"
+          >
+            <q-input
+              dense
+              borderless
+              v-model="filter_text"
+              color="grey-6"
+              input-class="text-left"
+              placeholder="Search items, collections and accounts"
+              class="q-ml-md full-width"
             >
-          </q-card-actions>
-        </q-card>
+              <template v-slot:prepend>
+                <q-icon v-if="filter_text === ''" name="search" />
+                <q-icon
+                  v-else
+                  name="clear"
+                  class="cursor-pointer"
+                  @click="filter_text = ''"
+                />
+              </template>
+            </q-input>
+          </div>
+          <q-space />
+          <div class="flex float-right justify-center filter-select">
+            <q-select
+              filled
+              v-model="item_filter"
+              :options="item_options"
+              class="q-pa-md"
+              style="width: 220px"
+              dense
+            />
+            <q-select
+              filled
+              v-model="sort_filter"
+              :options="sort_options"
+              class="q-pa-md"
+              style="width: 220px"
+              dense
+            />
+          </div>
+        </div>
+        <div class="row ">
+          <div
+            class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
+            v-for="item in 50"
+            v-bind:key="item"
+          >
+            <ProductPackageCard></ProductPackageCard>
+          </div>
+        </div>
       </div>
     </div>
   </q-page>
 </template>
-
 <script>
-import { mapGetters } from "vuex";
-import timeZone from "./time_zone";
 export default {
-  name: "MyProfile",
-  computed: {
-    ...mapGetters({
-      inRequest: "inRequest",
-      notificationText: "notificationText",
-      notificationType: "notificationType",
-      requestSuccess: "requestSuccess",
-      loggedIn: "auth/loggedIn",
-      user: "auth/user"
-    })
+  name: "Profile",
+  components: {
+    ProductPackageCard: () => import("../../components/ProductPackageCard")
+  },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
 
   data() {
     return {
-      timeZoneList: timeZone.time_zones,
-      timeZone: null,
-      userName: "",
-      fullName: "",
-      userEmail: "",
-      avatarImageUrl: "",
-      avatarFile: null,
-      accountHeader: null,
-      updatingUser: false,
-      currentPassword: "",
-      newPassword: "",
-      confirmNewPassword: "",
-      updatingUserPassword: false
+      currentTab: 0,
+      drawerLeft: false,
+      ethFilterCheck: false,
+      mtFilterCheck: false,
+      xdnFilterCheck: false,
+      btFilterCheck: false,
+      wethFilterCheck: false,
+      filterSaleText: "",
+      filterCollectionText: "",
+      items: [{}, {}, {}, {}, {}, {}, {}],
+      item_options: ["Single Items", "Bundles"],
+      sort_options: [
+        "Recently Listed",
+        "Recently Sold",
+        "Ending Soon",
+        "Price: Low to High",
+        "Price: High to Low",
+        "Highest Last Sale",
+        "Most Viewed",
+        "Most Favorited",
+        "Oldest"
+      ],
+      item_filter: "Single Items",
+      sort_filter: "Recently Listed",
+      filter_text: "",
+      bannerFile: null,
+      avatarFile: null
     };
   },
-
-  created() {
-    this.timeZone = this.user.data.tz;
-    this.userName = this.user.data.username;
-    this.fullName = this.user.data.full_name;
-    this.userEmail = this.user.data.email;
-    this.avatarImageUrl = this.user.data.avatar;
-  },
-
   methods: {
-    filterTimeZone(val, update) {
-      if (val === "") {
-        update(() => {
-          this.timeZoneList = timeZone.time_zones;
+    handleScroll(event) {
+      let positionUserID = this.$refs["userID"].getBoundingClientRect();
 
-          // with Quasar v1.7.4+
-          // here you have access to "ref" which
-          // is the Vue reference of the QSelect
-        });
-        return;
+      if (positionUserID.y < 15) {
+        this.$refs.menus.style.position = "fixed";
+        this.$refs.menus.style.top = "-80px";
+        this.$refs.contentForm.style = "margin-top: 220px;";
+        this.$refs.sideBar.position = "absolute";
+      } else {
+        this.$refs.contentForm.style = "margin-top: 20px;";
+        this.$refs.menus.style.position = "relative";
+
+        this.$refs.menus.style.top = "unset";
+        this.$refs.contentForm.style = "margin-top: 0px;";
       }
-
-      update(() => {
-        const needle = val.toLowerCase();
-        this.timeZoneList = timeZone.time_zones.filter(
-          v => v.label.toLowerCase().indexOf(needle) > -1
-        );
-      });
     },
+    getBannerFile() {
+      this.$refs.bannerFileInput.$el.click();
+    },
+    onSelectBannerImage() {},
     getAvatarFile() {
-      this.$refs.myFileInput.$el.click();
+      this.$refs.avatarFileInput.$el.click();
     },
-    onSelectUserAvatar(e) {
-      let image = e.target.files[0];
-      if (image !== undefined) {
-        this.createImage(image);
-        this.avatarFile = image;
-      }
-    },
-    createImage(file) {
-      var reader = new FileReader();
-      reader.onload = e => {
-        this.avatarImageUrl = e.target.result;
-        // this.cssProfileImageUrl = "url(" + this.profileImageUrl + ")";
-      };
-      reader.readAsDataURL(file);
-    },
-    updateUser() {
-      let user = {
-        email: this.userEmail,
-        full_name: this.fullName,
-        tz: this.timeZone,
-        avatar: this.avatarFile,
-        account_header: this.accountHeader
-      };
-      this.updatingUser = true;
-      this.$store
-        .dispatch("auth/updateUser", user)
-        .then(() => {
-          this.$q.notify({
-            type: this.notificationType,
-            message: this.notificationText
-          });
-
-          this.updatingUser = false;
-        })
-        .catch(() => {
-          this.$q.notify({
-            type: this.notificationType,
-            message: this.notificationText
-          });
-
-          this.updatingUser = false;
-        });
-    },
-
-    changePassword() {
-      if (this.newPassword != this.confirmNewPassword) {
-        this.$q.notify({
-          type: "negative",
-          message: "password mismatching"
-        });
-        return;
-      }
-      this.updatingUserPassword = true;
-
-      this.$store
-        .dispatch("auth/changePassword", [
-          this.currentPassword,
-          this.newPassword
-        ])
-        .then(() => {
-          this.$q.notify({
-            type: this.notificationType,
-            message: this.notificationText
-          });
-          this.updatingUserPassword = false;
-        })
-        .catch(() => {
-          this.$q.notify({
-            type: this.notificationType,
-            message: this.notificationText
-          });
-
-          this.updatingUserPassword = false;
-        });
-    }
+    onSelectAvatarImage() {}
   }
 };
 </script>
+<style lang="scss" scoped>
+.edit-avatar {
+  display: none;
+  position: absolute;
+  top: 100px;
+  right: 7px;
+}
+.account-header {
+  .avatar {
+    margin-top: -65px !important;
+    cursor: pointer;
+    &:hover {
+      .edit-avatar {
+        display: block;
+      }
+    }
+  }
+}
+.edit-banner-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.menus {
+  width: 100%;
+  z-index: 100;
+  background: white;
+  border-bottom: solid 1px $grey-4;
+  .desktop-menu {
+    display: block;
+  }
+  .mobile-menu {
+    display: none;
+  }
+}
 
-<style scoped></style>
+.content-list {
+  $width: 350px;
+  width: calc(100% - #{$width});
+}
+.filter-input {
+  $width: 450px;
+  width: calc(100% - #{$width});
+}
+.side-bar {
+  display: block;
+  border-right: solid 1px $grey-4;
+}
+.contentForm {
+  position: relative;
+}
+.filter-select {
+  width: 450px;
+}
+@media only screen and (max-width: 1200px) {
+  .side-bar {
+    display: none;
+  }
+  .content-list {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .filter-input {
+    width: 100%;
+  }
+  .filter-select {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .menus {
+    .desktop-menu {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+  }
+}
+</style>

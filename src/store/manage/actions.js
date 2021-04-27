@@ -15,9 +15,7 @@ export async function getCategories(context) {
     root: true
   });
   await axios
-    .get(API_URL_CATEGORIES, {
-      headers: authHeader()
-    })
+    .get(API_URL_CATEGORIES)
     .then(response => {
       if (response.status == 200) {
         context.commit("getCategoriesSuccess", response);

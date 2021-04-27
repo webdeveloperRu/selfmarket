@@ -7,7 +7,7 @@ export function getCategoriesSuccess(state, res) {
   Store.state.notificationText = "Categories successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.categories = res.data;
+  state.publicCategories = res.data.data;
 }
 /**
  *  ---------------------------@collections_mutation ---------------------------
@@ -17,7 +17,7 @@ export function getCollectionsSuccess(state, res) {
   Store.state.notificationText = "Collections successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.collections = res.data;
+  state.publicCollections = res.data;
 }
 
 export function getTopCollectionsSuccess(state, res) {
@@ -25,7 +25,7 @@ export function getTopCollectionsSuccess(state, res) {
   Store.state.notificationText = "Top Collections successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.topCollections = res.data;
+  state.publicTopCollections = res.data;
 }
 
 /**
@@ -36,7 +36,7 @@ export function getProductsSuccess(state, res) {
   Store.state.notificationText = "Products successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.products = res.data;
+  state.publicProducts = res.data;
 }
 
 export function filterProductsSuccess(state, res) {
@@ -44,7 +44,7 @@ export function filterProductsSuccess(state, res) {
   Store.state.notificationText = "Products successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.filterProducts = res.data;
+  state.publicFilterProducts = res.data;
 }
 
 export function addProductsSuccess(state, res) {
@@ -52,7 +52,7 @@ export function addProductsSuccess(state, res) {
   Store.state.notificationText = "Products successfully added!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.products.push(res.data);
+  state.publicProducts.push(res.data);
 }
 
 /**
@@ -63,7 +63,7 @@ export function getFavoritesSuccess(state, res) {
   Store.state.notificationText = "Favorites successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.favorites = res.data;
+  state.myFavorites = res.data;
 }
 
 export function addFavoriteSuccess(state, res) {
@@ -71,7 +71,7 @@ export function addFavoriteSuccess(state, res) {
   Store.state.notificationText = "Product succesfully added to favorites!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.favorites.push(res.data);
+  state.myFavorites.push(res.data);
 }
 
 export function removeFavoriteSuccess() {

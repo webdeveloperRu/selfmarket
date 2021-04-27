@@ -46,6 +46,7 @@
               color="primary"
               class="full-width text-white q-mt-lg"
               label="login"
+              no-caps
               type="submit"
               aria-label="Login"
               :loading="sendingRequest"

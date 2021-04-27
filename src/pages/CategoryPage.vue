@@ -21,6 +21,16 @@
         />
         <q-tab
           no-caps
+          :name="category.slug"
+          :label="category.title"
+          @mouseover.native="selected_tab = category.slug"
+          @click.native="navigatePage('/categories/' + category.slug)"
+          v-for="category in publicCategories"
+          v-bind:key="category.slug"
+        />
+
+        <!-- <q-tab
+          no-caps
           name="art"
           label="Art"
           @mouseover.native="selected_tab = 'art'"
@@ -67,7 +77,7 @@
           label="Utility"
           @mouseover.native="selected_tab = 'utility'"
           @click.native="navigatePage('/categories/utility')"
-        />
+        /> -->
       </q-tabs>
       <q-separator />
 
@@ -77,28 +87,20 @@
         class="full-width shadow-2 tab-panel"
       >
         <q-tab-panel name="new">
-          <NewCollection></NewCollection>
+          <CategoryPanel
+            :title="'New'"
+            :description="newCollectionDescription"
+          ></CategoryPanel>
         </q-tab-panel>
-        <q-tab-panel name="art">
-          <Art></Art>
-        </q-tab-panel>
-        <q-tab-panel name="domain_names">
-          <DomainNames></DomainNames>
-        </q-tab-panel>
-        <q-tab-panel name="trading_cards">
-          <TradingCards></TradingCards>
-        </q-tab-panel>
-        <q-tab-panel name="virtual_world">
-          <VirtualWorlds></VirtualWorlds>
-        </q-tab-panel>
-        <q-tab-panel name="collectibles">
-          <Collectibles></Collectibles>
-        </q-tab-panel>
-        <q-tab-panel name="sports">
-          <Sports></Sports>
-        </q-tab-panel>
-        <q-tab-panel name="utility">
-          <Utility></Utility>
+        <q-tab-panel
+          :name="category.slug"
+          v-for="category in publicCategories"
+          v-bind:key="'category-panel' + category.slug"
+        >
+          <CategoryPanel
+            :title="category.title"
+            :description="category.description"
+          ></CategoryPanel>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -141,10 +143,10 @@
         <q-separator />
         <div class="q-mt-lg">
           <div class="trending-collections-list">
-            <DataPackageCard
+            <ProductPackageCard
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
               v-bind:key="'collectibles' + item"
-            ></DataPackageCard>
+            ></ProductPackageCard>
           </div>
         </div>
       </div>
@@ -166,10 +168,10 @@
         <q-separator />
         <div class="q-mt-lg">
           <div class="trending-collections-list">
-            <DataPackageCard
+            <ProductPackageCard
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
               v-bind:key="'collectibles' + item"
-            ></DataPackageCard>
+            ></ProductPackageCard>
           </div>
         </div>
       </div>
@@ -191,10 +193,10 @@
         <q-separator />
         <div class="q-mt-lg">
           <div class="trending-collections-list">
-            <DataPackageCard
+            <ProductPackageCard
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
               v-bind:key="'collectibles' + item"
-            ></DataPackageCard>
+            ></ProductPackageCard>
           </div>
         </div>
       </div>
@@ -217,10 +219,10 @@
         <q-separator />
         <div class="q-mt-lg">
           <div class="trending-collections-list">
-            <DataPackageCard
+            <ProductPackageCard
               v-for="item in [1, 2, 3, 4, 5, 6, 7]"
               v-bind:key="'collectibles' + item"
-            ></DataPackageCard>
+            ></ProductPackageCard>
           </div>
         </div>
       </div>
@@ -229,31 +231,36 @@
 </template>
 
 <script>
-import NewCollection from "components/homepage/NewCollection.vue";
-import Collectibles from "components/homepage/Collectibles.vue";
-import DomainNames from "components/homepage/DomainNames.vue";
-import Sports from "components/homepage/Sports.vue";
-import TradingCards from "components/homepage/TradingCards.vue";
-import Utility from "components/homepage/Utility.vue";
-import Art from "components/homepage/Art.vue";
-import VirtualWorlds from "components/homepage/VirtualWorlds.vue";
+import CategoryPanel from "src/components/CategoryPanel.vue";
+
+import { mapGetters } from "vuex";
 export default {
   name: "MyCollection",
   components: {
-    NewCollection,
-    Collectibles,
-    DomainNames,
-    Sports,
-    TradingCards,
-    Utility,
-    Art,
-    VirtualWorlds,
-    DataPackageCard: () => import("../components/DataPackageCard")
+    CategoryPanel,
+
+    ProductPackageCard: () => import("../components/ProductPackageCard")
   },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      publicCategories: "manage/publicCategories"
+    })
+  },
+
   data() {
     return {
-      selected_tab: 0
+      selected_tab: 0,
+      newCollectionDescription:
+        "Every week, developers, creators, artists, and influencers are launching brandnew collections on OpenSea. If you’d like to create your own collection, visitthe collection manager page."
     };
+  },
+  created() {
+    this.$store.dispatch("manage/getCategories");
   },
   methods: {
     navigatePage(path) {

@@ -1,13 +1,13 @@
 export default function() {
   return {
-    categories: [],
+    publicCategories: [],
 
-    collections: [],
-    topCollections: [],
+    publicCollections: [],
+    publicTopCollections: [],
 
-    products: [],
-    filterProducts: [],
+    publicProducts: [],
+    publicFilterProducts: [],
 
-    favorites: []
+    myFavorites: []
   };
 }

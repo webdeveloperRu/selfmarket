@@ -48,11 +48,11 @@ const routes = [
       },
       {
         path: "/profile",
-        component: () => import("src/pages/account/Profile.vue"),
-        beforeEnter: (to, from, next) => {
-          if (Store.state.auth.loggedIn) next();
-          else next("/login");
-        }
+        component: () => import("src/pages/account/Profile.vue")
+        // beforeEnter: (to, from, next) => {
+        //   if (Store.state.auth.loggedIn) next();
+        //   else next("/login");
+        // }
       },
       {
         path: "/station",
@@ -94,14 +94,7 @@ const routes = [
           else next("/login");
         }
       },
-      {
-        path: "/my-collection",
-        component: () => import("src/pages/create/MyCollection.vue"),
-        beforeEnter: (to, from, next) => {
-          if (Store.state.auth.loggedIn) next();
-          else next("/login");
-        }
-      },
+
       {
         path: "/submit",
         component: () => import("src/pages/create/Submit.vue"),
@@ -135,6 +128,38 @@ const routes = [
       {
         path: "/accounts/:id",
         component: () => import("pages/AccountUser.vue")
+      },
+      {
+        path: "/my-collection",
+        component: () => import("src/pages/create/MyCollection.vue"),
+        beforeEnter: (to, from, next) => {
+          if (Store.state.auth.loggedIn) next();
+          else next("/login");
+        }
+      },
+      {
+        path: "/my-collection/:collection_id/assets/edit",
+        component: () => import("src/pages/create/MyCollectionAssets.vue"),
+        beforeEnter: (to, from, next) => {
+          if (Store.state.auth.loggedIn) next();
+          else next("/login");
+        }
+      },
+      {
+        path: "/my-collection/:collection_id/assets/create",
+        component: () => import("src/pages/create/CreateProduct.vue"),
+        beforeEnter: (to, from, next) => {
+          if (Store.state.auth.loggedIn) next();
+          else next("/login");
+        }
+      },
+      {
+        path: "/my-collection/:collection_id/edit",
+        component: () => import("src/pages/create/MyCollectionEdit.vue"),
+        beforeEnter: (to, from, next) => {
+          if (Store.state.auth.loggedIn) next();
+          else next("/login");
+        }
       }
     ]
   },

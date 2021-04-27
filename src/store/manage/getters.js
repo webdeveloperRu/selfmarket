@@ -1,32 +1,36 @@
 /**
  *  ---------------------------@collections_getters ---------------------------
  **/
-export function collections(state) {
-  return state.collections;
+export function publicCollections(state) {
+  return state.publicCollections;
 }
 
-export function topCollections(state) {
-  return state.topCollections;
+export function publicTopCollections(state) {
+  return state.publicTopCollections;
 }
 
 /**
  *  ---------------------------@categories_getters ---------------------------
  **/
-export function categories(state) {
-  return state.categories;
+export function publicCategories(state) {
+  return state.publicCategories;
 }
 
 /**
  *  ---------------------------@products_getters ---------------------------
  **/
 
-export function products(state) {
-  return state.products;
+export function publicProducts(state) {
+  return state.publicProducts;
+}
+
+export function publicFilterProducts(state) {
+  return state.publicFilterProducts;
 }
 
 /**
  *  ---------------------------@favorites_getters ---------------------------
  **/
-export function favorites(state) {
-  return state.favorites;
+export function myFavorites(state) {
+  return state.myFavorites;
 }

@@ -298,7 +298,7 @@
             v-for="item in 50"
             v-bind:key="item"
           >
-            <DataPackageCard></DataPackageCard>
+            <ProductPackageCard></ProductPackageCard>
           </div>
         </div>
       </div>
@@ -309,7 +309,7 @@
 export default {
   name: "AccountUser",
   components: {
-    DataPackageCard: () => import("../components/DataPackageCard")
+    ProductPackageCard: () => import("../components/ProductPackageCard")
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);

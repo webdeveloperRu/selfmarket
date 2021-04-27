@@ -29,7 +29,7 @@
 ,
 <script>
 export default {
-  name: "DataPackageCard",
+  name: "ProductPackageCard",
   data() {
     return {
       product_id: 30
