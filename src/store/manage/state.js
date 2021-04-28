@@ -8,6 +8,7 @@ export default function() {
     publicProducts: [],
     publicFilterProducts: [],
 
-    myFavorites: []
+    myFavorites: [],
+    myCollectiosn: []
   };
 }

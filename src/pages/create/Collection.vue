@@ -97,30 +97,28 @@
 </template>
 
 <script>
-import NewCollection from "components/homepage/NewCollection.vue";
-import Collectibles from "components/homepage/Collectibles.vue";
-import DomainNames from "components/homepage/DomainNames.vue";
-import Sports from "components/homepage/Sports.vue";
-import TradingCards from "components/homepage/TradingCards.vue";
-import Utility from "components/homepage/Utility.vue";
-import Art from "components/homepage/Art.vue";
-import VirtualWorlds from "components/homepage/VirtualWorlds.vue";
+import { mapGetters } from "vuex";
+
 export default {
   name: "MyCollection",
-  components: {
-    NewCollection,
-    Collectibles,
-    DomainNames,
-    Sports,
-    TradingCards,
-    Utility,
-    Art,
-    VirtualWorlds
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn"
+    })
   },
+
+  components: {},
   data() {
     return {
       selected_tab: 0
     };
+  },
+  created() {
+    this.$store.dispatch("manage/getCollections").then(() => {});
   },
   methods: {
     navigatePage(path) {

@@ -97,6 +97,38 @@ export async function getTopCollections(context) {
     });
 }
 
+export async function addCollection(context, collection) {
+  var FormData = require("form-data");
+  var data = new FormData();
+  data.append("category_id", collection.category_id);
+  data.append("title", collection.title);
+  data.append("description", collection.description);
+
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .post(API_URL_COLLECTIONS + "add", data, {
+      headers: authHeader()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("addCollectionSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
 /**
  *  ---------------------------@products_api ---------------------------
  **/

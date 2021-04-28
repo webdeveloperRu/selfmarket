@@ -14,10 +14,14 @@ export function getCategoriesSuccess(state, res) {
  **/
 export function getCollectionsSuccess(state, res) {
   Store.state.inRequest = false;
-  Store.state.notificationText = "Collections successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.publicCollections = res.data;
+  state.myCollections = res.data.data;
+  if (state.myCollections.length == 0)
+    Store.state.notificationText = "There is no collections creatd!";
+  else
+    Store.state.notificationText =
+      state.myCollections.length + " collections found!";
 }
 
 export function getTopCollectionsSuccess(state, res) {
@@ -26,6 +30,14 @@ export function getTopCollectionsSuccess(state, res) {
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
   state.publicTopCollections = res.data;
+}
+
+export function addCollectionSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "Top Collections successfully got!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.myCollections.push(res.data);
 }
 
 /**

@@ -29,7 +29,17 @@
     </q-drawer>
     <q-page-container>
       <div class="q-pa-md q-gutter-y-sm">
-        <div class="text-h5" style="font-size: 26px">My Collections</div>
+        <div class="text-h5 flex items center">
+          <div class="text-h5 q-mr-sm" style="font-size: 26px">
+            My Collecitons
+          </div>
+          <q-spinner
+            color="grey-5"
+            size="1.5em"
+            :thickness="10"
+            v-if="loadingData"
+          />
+        </div>
         <div class="text-grey-7" style="font-size: 15px; font-weight: 300">
           Create collections (your own storefronts), upload digital creations,
           configure your commission, and sell NFTs to your fans - all for free!
@@ -70,8 +80,8 @@
 
           <div
             class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
-            v-for="item in 2"
-            v-bind:key="item"
+            v-for="(item, index) in myCollections"
+            v-bind:key="'my-colleciton' + index"
           >
             <CollectionPackageCard></CollectionPackageCard>
           </div>
@@ -89,8 +99,8 @@
           </p>
         </div>
         <div class="row">
-          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm">
-            <q-card class="cursor-pointer">
+          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm ">
+            <q-card class="cursor-pointer" style="height: 200px">
               <q-card-section class="q-py-md">
                 <div
                   class="text-h5 text-center q-my-md"
@@ -109,8 +119,8 @@
             </q-card>
           </div>
 
-          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm">
-            <q-card class="cursor-pointer">
+          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm ">
+            <q-card class="cursor-pointer" style="height: 200px">
               <q-card-section class="q-py-md">
                 <div
                   class="text-h5 text-center q-my-md"
@@ -129,8 +139,8 @@
             </q-card>
           </div>
 
-          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm">
-            <q-card class="cursor-pointer">
+          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm ">
+            <q-card class="cursor-pointer" style="height: 200px">
               <q-card-section class="q-py-md">
                 <div
                   class="text-h5 text-center q-my-md"
@@ -149,8 +159,8 @@
             </q-card>
           </div>
 
-          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm">
-            <q-card class="cursor-pointer">
+          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm ">
+            <q-card class="cursor-pointer" style="height: 200px">
               <q-card-section class="q-py-md">
                 <div
                   class="text-h5 text-center q-my-md"
@@ -169,8 +179,8 @@
             </q-card>
           </div>
 
-          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm">
-            <q-card class="cursor-pointer">
+          <div class=" col-md-3 col-sm-6 col-xs-12 q-pa-sm ">
+            <q-card class="cursor-pointer" style="height: 200px">
               <q-card-section class="q-py-md">
                 <div
                   class="text-h5 text-center q-my-md"
@@ -213,7 +223,7 @@
             </p>
           </q-card-section>
           <q-card-section>
-            <div class="text-body2 text-grey-10">Logo *</div>
+            <!-- <div class="text-body2 text-grey-10">Logo</div>
             <div class="text-body2  text-grey-5">
               (350 x 350 recommended)
             </div>
@@ -234,23 +244,36 @@
                   style="font-size: 5rem"
                 ></q-icon>
               </div>
-            </div>
-            <div class="text-body2 text-grey-10 q-mt-lg q-mb-sm">Logo *</div>
-            <q-input v-model="collectionName" outlined />
+            </div> -->
+            <div class="text-body2 text-grey-10 q-mt-lg q-mb-sm">Title *</div>
+            <q-input v-model="collectionTitle" outlined dense />
             <div class="text-body2 text-grey-10 q-mt-lg ">
-              Description
+              Description *
             </div>
             <div class="text-body2 text-grey-5 q-mb-sm">
               (0 of 1000 characters used)
             </div>
             <q-input v-model="collectionDescription" outlined type="textarea" />
+            <div class="text-body2 text-grey-10 q-mt-lg ">
+              Category *
+            </div>
+
+            <q-select
+              v-model="selectedCategory"
+              :options="categoryList"
+              class="q-mt-sm"
+              outlined
+              dense
+            >
+            </q-select>
             <div class="text-center q-my-md">
               <q-btn
                 color="primary"
                 class="q-pa-sm"
-                disable
                 no-caps
                 label="Create"
+                @click="createCollection"
+                :loading="creatingColleciton"
               ></q-btn>
             </div>
           </q-card-section>
@@ -261,11 +284,24 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "MyCollection",
   components: {
     CollectionPackageCard: () =>
       import("../../components/CollectionPackageCard.vue")
+  },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      myCollections: "manage/myCollections",
+      publicCategories: "manage/publicCategories"
+    })
   },
 
   data() {
@@ -274,16 +310,76 @@ export default {
       filterCollectionText: "",
       selectedTab: "my-collections",
       createCollectionModal: false,
-      collectionName: "",
+      collectionTitle: "",
       collectionDescription: "",
-      collectionLogoFile: null
+      collectionLogoFile: null,
+      loadingData: false,
+      categoryList: [],
+      selectedCategory: null,
+      creatingColleciton: false
     };
   },
+
+  created() {
+    this.loadData();
+  },
   methods: {
+    async loadData() {
+      this.loadingData = true;
+      await this.$store.dispatch("manage/getCategories").then(() => {
+        if (this.requestSuccess) {
+          this.categoryList = [];
+          for (let i = 0; i < this.publicCategories.length; i++) {
+            this.categoryList[i] = {
+              label: this.publicCategories[i].title,
+              value: this.publicCategories[i].id
+            };
+          }
+        }
+      });
+      await this.$store.dispatch("manage/getCollections").then(() => {
+        this.$q.notify({
+          type: this.notificationType,
+          message: this.notificationText
+        });
+      });
+      this.loadingData = false;
+    },
     getCollectionLogoFile() {
       this.$refs.collectionLogoFileInput.$el.click();
     },
-    onSelectCollectionLogoImage() {}
+    onSelectCollectionLogoImage() {},
+    createCollection() {
+      if (this.collectionDescription == "") {
+        this.$q.notify({
+          type: "negative",
+          message: "Description is required!"
+        });
+        return;
+      }
+
+      if (this.collectionTitle == "") {
+        this.$q.notify({ type: "negative", message: "Title is required!" });
+        return;
+      }
+      if (this.selectedCategory == null) {
+        this.$q.notify({ type: "negative", message: "Category is required!" });
+        return;
+      }
+      let collection = {
+        category_id: this.selectedCategory.value,
+        title: this.collectionTitle,
+        description: this.collectionDescription
+      };
+      this.creatingColleciton = true;
+      this.$store.dispatch("manage/addCollection", collection).then(() => {
+        this.creatingColleciton = false;
+        this.$q.notify({
+          type: this.notificationType,
+          message: this.notificationText
+        });
+      });
+    }
   }
 };
 </script>

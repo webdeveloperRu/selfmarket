@@ -9,6 +9,10 @@ export function publicTopCollections(state) {
   return state.publicTopCollections;
 }
 
+export function myCollections(state) {
+  return state.myCollections;
+}
+
 /**
  *  ---------------------------@categories_getters ---------------------------
  **/
