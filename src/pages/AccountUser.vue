@@ -111,43 +111,96 @@
       </div>
     </div>
     <div class="flex justify-between contentForm" ref="contentForm">
-      <div style="width: 350px" class="side-bar" ref="sideBar">
+      <div
+        style="width: 350px"
+        class="side-bar"
+        ref="sideBar"
+        v-if="currentTab != 3"
+      >
         <div style="position: sticky; top: 140px">
-          <q-expansion-item
-            expand-separator
-            icon="star"
-            label="Status"
-            class="text-subtitle1 text-bold"
-          >
+          <div v-if="currentTab == 0">
+            <q-expansion-item
+              expand-separator
+              icon="star"
+              label="Status"
+              class="text-subtitle1 text-bold"
+            >
+              <q-separator />
+              <div class="q-pa-md q-gutter-sm justify-around flex">
+                <q-btn
+                  label="Buy Now"
+                  outline
+                  no-caps
+                  style="width: 130px"
+                  aria-label="Buy Now"
+                />
+                <q-btn
+                  label="On Auction"
+                  style="width: 130px"
+                  outline
+                  no-caps
+                  aria-label="On Auction"
+                />
+                <q-btn
+                  label="New"
+                  outline
+                  no-caps
+                  style="width: 130px"
+                  aria-label="New"
+                />
+                <q-btn
+                  label="Has Offers"
+                  style="width: 130px"
+                  outline
+                  no-caps
+                  aria-label="Has Offers"
+                />
+              </div>
+            </q-expansion-item>
             <q-separator />
-            <div class="q-pa-md q-gutter-sm justify-around flex">
-              <q-btn
-                label="Buy Now"
-                outline
-                style="width: 130px"
-                aria-label="Buy Now"
-              />
-              <q-btn
-                label="On Auction"
-                style="width: 130px"
-                outline
-                aria-label="On Auction"
-              />
-              <q-btn
-                label="New"
-                outline
-                style="width: 130px"
-                aria-label="New"
-              />
-              <q-btn
-                label="Has Offers"
-                style="width: 130px"
-                outline
-                aria-label="Has Offers"
-              />
-            </div>
-          </q-expansion-item>
-          <q-separator />
+          </div>
+          <div v-if="currentTab == 1">
+            <q-expansion-item
+              expand-separator
+              icon="star"
+              label="Event Type"
+              class="text-subtitle1 text-bold"
+            >
+              <q-separator />
+              <div class="q-pa-md q-gutter-sm justify-around flex">
+                <q-btn
+                  label="Listings"
+                  outline
+                  no-caps
+                  style="width: 130px"
+                  aria-label="Listings"
+                />
+                <q-btn
+                  label="Sales"
+                  style="width: 130px"
+                  outline
+                  no-caps
+                  aria-label="Sales"
+                />
+                <q-btn
+                  label="Bids"
+                  outline
+                  no-caps
+                  style="width: 130px"
+                  aria-label="Bids"
+                />
+                <q-btn
+                  label="Transfers"
+                  style="width: 130px"
+                  outline
+                  no-caps
+                  aria-label="Transfers"
+                />
+              </div>
+            </q-expansion-item>
+            <q-separator />
+          </div>
+
           <q-expansion-item
             expand-separator
             icon="view_comfy"
@@ -187,118 +240,259 @@
             </div>
           </q-expansion-item>
           <q-separator />
-          <q-expansion-item
-            expand-separator
-            icon="local_offer"
-            label="On Sale in"
-            class="text-subtitle1 text-bold"
-          >
+          <div v-if="currentTab == 0">
+            <q-expansion-item
+              expand-separator
+              icon="local_offer"
+              label="On Sale in"
+              class="text-subtitle1 text-bold"
+            >
+              <q-separator />
+              <div class="q-pa-md  justify-around flex">
+                <q-input
+                  dense
+                  outlined
+                  v-model="filterSaleText"
+                  input-class="text-left"
+                  placeholder="Filter"
+                  class="q-ml-md"
+                  style="width: 100%"
+                >
+                  <template v-slot:append>
+                    <q-icon v-if="filterSaleText === ''" name="search" />
+                    <q-icon
+                      v-else
+                      name="clear"
+                      class="cursor-pointer"
+                      @click="filterSaleText = ''"
+                    />
+                  </template>
+                </q-input>
+                <div class="q-pa-md text-subtitle1">
+                  <q-checkbox
+                    v-model="ethFilterCheck"
+                    label="ETH"
+                    class="full-width"
+                  />
+                  <q-checkbox
+                    v-model="wethFilterCheck"
+                    label="WETH"
+                    class="full-width"
+                  />
+                  <q-checkbox
+                    v-model="btFilterCheck"
+                    label="0xBTC"
+                    class="full-width"
+                  />
+                  <q-checkbox
+                    v-model="mtFilterCheck"
+                    label="1MT"
+                    class="full-width"
+                  />
+                  <q-checkbox
+                    v-model="xdnFilterCheck"
+                    label="2XDN"
+                    class="full-width"
+                  />
+                </div>
+              </div>
+            </q-expansion-item>
             <q-separator />
-            <div class="q-pa-md  justify-around flex">
+          </div>
+        </div>
+      </div>
+      <div class="content-list" :class="currentTab == 3 ? 'full-width' : ''">
+        <div v-if="currentTab == 0">
+          <div class="flex justify-between items-center q-mt-sm q-pa-sm">
+            <div
+              style="border: solid 1px #aaa;"
+              class="rounded-borders q-px-sm  filter-input"
+            >
               <q-input
                 dense
-                outlined
-                v-model="filterSaleText"
+                borderless
+                v-model="filter_text"
+                color="grey-6"
                 input-class="text-left"
-                placeholder="Filter"
-                class="q-ml-md"
-                style="width: 100%"
+                placeholder="Search items, collections and accounts"
+                class="q-ml-md full-width"
               >
-                <template v-slot:append>
-                  <q-icon v-if="filterSaleText === ''" name="search" />
+                <template v-slot:prepend>
+                  <q-icon v-if="filter_text === ''" name="search" />
                   <q-icon
                     v-else
                     name="clear"
                     class="cursor-pointer"
-                    @click="filterSaleText = ''"
+                    @click="filter_text = ''"
                   />
                 </template>
               </q-input>
-              <div class="q-pa-md text-subtitle1">
-                <q-checkbox
-                  v-model="ethFilterCheck"
-                  label="ETH"
-                  class="full-width"
-                />
-                <q-checkbox
-                  v-model="wethFilterCheck"
-                  label="WETH"
-                  class="full-width"
-                />
-                <q-checkbox
-                  v-model="btFilterCheck"
-                  label="0xBTC"
-                  class="full-width"
-                />
-                <q-checkbox
-                  v-model="mtFilterCheck"
-                  label="1MT"
-                  class="full-width"
-                />
-                <q-checkbox
-                  v-model="xdnFilterCheck"
-                  label="2XDN"
-                  class="full-width"
-                />
-              </div>
             </div>
-          </q-expansion-item>
-          <q-separator />
-        </div>
-      </div>
-      <div class="content-list">
-        <div class="flex justify-between items-center q-mt-sm q-pa-sm">
-          <div
-            style="border: solid 1px #aaa;"
-            class="rounded-borders q-px-sm  filter-input"
-          >
-            <q-input
-              dense
-              borderless
-              v-model="filter_text"
-              color="grey-6"
-              input-class="text-left"
-              placeholder="Search items, collections and accounts"
-              class="q-ml-md full-width"
+            <q-space />
+            <div class="flex float-right justify-center filter-select">
+              <q-select
+                filled
+                v-model="item_filter"
+                :options="item_options"
+                class="q-pa-md"
+                style="width: 220px"
+                dense
+              />
+              <q-select
+                filled
+                v-model="sort_filter"
+                :options="sort_options"
+                class="q-pa-md"
+                style="width: 220px"
+                dense
+              />
+            </div>
+          </div>
+          <div class="row ">
+            <div
+              class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
+              v-for="item in 50"
+              v-bind:key="item"
             >
-              <template v-slot:prepend>
-                <q-icon v-if="filter_text === ''" name="search" />
-                <q-icon
-                  v-else
-                  name="clear"
-                  class="cursor-pointer"
-                  @click="filter_text = ''"
-                />
-              </template>
-            </q-input>
-          </div>
-          <q-space />
-          <div class="flex float-right justify-center filter-select">
-            <q-select
-              filled
-              v-model="item_filter"
-              :options="item_options"
-              class="q-pa-md"
-              style="width: 220px"
-              dense
-            />
-            <q-select
-              filled
-              v-model="sort_filter"
-              :options="sort_options"
-              class="q-pa-md"
-              style="width: 220px"
-              dense
-            />
+              <ProductPackageCard></ProductPackageCard>
+            </div>
           </div>
         </div>
-        <div class="row ">
-          <div
-            class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
-            v-for="item in 50"
-            v-bind:key="item"
+        <div v-if="currentTab == 1" class="q-ma-sm">
+          <q-table
+            class="activity-table"
+            title="Trading History"
+            :data="activityList"
+            :columns="columns"
+            row-key="index"
+            virtual-scroll
+            :pagination.sync="pagination"
+            :rows-per-page-options="[0]"
+            no-data-label="No data to show"
           >
-            <ProductPackageCard></ProductPackageCard>
+            <template v-slot:body-cell-event="props">
+              <q-td :props="props">
+                <q-icon
+                  :name="eventIcon(props.row.event)"
+                  size="1.5em"
+                  class="q-pr-sm"
+                />
+                {{ props.row.event }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-price="props">
+              <q-td :props="props">
+                <q-icon name="attach_money" size="1.5em" />
+                {{ props.row.price }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-item="props">
+              <q-td :props="props">
+                <q-avatar rounded>
+                  <img src="../assets/images/avatar.png" />
+                </q-avatar>
+                {{ props.row.item }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-from="props">
+              <q-td :props="props">
+                <q-avatar size="30px">
+                  <img src="../assets/images/avatar.png" />
+                </q-avatar>
+                {{ props.row.from.name }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-to="props">
+              <q-td :props="props">
+                <q-avatar size="30px">
+                  <img src="../assets/images/avatar.png" />
+                </q-avatar>
+                {{ props.row.to.name }}
+              </q-td>
+            </template></q-table
+          >
+        </div>
+        <div v-if="currentTab == 2" class="q-ma-sm">
+          <div class="flex justify-between ">
+            <div
+              class="offer-tab-button"
+              :class="currentOfferTab == 'made' ? 'active' : ''"
+              @click="currentOfferTab = 'made'"
+            >
+              Offers Made
+            </div>
+            <div
+              class="offer-tab-button"
+              :class="currentOfferTab == 'received' ? 'active' : ''"
+              @click="currentOfferTab = 'received'"
+            >
+              Offers Received
+            </div>
+          </div>
+
+          <q-table
+            class="activity-table"
+            :data="
+              currentOfferTab == 'made' ? offerMadeList : offerReceivedList
+            "
+            :columns="columns"
+            row-key="index"
+            virtual-scroll
+            :pagination.sync="pagination"
+            :rows-per-page-options="[0]"
+            no-data-label="No data to show"
+          >
+            <template v-slot:body-cell-event="props">
+              <q-td :props="props">
+                <q-icon
+                  :name="eventIcon(props.row.event)"
+                  size="1.5em"
+                  class="q-pr-sm"
+                />
+                {{ props.row.event }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-price="props">
+              <q-td :props="props">
+                <q-icon name="attach_money" size="1.5em" />
+                {{ props.row.price }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-item="props">
+              <q-td :props="props">
+                <q-avatar rounded>
+                  <img src="../assets/images/avatar.png" />
+                </q-avatar>
+                {{ props.row.item }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-from="props">
+              <q-td :props="props">
+                <q-avatar size="30px">
+                  <img src="../assets/images/avatar.png" />
+                </q-avatar>
+                {{ props.row.from.name }}
+              </q-td>
+            </template>
+            <template v-slot:body-cell-to="props">
+              <q-td :props="props">
+                <q-avatar size="30px">
+                  <img src="../assets/images/avatar.png" />
+                </q-avatar>
+                {{ props.row.to.name }}
+              </q-td>
+            </template></q-table
+          >
+        </div>
+        <div v-if="currentTab == 3" class="q-ma-sm">
+          <div class="row ">
+            <div
+              class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
+              v-for="item in 10"
+              v-bind:key="item"
+            >
+              <ProductPackageCard></ProductPackageCard>
+            </div>
           </div>
         </div>
       </div>
@@ -306,6 +500,8 @@
   </q-page>
 </template>
 <script>
+import fakeData from "./fakeData";
+
 export default {
   name: "AccountUser",
   components: {
@@ -344,7 +540,49 @@ export default {
       ],
       item_filter: "Single Items",
       sort_filter: "Recently Listed",
-      filter_text: ""
+      filter_text: "",
+      activityList: fakeData.activity_data,
+      offerMadeList: fakeData.activity_data,
+      offerReceivedList: [],
+      pagination: { rowsPerPage: 6 },
+      currentOfferTab: "made",
+      columns: [
+        {
+          name: "event",
+          label: "Event",
+          align: "left",
+          field: "event",
+          sortable: true
+        },
+        {
+          name: "item",
+          align: "left",
+          label: "Item",
+          field: "item",
+          sortable: true
+        },
+        {
+          name: "price",
+          label: "Unit Price",
+          field: "price",
+          sortable: true,
+          align: "left"
+        },
+        {
+          name: "quantity",
+          label: "Quantity",
+          field: "quantity",
+          align: "left"
+        },
+        { name: "from", label: "From", field: "from", align: "left" },
+        { name: "to", label: "To", field: "to", align: "left" },
+        {
+          name: "date",
+          label: "Date",
+          field: "date",
+          align: "left"
+        }
+      ]
     };
   },
   methods: {
@@ -363,6 +601,18 @@ export default {
         this.$refs.menus.style.top = "unset";
         this.$refs.contentForm.style = "margin-top: 0px;";
       }
+    },
+    eventIcon(icon_name) {
+      let icon = "";
+      switch (icon_name) {
+        case "List":
+          icon = "sell";
+          break;
+        case "Offer":
+          icon = "back_hand";
+          break;
+      }
+      return icon;
     }
   }
 };
@@ -384,6 +634,22 @@ export default {
   .mobile-menu {
     display: none;
   }
+}
+.offer-tab-button {
+  height: 60px;
+  width: 48%;
+  border: solid 1px $grey-4;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: $grey-6;
+}
+.offer-tab-button.active {
+  color: $grey-10;
 }
 
 .content-list {

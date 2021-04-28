@@ -148,50 +148,49 @@
     </div>
     <div class="home-content full-width">
       <div class="containter ">
-        <div class="promo-carousel">
-          <q-carousel
-            v-model="slide"
-            transition-prev="slide-right"
-            transition-next="slide-left"
-            swipeable
-            animated
-            control-color="primary"
-            navigation
-            padding
-            arrows
-            class="bg-grey-1  rounded-borders promo-carousel"
+        <div class="promo-carousel q-py-md">
+          <hooper
+            :infiniteScroll="true"
+            :playSpeed="3000"
+            :settings="hooperSettings"
+            :autoPlay="true"
           >
-            <q-carousel-slide :name="1" class="column no-wrap">
-              <div
-                class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
-              >
+            <slide>
+              <div class="slider-item">
                 <q-img
-                  class="rounded-borders full-height"
                   src="../assets/images/mountains.jpg"
-                />
+                  spinner-color="white"
+                  class="rounded-borders"
+                  style="max-height: 390px"
+                >
+                  <q-btn
+                    color="white"
+                    label="Explorer"
+                    text-color="primary"
+                    class="absolute-bottom-left q-ma-md"
+                  ></q-btn>
+                </q-img>
               </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="2" class="column no-wrap">
-              <div
-                class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
-              >
+            </slide>
+            <slide>
+              <div class="slider-item">
                 <q-img
-                  class="rounded-borders full-height"
                   src="../assets/images/parallax2.jpg"
-                />
+                  spinner-color="white"
+                  class="rounded-borders"
+                  style="max-height: 390px"
+                >
+                  <q-btn
+                    color="white"
+                    label="Bid Now"
+                    text-color="primary"
+                    class="absolute-bottom-left  q-ma-md"
+                  ></q-btn>
+                </q-img>
               </div>
-            </q-carousel-slide>
-            <q-carousel-slide :name="3" class="column no-wrap">
-              <div
-                class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
-              >
-                <q-img
-                  class="rounded-borders full-height"
-                  src="../assets/images/mountains.jpg"
-                />
-              </div>
-            </q-carousel-slide>
-          </q-carousel>
+            </slide>
+            <hooper-pagination slot="hooper-addons"></hooper-pagination>
+          </hooper>
         </div>
         <div class="trending-collections q-px-sm">
           <div class="q-pl-lg" style="font-size: 14px; font-weight: 700">
@@ -683,12 +682,17 @@
 import CategoryPanel from "src/components/CategoryPanel.vue";
 
 import { mapGetters } from "vuex";
+import { Hooper, Slide, Pagination as HooperPagination } from "hooper";
+import "hooper/dist/hooper.css";
 
 export default {
   name: "HomePage",
   components: {
     CategoryPanel,
-    ProductPackageCard: () => import("../components/ProductPackageCard")
+    ProductPackageCard: () => import("../components/ProductPackageCard"),
+    Hooper,
+    Slide,
+    HooperPagination
   },
   computed: {
     ...mapGetters({
@@ -706,7 +710,15 @@ export default {
       selected_tab: 0,
       slide: 1,
       newCollectionDescription:
-        "Every week, developers, creators, artists, and influencers are launching brandnew collections on OpenSea. If you’d like to create your own collection, visitthe collection manager page."
+        "Every week, developers, creators, artists, and influencers are launching brandnew collections on OpenSea. If you’d like to create your own collection, visitthe collection manager page.",
+      hooperSettings: {
+        itemsToShow: 1,
+        breakpoints: {
+          900: {
+            itemsToShow: 2
+          }
+        }
+      }
     };
   },
 
@@ -735,6 +747,13 @@ export default {
     margin: 0 auto;
     .promo-carousel {
       margin-top: 250px;
+      .slider-item {
+        max-height: 400px;
+        height: 100%;
+        margin: 5px;
+        box-shadow: #aaa 0px 0px 3px 0px;
+        border-radius: 5px;
+      }
     }
     .trending-collections {
       .trending-collections__items {
@@ -811,7 +830,9 @@ export default {
 .browse-category-layout {
   max-width: 1280px;
 }
-
+.hooper {
+  height: 100%;
+}
 @media only screen and (max-width: 950px) {
   .tab-panel {
     display: none;
@@ -827,6 +848,9 @@ export default {
     background-position: center 250px;
     background-repeat: no-repeat;
     background-size: contain;
+  }
+  .promo-carousel {
+    margin-top: 100px !important;
   }
 }
 @media only screen and (max-width: 600px) {
