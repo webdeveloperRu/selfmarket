@@ -19,22 +19,18 @@ export async function getCategories(context) {
     .then(response => {
       if (response.status == 200) {
         context.commit("getCategoriesSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -52,22 +48,18 @@ export async function getCollections(context) {
     .then(response => {
       if (response.status == 200) {
         context.commit("getCollectionsSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -129,74 +121,78 @@ export async function addCollection(context, collection) {
     });
 }
 
+export async function updateCollection(context, collection) {
+  var FormData = require("form-data");
+  var data = new FormData();
+  data.append("category_id", collection.category_id);
+  data.append("title", collection.title);
+  data.append("description", collection.description);
+  data.append("seo_description", collection.seo_description);
+  data.append("slug", collection.slug);
+  data.append("avatar", collection.avatar);
+  data.append("banner_img", collection.banner_img);
+
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .put(API_URL_COLLECTIONS + "update/" + collection.id, data, {
+      headers: authHeader()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("updateCollectionSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
 /**
  *  ---------------------------@products_api ---------------------------
  **/
-export async function getProducts(context) {
+
+export async function getProducts(context, filterParams) {
+  var qs = require("qs");
   context.commit("SET_IN_REQUEST", true, {
     root: true
   });
   await axios
     .get(API_URL_PRODUCTS, {
-      headers: authHeader()
-    })
-    .then(response => {
-      if (response.status == 200) {
-        context.commit("getProductsSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
-      }
-    })
-    .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
-    });
-}
-
-export async function filterProducts(context, filter) {
-  context.commit("SET_IN_REQUEST", true, {
-    root: true
-  });
-  await axios
-    .get(API_URL_PRODUCTS + "filter", {
       headers: authHeader(),
-      params: filter,
+      params: filterParams,
       paramsSerializer: function(params) {
         return qs.stringify(params, { arrayFormat: "repeat" });
       }
     })
     .then(response => {
       if (response.status == 200) {
-        context.commit("filterProductsSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
+        context.commit("getProductsSuccess", response);
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
-export async function addProducts(context, product) {
+export async function addProduct(context, product) {
   context.commit("SET_IN_REQUEST", true, {
     root: true
   });
@@ -206,23 +202,45 @@ export async function addProducts(context, product) {
     })
     .then(response => {
       if (response.status == 200) {
-        context.commit("addProductsSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
+        context.commit("addProductSuccess", response);
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function updateProduct(context, product) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .put(API_URL_PRODUCTS, product, {
+      headers: authHeader()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("updateProductSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -240,22 +258,18 @@ export async function getFavorites(context) {
     .then(response => {
       if (response.status == 200) {
         context.commit("getFavoritesSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -270,22 +284,18 @@ export async function addFavorite(context, productID) {
     .then(response => {
       if (response.status == 200) {
         context.commit("addFavoriteSuccess", response);
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }
 
@@ -300,21 +310,17 @@ export async function removeFavorite(context, productID) {
     .then(response => {
       if (response.status == 200) {
         context.commit("removeFavoriteSuccess");
-      } else {
-        if (response.response == undefined)
-          context.commit("NETWORK_ERROR", null, {
-            root: true
-          });
-        else {
-          context.commit("REQUEST_FAILED", response.response, {
-            root: true
-          });
-        }
       }
     })
     .catch(err => {
-      context.commit("REQUEST_FAILED", err.response, {
-        root: true
-      });
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
     });
 }

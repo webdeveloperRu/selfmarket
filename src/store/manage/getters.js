@@ -9,8 +9,8 @@ export function publicTopCollections(state) {
   return state.publicTopCollections;
 }
 
-export function myCollections(state) {
-  return state.myCollections;
+export function currentCollection(state) {
+  return state.currentCollection;
 }
 
 /**
@@ -28,8 +28,8 @@ export function publicProducts(state) {
   return state.publicProducts;
 }
 
-export function publicFilterProducts(state) {
-  return state.publicFilterProducts;
+export function currentProduct(state) {
+  return state.currentProduct;
 }
 
 /**

@@ -16,12 +16,12 @@ export function getCollectionsSuccess(state, res) {
   Store.state.inRequest = false;
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.myCollections = res.data.data;
-  if (state.myCollections.length == 0)
+  state.publicCollections = res.data.data;
+  if (state.publicCollections.length == 0)
     Store.state.notificationText = "There is no collections creatd!";
   else
     Store.state.notificationText =
-      state.myCollections.length + " collections found!";
+      state.publicCollections.length + " collections found!";
 }
 
 export function getTopCollectionsSuccess(state, res) {
@@ -34,37 +34,58 @@ export function getTopCollectionsSuccess(state, res) {
 
 export function addCollectionSuccess(state, res) {
   Store.state.inRequest = false;
-  Store.state.notificationText = "Top Collections successfully got!";
+  Store.state.notificationText = "New collection succesully added!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.myCollections.push(res.data);
+  console.log(res.data);
+  state.publicCollections.push(res.data);
+}
+export function updateCollectionSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "Collection succesully updated!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.currentCollection = res.data;
+}
+
+export function setCurrentCollection(state, collection) {
+  state.currentCollection = collection;
 }
 
 /**
  *  ---------------------------@products_mutation ---------------------------
  **/
+
 export function getProductsSuccess(state, res) {
   Store.state.inRequest = false;
   Store.state.notificationText = "Products successfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.publicProducts = res.data;
+  state.publicProducts = res.data.data;
 }
 
-export function filterProductsSuccess(state, res) {
+export function addProductSuccess(state, res) {
   Store.state.inRequest = false;
-  Store.state.notificationText = "Products successfully got!";
-  Store.state.notificationType = "positive";
-  Store.state.requestSuccess = true;
-  state.publicFilterProducts = res.data;
-}
-
-export function addProductsSuccess(state, res) {
-  Store.state.inRequest = false;
-  Store.state.notificationText = "Products successfully added!";
+  Store.state.notificationText = "Product successfully added!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
   state.publicProducts.push(res.data);
+}
+
+export function updateProductSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "Product successfully updated!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.currentProduct = res.data;
+}
+
+export function setCurrentProduct(state, product) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "current product changed";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.currentProduct = product;
 }
 
 /**

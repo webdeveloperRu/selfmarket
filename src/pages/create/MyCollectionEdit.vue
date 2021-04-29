@@ -6,7 +6,8 @@
       style="justify-content: flex-start; z-index: 100; border-bottom:solid 1px #eeeeee"
     >
       <div class="q-pa-md cursor-pointer" @click="backToCollectionAssets">
-        <q-icon name="arrow_back_ios"></q-icon>Back to collection
+        <q-icon name="arrow_back_ios"></q-icon>Back to
+        {{ currentCollection.title }}
       </div>
     </q-page-sticky>
     <div class="flex full-width justify-center">
@@ -29,12 +30,20 @@
 
           <q-icon
             name="image"
+            style="font-size: 5rem; position: absolute"
+            class="select-avatar-icon"
+          ></q-icon>
+          <q-img :src="collectionAvatarUrl" v-if="collectionAvatarUrl != ''">
+          </q-img>
+          <q-icon
+            name="image"
             class="logo-demo-icon"
-            style="font-size: 5rem"
+            style="font-size: 5rem; position: absolute"
+            v-else
           ></q-icon>
         </div>
 
-        <div class="text-h6 q-mt-lg" style="font-size: 16px">
+        <!-- <div class="text-h6 q-mt-lg" style="font-size: 16px">
           Featured image
         </div>
         <div class="text-body2 text-grey-8 q-mt-sm">
@@ -56,12 +65,12 @@
             class="logo-demo-icon"
             style="font-size: 5rem"
           ></q-icon>
-        </div>
+        </div> -->
 
         <div class="text-h6 q-mt-lg" style="font-size: 16px">
           Name
         </div>
-        <q-input outlined v-model="collectionName"></q-input>
+        <q-input outlined v-model="collectionTitle"></q-input>
         <div class="text-h6 q-mt-lg" style="font-size: 16px">
           Url
         </div>
@@ -87,10 +96,16 @@
           Category
         </div>
         <div class="text-body2 text-grey-7 q-mb-sm">
-          Adding a category will help make your item discoverable on OpenSea.
+          Adding a category will help make your item discoverable on SelfMarket.
         </div>
-        <q-btn color="white" text-color="grey" label="Addd category" no-caps>
-        </q-btn>
+        <q-select
+          v-model="selectedCategory"
+          :options="categoryList"
+          class="q-mt-sm"
+          outlined
+          dense
+        >
+        </q-select>
 
         <div class="text-h6 q-mt-lg" style="font-size: 16px">
           Links
@@ -116,7 +131,13 @@
         <q-btn label="you" no-caps color="white" text-color="primary"></q-btn>
 
         <div class="flex justify-between q-mt-lg">
-          <q-btn color="primary" label="Submit Chagnes" class="q-pa-sm"></q-btn>
+          <q-btn
+            color="primary"
+            label="Submit Chagnes"
+            class="q-pa-sm"
+            @click.native="updateCollection"
+            :loading="updatingCollection"
+          ></q-btn>
           <q-btn
             class="q-pa-sm"
             color="white"
@@ -130,10 +151,23 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "MyCollection",
   components: {
     // ProductPackageCard: () => import("../../components/ProductPackageCard")
+  },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      publicCategories: "manage/publicCategories",
+      currentCollection: "manage/currentCollection"
+    })
   },
 
   data() {
@@ -142,20 +176,81 @@ export default {
       filterCollectionText: "",
       selectedTab: "my-collections",
       createCollectionModal: false,
-      collectionName: "",
+      collectionTitle: "",
       collectionDescription: "",
       collectionLogoFile: null,
-      collectionID: 30,
       collectionUrl: "",
+      categoryList: [],
+      selectedCategory: null,
+      collectionAvatarFile: null,
+      collectionBannerFile: null,
+      seoDescription: "",
+      collectionAvatarUrl: "",
+      updatingCollection: false
     };
   },
+  created() {
+    this.loadData();
+  },
   methods: {
+    loadData() {
+      this.collectionTitle = this.currentCollection.title;
+      this.collectionDescription = this.currentCollection.description;
+      this.collectionAvatarUrl = this.currentCollection.avatar;
+      this.categoryList = [];
+      for (let i = 0; i < this.publicCategories.length; i++) {
+        this.categoryList[i] = {
+          label: this.publicCategories[i].title,
+          value: this.publicCategories[i].id,
+          slug: this.publicCategories[i].slug
+        };
+        if (this.categoryList[i].value == this.currentCollection.category_id)
+          this.selectedCategory = this.categoryList[i];
+      }
+    },
     getCollectionLogoFile() {
       this.$refs.collectionLogoFileInput.$el.click();
     },
-    onSelectCollectionLogoImage() {},
     backToCollectionAssets() {
-      this.$router.push("/my-collection/" + this.collectionID + "/assets/edit");
+      this.$router.push(
+        "/my-collection/" + this.currentCollection.id + "/assets/edit"
+      );
+    },
+
+    onSelectCollectionLogoImage(e) {
+      let image = e.target.files[0];
+      if (image !== undefined) {
+        this.createImage(image);
+        this.collectionAvatarFile = image;
+      }
+    },
+    createImage(file) {
+      var reader = new FileReader();
+      reader.onload = e => {
+        this.collectionAvatarUrl = e.target.result; // this.cssProfileImageUrl = "url(" + this.profileImageUrl +
+      };
+      reader.readAsDataURL(file);
+    },
+
+    updateCollection() {
+      let collection = {
+        category_id: this.selectedCategory.value,
+        title: this.collectionTitle,
+        description: this.collectionDescription,
+        seo_description: this.seoDescription,
+        slug: this.selectedCategory.slug,
+        avatar: this.collectionAvatarFile,
+        banner_img: this.collectionBannerFile,
+        id: this.currentCollection.id
+      };
+      this.updatingCollection = true;
+      this.$store.dispatch("manage/updateCollection", collection).then(() => {
+        this.updatingCollection = false;
+        this.$q.notify({
+          type: this.notificationType,
+          message: this.notificationText
+        });
+      });
     }
   }
 };
@@ -182,9 +277,17 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  .select-avatar-icon {
+    display: none;
+    z-index: 10;
+  }
   &:hover {
     border-color: #aaaaaa;
     color: $grey-6;
+    .select-avatar-icon {
+      display: block;
+    }
   }
 }
 .fetured-image-logo {

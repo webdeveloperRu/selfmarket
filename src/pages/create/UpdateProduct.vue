@@ -251,11 +251,11 @@
         <div class="flex justify-between q-mt-lg">
           <q-btn
             color="primary"
-            label="Create"
+            label="Submit Change"
             no-caps
             class="q-pa-sm"
-            @click="addProduct"
-            :loading="creatingProduct"
+            @click="updateProduct"
+            :loading="updatingProduct"
           ></q-btn>
         </div>
       </div>
@@ -266,7 +266,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "CreateProduct",
+  name: "UpdateProduct",
   components: {
     // ProductPackageCard: () => import("../../components/ProductPackageCard")
   },
@@ -278,7 +278,8 @@ export default {
       requestSuccess: "requestSuccess",
       loggedIn: "auth/loggedIn",
       publicCategories: "manage/publicCategories",
-      currentCollection: "manage/currentCollection"
+      currentCollection: "manage/currentCollection",
+      currentProduct: "manage/currentProduct"
     })
   },
 
@@ -308,10 +309,28 @@ export default {
       productSlug: "",
       productAvatarUrl: "",
       productAvatarFile: null,
-      creatingProduct: false
+      updatingProduct: false
     };
   },
+  created() {
+    this.loadingData();
+  },
   methods: {
+    loadingData() {
+      this.productName = this.currentProduct.title;
+      this.productDescription = this.currentProduct.description;
+      this.productPrice = this.currentProduct.price;
+      for (let i = 0; i < this.priceTypeList.length; i++) {
+        if (this.priceTypeList[i].value == this.currentProduct.price_type)
+          this.selectedPriceType = this.priceTypeList[i];
+      }
+      this.isNFT = this.currentProduct.is_nft;
+      this.productAddress = this.currentProduct.address;
+      this.productSymbol = this.currentProduct.symbol;
+      this.productDecimals = this.currentProduct.decimals;
+      this.deliveryTime = this.currentProduct.delivery_time;
+      this.productSlug = this.currentProduct.slug;
+    },
     getProductMediaFile() {
       this.$refs.productMediaFileInput.$el.click();
     },
@@ -336,8 +355,8 @@ export default {
       );
     },
 
-    addProduct() {
-      this.creatingProduct = true;
+    updateProduct() {
+      this.updatingProduct = true;
       let product = {
         title: this.productName,
         description: this.productDescription,
@@ -349,10 +368,10 @@ export default {
         decimals: this.productDecimals,
         delivery_time: this.deliveryTime,
         slug: this.productSlug,
-        collection_id: this.currentCollection.id
+        collection_id: this.currentProduct.collection_id
       };
-      this.$store.dispatch("manage/addProduct", product).then(() => {
-        this.creatingProduct = false;
+      this.$store.dispatch("manage/updateProduct", product).then(() => {
+        this.updatingProduct = false;
         this.$q.notify({
           type: this.notificationType,
           message: this.notificationText

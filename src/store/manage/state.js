@@ -6,9 +6,10 @@ export default function() {
     publicTopCollections: [],
 
     publicProducts: [],
-    publicFilterProducts: [],
+    currentProduct: [],
 
     myFavorites: [],
-    myCollectiosn: []
+
+    currentCollection: null
   };
 }

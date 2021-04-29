@@ -6,9 +6,31 @@
     @click="navigateCollectionAssets"
   >
     <span class="q-focus-helper"></span>
-    <img src="../assets/images/mountains.jpg" alt="card-item" />
-    <q-card-section>
-      <span class="text-subtitle1 q-pa-md">Collection</span>
+    <div class="flex justify-center items-center full-width">
+      <q-icon
+        name="image"
+        style="font-size: 12.5rem"
+        color="grey-4"
+        v-if="
+          collection.avatar == '' ||
+            collection.avatar == null ||
+            collection.avatar == undefined
+        "
+      ></q-icon>
+      <q-img
+        v-else
+        :src="collection.avatar"
+        alt="card-item"
+        class="full-width"
+        style="height: 200px"
+      />
+    </div>
+    <q-separator />
+    <q-card-section
+      style="height: 70px; padding: 5px"
+      class="text-center flex items-center justify-center"
+    >
+      <span class="text-subtitle1 ">{{ collection.title }}</span>
     </q-card-section>
   </q-card>
 </template>
@@ -17,14 +39,16 @@
 export default {
   name: "CollectionPackageCard",
   data() {
-    return {
-      collection_id: 30
-    };
+    return {};
+  },
+  props: {
+    collection: Object
   },
   methods: {
     navigateCollectionAssets() {
+      this.$store.commit("manage/setCurrentCollection", this.collection);
       this.$router.push(
-        "/my-collection/" + this.collection_id + "/assets/edit"
+        "/my-collection/" + this.collection.id + "/assets/edit"
       );
     }
   }

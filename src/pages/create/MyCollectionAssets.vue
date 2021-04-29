@@ -1,42 +1,32 @@
 <template>
-  <q-layout view="hHh Lpr lff" container style="height: 92vh;">
-    <q-drawer
-      v-model="drawerLeft"
-      show-if-above
-      :width="280"
-      :breakpoint="1150"
-      bordered
-    >
-      <q-scroll-area class="fit">
-        <q-tabs
-          v-model="selectedTab"
-          vertical
-          class="text-grey-8 q-mt-lg"
-          inline-label
-        >
-          <q-tab name="my-pyaouts" icon="view_list" label="My Payouts" disable>
-            <q-tooltip content-class="bg-black">
-              <div style="font-size: 14px; max-width: 250px;" class="q-pa-sm">
-                Please select a collection and click the "Payouts" button to
-                view payouts for that collection
-              </div>
-            </q-tooltip>
-          </q-tab>
-          <q-tab name="my-collections" icon="store" label="My Collections" />
-          <q-tab name="community" icon="info" label="Commnutiy & Help" />
-        </q-tabs>
-      </q-scroll-area>
-    </q-drawer>
-    <q-page-container>
-      <q-page-sticky
-        position="top-left"
-        class="full-width bg-white"
-        style="justify-content: flex-start; z-index: 100; border-bottom:solid 1px #eeeeee"
+  <div style="height: 92vh;" class="flex">
+    <div class="side-bar">
+      <q-tabs
+        v-model="selectedTab"
+        vertical
+        class="text-grey-8 q-mt-lg side-bar-menus"
+        style="width: 280px"
+        inline-label
       >
-        <div class="q-pa-md cursor-pointer" @click="backToMyCollections">
-          <q-icon name="arrow_back_ios"></q-icon>Back to my collections
-        </div>
-      </q-page-sticky>
+        <q-tab name="my-pyaouts" icon="view_list" label="My Payouts" disable>
+          <q-tooltip content-class="bg-black">
+            <div style="font-size: 14px; max-width: 250px;" class="q-pa-sm">
+              Please select a collection and click the "Payouts" button to view
+              payouts for that collection
+            </div>
+          </q-tooltip>
+        </q-tab>
+        <q-tab name="my-collections" icon="store" label="My Collections" />
+        <q-tab name="community" icon="info" label="Commnutiy & Help" />
+      </q-tabs>
+    </div>
+    <div class="container">
+      <div
+        class="q-pa-md cursor-pointer router-bar"
+        @click="backToMyCollections"
+      >
+        <q-icon name="arrow_back_ios"></q-icon>Back to my collections
+      </div>
       <div class="colleciton-body items-center" style="margin-top: 53px">
         <q-img
           src="../../assets/images/collection-banner.webp"
@@ -67,9 +57,11 @@
                 class="colleciton-logo"
               ></q-img>
               <div class="info q-ml-lg">
-                <div class="text-h4" style="font-size: 40px">Collection</div>
+                <div class="text-h4" style="font-size: 40px">
+                  {{ currentCollection.title }}
+                </div>
                 <div class="text-body2 text-grey-7 q-mt-lg">
-                  This is Collection Description
+                  {{ currentCollection.description }}
                 </div>
                 <div class="flex q-mt-lg">
                   <q-btn
@@ -176,28 +168,46 @@
                 />
               </div>
             </div>
+            <div v-if="loadingProducts">
+              <q-spinner color="grey-5" size="3em" :thickness="10" />
+            </div>
 
-            <div class="row q-mt-xl">
+            <div class="row q-mt-xl" v-else>
               <div
                 class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
-                v-for="item in 10"
-                v-bind:key="item"
+                v-for="(product, index) in publicProducts"
+                v-bind:key="'my-collection-product' + index"
               >
-                <ProductPackageCard></ProductPackageCard>
+                <ProductPackageCard
+                  :product="product"
+                  :editable="true"
+                ></ProductPackageCard>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </q-page-container>
-  </q-layout>
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "MyCollection",
   components: {
     ProductPackageCard: () => import("../../components/ProductPackageCard.vue")
+  },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      currentCollection: "manage/currentCollection",
+      publicProducts: "manage/publicProducts"
+    })
   },
 
   data() {
@@ -219,10 +229,22 @@ export default {
         "MostFavorited",
         "Oldest"
       ],
-      collectionID: 30
+      loadingProducts: false
     };
   },
+  created() {
+    this.getProducts();
+  },
   methods: {
+    getProducts() {
+      this.loadingProducts = true;
+      let params = {
+        collection_id: this.currentCollection.id
+      };
+      this.$store.dispatch("manage/getProducts", params).then(() => {
+        this.loadingProducts = false;
+      });
+    },
     getBannerFile() {
       this.$refs.bannerFileInput.$el.click();
     },
@@ -235,17 +257,44 @@ export default {
     onSelectBannerImage() {},
 
     navigateEditCollectionPage() {
-      this.$router.push("/my-collection/" + this.collectionID + "/edit");
+      this.$router.push(
+        "/my-collection/" + this.currentCollection.id + "/edit"
+      );
     },
     navigateCreateProductPage() {
       this.$router.push(
-        "/my-collection/" + this.collectionID + "/assets/create"
+        "/my-collection/" + this.currentCollection.id + "/assets/create"
       );
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+$width: 280px;
+
+.side-bar {
+  position: sticky;
+  width: $width;
+  position: relative;
+  border-right: solid 1px $grey-3;
+}
+.side-bar-menus {
+  position: fixed;
+}
+.container {
+  $width: 280px;
+  width: calc(100% - #{$width});
+  position: relative;
+  .router-bar {
+    position: fixed;
+    top: 72px;
+    z-index: 100;
+    width: 100%;
+    background: white;
+    border-bottom: solid 1px $grey-3;
+  }
+}
+
 .q-tab {
   justify-content: left;
   margin-left: 15px;
@@ -261,12 +310,21 @@ export default {
 }
 .edit-banner-button {
   position: absolute;
-  top: 20px;
+  top: 60px;
   right: 20px;
 }
 .filter-input {
   $width: 350px;
   width: calc(100% - #{$width});
+}
+
+@media only screen and (max-width: 900px) {
+  .side-bar {
+    display: none;
+  }
+  .container {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 600px) {

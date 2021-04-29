@@ -101,7 +101,8 @@ export default {
       inRequest: "inRequest",
       notificationText: "notificationText",
       notificationType: "notificationType",
-      requestSuccess: "requestSuccess"
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn"
     })
   },
   methods: {
@@ -132,6 +133,8 @@ export default {
           type: this.notificationType,
           message: this.notificationText
         });
+        if (this.loggedIn) this.$router.push("/profile");
+
         this.sendingRequest = false;
       });
     }

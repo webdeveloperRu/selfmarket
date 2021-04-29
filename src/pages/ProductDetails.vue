@@ -12,7 +12,7 @@
                 icon="favorite_border"
                 aria-label="favorite-item"
               />
-              <span class="text-subtitle1">4</span>
+              <span class="text-subtitle1">{{ currentProduct.vote }}</span>
             </div>
             <img src="../assets/images/product-demo.png" alt="card-item" />
           </q-card>
@@ -170,7 +170,7 @@
             class="text-h4 q-py-md text-grey-9"
             style="font-size: 30px; font-weight: 500"
           >
-            Land (30,50)
+            {{ currentProduct.title }}
           </div>
           <div>
             <q-avatar size="30px">
@@ -186,9 +186,11 @@
               color="grey"
               class="q-px-sm"
             ></q-icon>
-            <span class="text-subtitle1 text-grey">26 views</span>
+            <span class="text-subtitle1 text-grey"
+              >{{ currentProduct.views }} views</span
+            >
           </div>
-          <q-card class="q-my-md">
+          <!-- <q-card class="q-my-md">
             <q-card-section class="bg-red text-white">
               <div class="text-h6">
                 <q-icon
@@ -216,7 +218,7 @@
                 >Buy Now</q-btn
               >
             </q-card-actions>
-          </q-card>
+          </q-card> -->
           <q-list bordered class="rounded-borders">
             <q-expansion-item
               expand-separator
@@ -404,9 +406,21 @@
 
 <script>
 import fakeData from "./fakeData";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ProductDetails",
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      currentProduct: "manage/currentProduct"
+    })
+  },
+
   data() {
     return {
       columns: [

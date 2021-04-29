@@ -147,6 +147,14 @@ const routes = [
         }
       },
       {
+        path: "/assets/:product_id/edit",
+        component: () => import("src/pages/create/UpdateProduct.vue"),
+        beforeEnter: (to, from, next) => {
+          if (Store.state.auth.loggedIn) next();
+          else next("/login");
+        }
+      },
+      {
         path: "/my-collection/:collection_id/edit",
         component: () => import("src/pages/create/MyCollectionEdit.vue"),
         beforeEnter: (to, from, next) => {
