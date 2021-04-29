@@ -8,13 +8,12 @@
       aria-label="favorite-item"
       style="position: absolute"
       class="edit-button"
-      @click="navigateProductEditPage"
     />
 
     <span class="q-focus-helper"></span>
     <div class="float-right q-mx-md">
       <q-btn flat round icon="favorite_border" aria-label="favorite-item" />
-      <span class="text-subtitle1">{{ product.votes }}</span>
+      <span class="text-subtitle1">4</span>
     </div>
     <img
       src="../assets/images/mountains.jpg"
@@ -25,12 +24,12 @@
     <q-card-section @click="navigateProductDetails">
       <div class="flex justify-between">
         <div style="font-size: 12px;">
-          <div class="text-grey">{{ product.title }}</div>
-          <div>{{ product.address }}</div>
+          <div class="text-grey">Demo Product</div>
+          <div>demo product..</div>
         </div>
         <div style="font-size: 12px;">
           <div class="text-grey">Price</div>
-          <div class="text-body2">{{ priceSymbol }} {{ product.price }}</div>
+          <div class="text-body2">Ξ 300</div>
         </div>
       </div>
     </q-card-section>
@@ -39,7 +38,7 @@
 ,
 <script>
 export default {
-  name: "ProductPackageCard",
+  name: "ProductPackageDemoCard",
   data() {
     return {
       priceSymbol: "$"
@@ -54,7 +53,6 @@ export default {
   },
   created() {
     if (this.product == undefined || this.product == null) return;
-
     switch (this.product.price_type) {
       case "BTC":
         this.priceSymbol = "฿";
@@ -72,12 +70,8 @@ export default {
   },
   methods: {
     async navigateProductDetails() {
-      await this.$store.commit("manage/setCurrentProduct", this.product);
-      this.$router.push("/assets/" + this.product.id);
-    },
-    async navigateProductEditPage() {
-      await this.$store.commit("manage/setCurrentProduct", this.product);
-      this.$router.push("/assets/" + this.product.id + "/edit");
+      await this.$store.commit("manage/setCurrentProduct", null);
+      this.$router.push("/assets/" + 20);
     }
   }
 };

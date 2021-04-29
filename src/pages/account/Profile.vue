@@ -546,7 +546,7 @@
               v-for="item in 10"
               v-bind:key="item"
             >
-              <ProductPackageCard></ProductPackageCard>
+              <ProductPackageDemoCard></ProductPackageDemoCard>
             </div>
           </div>
         </div>
@@ -559,7 +559,7 @@ import fakeData from "../fakeData";
 export default {
   name: "Profile",
   components: {
-    ProductPackageCard: () => import("../../components/ProductPackageCard")
+    ProductPackageCard: () => import("../../components/ProductPackageDemoCard")
   },
   created() {
     window.addEventListener("scroll", this.handleScroll);

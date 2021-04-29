@@ -12,7 +12,12 @@
                 icon="favorite_border"
                 aria-label="favorite-item"
               />
-              <span class="text-subtitle1">{{ currentProduct.vote }}</span>
+              <span
+                class="text-subtitle1"
+                v-if="currentProduct != null && currentProduct != undefined"
+                >{{ currentProduct.vote }}</span
+              >
+              <span class="text-subtitle1">4</span>
             </div>
             <img src="../assets/images/product-demo.png" alt="card-item" />
           </q-card>
@@ -169,9 +174,18 @@
           <div
             class="text-h4 q-py-md text-grey-9"
             style="font-size: 30px; font-weight: 500"
+            v-if="currentProduct != null"
           >
             {{ currentProduct.title }}
           </div>
+          <div
+            class="text-h4 q-py-md text-grey-9"
+            style="font-size: 30px; font-weight: 500"
+            v-else
+          >
+            Product Demo
+          </div>
+
           <div>
             <q-avatar size="30px">
               <img src="../assets/images/avatar.png" />
@@ -186,9 +200,12 @@
               color="grey"
               class="q-px-sm"
             ></q-icon>
-            <span class="text-subtitle1 text-grey"
+            <span
+              class="text-subtitle1 text-grey"
+              v-if="currentProduct != undefined && currentProduct != null"
               >{{ currentProduct.views }} views</span
             >
+            <span class="text-subtitle1 text-grey" v-else>3 views</span>
           </div>
           <!-- <q-card class="q-my-md">
             <q-card-section class="bg-red text-white">

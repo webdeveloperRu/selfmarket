@@ -247,7 +247,7 @@
             v-for="item in 50"
             v-bind:key="item"
           >
-            <ProductPackageCard></ProductPackageCard>
+            <ProductPackageDemoCard></ProductPackageDemoCard>
           </div>
         </div>
       </div>
@@ -259,7 +259,7 @@
 export default {
   name: "BrowsePage",
   components: {
-    ProductPackageCard: () => import("../components/ProductPackageCard")
+    ProductPackageDemoCard: () => import("../components/ProductPackageDemoCard")
   },
   data() {
     return {

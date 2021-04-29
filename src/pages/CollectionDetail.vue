@@ -89,10 +89,10 @@
             <q-separator />
             <div class="q-mt-lg">
               <div class="product-list">
-                <ProductPackageCard
+                <ProductPackageDemoCard
                   v-for="item in [1, 2, 3, 4, 5, 6, 7]"
                   v-bind:key="'collectibles' + item"
-                ></ProductPackageCard>
+                ></ProductPackageDemoCard>
               </div>
             </div>
           </div>
@@ -114,10 +114,10 @@
             <q-separator />
             <div class="q-mt-lg">
               <div class="product-list">
-                <ProductPackageCard
+                <ProductPackageDemoCard
                   v-for="item in [1, 2, 3, 4, 5, 6, 7]"
                   v-bind:key="'collectibles' + item"
-                ></ProductPackageCard>
+                ></ProductPackageDemoCard>
               </div>
             </div>
           </div>
@@ -140,10 +140,10 @@
             <q-separator />
             <div class="q-mt-lg">
               <div class="product-list">
-                <ProductPackageCard
+                <ProductPackageDemoCard
                   v-for="item in [1, 2, 3, 4, 5, 6, 7]"
                   v-bind:key="'collectibles' + item"
-                ></ProductPackageCard>
+                ></ProductPackageDemoCard>
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@
 export default {
   name: "CollectionDetail",
   components: {
-    ProductPackageCard: () => import("../components/ProductPackageCard")
+    ProductPackageDemoCard: () => import("../components/ProductPackageDemoCard")
   },
 
   data() {

@@ -689,7 +689,7 @@ export default {
   name: "HomePage",
   components: {
     CategoryPanel,
-    ProductPackageCard: () => import("../components/ProductPackageCard"),
+    ProductPackageCard: () => import("../components/ProductPackageDemoCard"),
     Hooper,
     Slide,
     HooperPagination
