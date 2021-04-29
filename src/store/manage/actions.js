@@ -247,13 +247,14 @@ export async function updateProduct(context, product) {
 /**
  *  ---------------------------@favorites_api ---------------------------
  **/
-export async function getFavorites(context) {
+export async function getFavorites(context, user_id) {
   context.commit("SET_IN_REQUEST", true, {
     root: true
   });
   await axios
     .get(API_URL_FAVORITEES, {
-      headers: authHeader()
+      headers: authHeader(),
+      params: user_id
     })
     .then(response => {
       if (response.status == 200) {
@@ -273,14 +274,21 @@ export async function getFavorites(context) {
     });
 }
 
-export async function addFavorite(context, productID) {
+export async function addFavorite(context, [productID, user_id]) {
   context.commit("SET_IN_REQUEST", true, {
     root: true
   });
   await axios
-    .post(API_URL_FAVORITEES + productID + "/add", {
-      headers: authHeader()
-    })
+    .post(
+      API_URL_FAVORITEES + productID + "/add",
+      {
+        user_id: user_id,
+        product_id: productID
+      },
+      {
+        headers: authHeader()
+      }
+    )
     .then(response => {
       if (response.status == 200) {
         context.commit("addFavoriteSuccess", response);

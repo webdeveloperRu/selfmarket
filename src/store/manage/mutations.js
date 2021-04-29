@@ -113,3 +113,17 @@ export function removeFavoriteSuccess() {
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
 }
+
+export function RESET_MODULE(state) {
+  state.publicCategories = [];
+
+  state.publicCollections = [];
+  state.publicTopCollections = [];
+
+  state.publicProducts = [];
+  state.currentProduct = [];
+
+  state.myFavorites = [];
+
+  state.currentCollection = null;
+}

@@ -3,6 +3,8 @@ import apiurl from "../baseApiUrl";
 import { authHeader } from "../authHeader";
 import { authHeaderFormData } from "../authHeaderFormData";
 const API_URL_AUTH = apiurl.API_URL + "auth/";
+import { Router } from "../../router/index";
+
 export async function login(context, [user, remeberMe]) {
   context.commit("SET_IN_REQUEST", true, {
     root: true
@@ -61,7 +63,38 @@ export async function register(context, user) {
     });
 }
 
-// export function logout(context) {}
+export async function logout(context) {
+  await axios
+    .get(API_URL_AUTH + "logout", { headers: authHeader() })
+    .then(response => {
+      if (response.status == 200) {
+        Router.push("/login").catch(() => {});
+
+        context.commit("manage/RESET_MODULE", null, {
+          root: true
+        });
+        context.commit("RESET_MODULE");
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        Router.push("/login").catch(() => {});
+        context.commit("manage/RESET_MODULE", null, {
+          root: true
+        });
+        context.commit("RESET_MODULE");
+
+        context.commit("REQUEST_FAILED", err.response);
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+  Router.push({
+    name: "login"
+  });
+}
 
 export async function forgotPassword(context, email) {
   context.commit("SET_IN_REQUEST", true, {

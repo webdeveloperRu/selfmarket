@@ -232,6 +232,23 @@
                     </div></q-item-section
                   >
                 </q-item>
+                <q-item
+                  clickable
+                  v-close-popup
+                  class="text-grey-9"
+                  v-if="loggedIn"
+                >
+                  <q-item-section>
+                    <div @click="logout">
+                      <q-icon
+                        name="settings_applications"
+                        size="28px"
+                        class="q-pr-sm"
+                      />
+                      Logout
+                    </div></q-item-section
+                  >
+                </q-item>
               </q-list>
             </q-menu>
           </q-btn>
@@ -440,6 +457,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import EssentialLink from "./EssentialLink.vue";
 
 const linksData = [
@@ -532,12 +550,25 @@ export default {
       walletDrawerOpen: false
     };
   },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn"
+    })
+  },
+
   methods: {
     navigateHomePage() {
       this.$router.push("/").catch(() => {});
     },
     navigatePage(page) {
       this.$router.push(page).catch(() => {});
+    },
+    logout() {
+      this.$store.dispatch("auth/logout");
     }
   }
 };

@@ -13,7 +13,13 @@
 
     <span class="q-focus-helper"></span>
     <div class="float-right q-mx-md">
-      <q-btn flat round icon="favorite_border" aria-label="favorite-item" />
+      <q-btn
+        flat
+        round
+        icon="favorite_border"
+        aria-label="favorite-item"
+        @click="addToFavorite"
+      />
       <span class="text-subtitle1">{{ product.votes }}</span>
     </div>
     <img
@@ -36,8 +42,9 @@
     </q-card-section>
   </q-card>
 </template>
-,
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "ProductPackageCard",
   data() {
@@ -45,6 +52,17 @@ export default {
       priceSymbol: "$"
     };
   },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      user: "auth/user"
+    })
+  },
+
   props: {
     product: Object,
     editable: {
@@ -75,9 +93,21 @@ export default {
       await this.$store.commit("manage/setCurrentProduct", this.product);
       this.$router.push("/assets/" + this.product.id);
     },
+
     async navigateProductEditPage() {
       await this.$store.commit("manage/setCurrentProduct", this.product);
       this.$router.push("/assets/" + this.product.id + "/edit");
+    },
+
+    addToFavorite() {
+      this.$store
+        .dispatch("manage/addFavorite", [this.product.id, this.user.data.id])
+        .then(() => {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+        });
     }
   }
 };

@@ -121,7 +121,14 @@ export function setTwoFactorSuccess(state) {
   state.twofaLogged = true;
 }
 export function RESET_MODULE(state) {
-  Object.assign(state, initialState);
+  state.loggedIn = false;
+  state.user = null;
+  state.emailCode = "";
+  state.emailResetPassword = "";
+  state.twofaLogged = false;
+  state.loginUserInfo = null;
+  state.remeberMe = false;
+  state.twoFaKey = "";
 }
 
 export function userLogSuccess() {}

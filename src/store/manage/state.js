@@ -1,5 +1,5 @@
 export default function() {
-  return {
+  const initialState = {
     publicCategories: [],
 
     publicCollections: [],
@@ -12,4 +12,5 @@ export default function() {
 
     currentCollection: null
   };
+  return initialState;
 }

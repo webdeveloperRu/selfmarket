@@ -126,7 +126,7 @@
             flat
             no-caps
             :text-color="currentTab == 3 ? 'primary' : 'grey'"
-            @click="currentTab = 3"
+            @click="setFavorite"
           ></q-btn>
         </div>
         <div class="mobile-menu">
@@ -409,7 +409,7 @@
               v-for="item in 50"
               v-bind:key="item"
             >
-              <ProductPackageCard></ProductPackageCard>
+              <ProductPackageDemoCard></ProductPackageDemoCard>
             </div>
           </div>
         </div>
@@ -540,14 +540,17 @@
           >
         </div>
         <div v-if="currentTab == 3" class="q-ma-sm">
-          <div class="row ">
+          <div class="row" v-if="!loadingFavorites">
             <div
               class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
-              v-for="item in 10"
-              v-bind:key="item"
+              v-for="(product, index) in myFavorites"
+              v-bind:key="'favorite' + index"
             >
-              <ProductPackageDemoCard></ProductPackageDemoCard>
+              <ProductPackageCard :product="product"></ProductPackageCard>
             </div>
+          </div>
+          <div v-else>
+            <q-spinner color="grey-5" size="3em" :thickness="10" />
           </div>
         </div>
       </div>
@@ -556,11 +559,26 @@
 </template>
 <script>
 import fakeData from "../fakeData";
+import { mapGetters } from "vuex";
 export default {
   name: "Profile",
   components: {
-    ProductPackageCard: () => import("../../components/ProductPackageDemoCard")
+    ProductPackageDemoCard: () =>
+      import("../../components/ProductPackageDemoCard"),
+    ProductPackageCard: () => import("../../components/ProductPackageCard")
   },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      myFavorites: "manage/myFavorites",
+      user: "auth/user"
+    })
+  },
+
   created() {
     window.addEventListener("scroll", this.handleScroll);
   },
@@ -638,10 +656,28 @@ export default {
       offerMadeList: fakeData.activity_data,
       offerReceivedList: [],
       pagination: { rowsPerPage: 6 },
-      currentOfferTab: "made"
+      currentOfferTab: "made",
+      loadingFavorites: false
     };
   },
   methods: {
+    setFavorite() {
+      this.currentTab = 3;
+      this.getMyFavorites();
+    },
+    getMyFavorites() {
+      let user_id = {
+        user_id: this.user.data.id
+      };
+      this.loadingFavorites = true;
+      this.$store.dispatch("manage/getFavorites", user_id).then(() => {
+        this.$q.notify({
+          type: this.notificationType,
+          message: this.notificationText
+        });
+        this.loadingFavorites = false;
+      });
+    },
     handleScroll(event) {
       let positionUserID = this.$refs["userID"].getBoundingClientRect();
 
@@ -649,7 +685,7 @@ export default {
         this.$refs.menus.style.position = "fixed";
         this.$refs.menus.style.top = "-80px";
         this.$refs.contentForm.style = "margin-top: 220px;";
-        this.$refs.sideBar.position = "absolute";
+        if (this.$refs.sideBar) this.$refs.sideBar.position = "absolute";
       } else {
         this.$refs.contentForm.style = "margin-top: 20px;";
         this.$refs.menus.style.position = "relative";
