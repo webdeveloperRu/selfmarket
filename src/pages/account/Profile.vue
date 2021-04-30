@@ -261,6 +261,7 @@
             icon="view_comfy"
             label="Collections"
             class="text-subtitle1 text-bold"
+            @show="showCollectionList"
           >
             <q-separator />
             <div class="q-pa-md  justify-around flex">
@@ -283,15 +284,27 @@
                   />
                 </template>
               </q-input>
-              <div v-for="(item, index) in items" :key="index" class="caption">
-                <q-item clickable v-ripple class="full-width">
-                  <q-item-section avatar>
-                    <q-icon color="primary" name="bluetooth" />
-                  </q-item-section>
+              <q-scroll-area style="height: 300px;" class="q-mt-md full-width">
+                <q-list>
+                  <q-item
+                    clickable
+                    v-ripple
+                    class="full-width"
+                    v-for="(collection, index) in collectionTagList"
+                    :key="index"
+                  >
+                    <q-item-section avatar>
+                      <q-avatar>
+                        <img :src="collection.avatar" />
+                      </q-avatar>
+                    </q-item-section>
 
-                  <q-item-section>Icon as avatar</q-item-section>
-                </q-item>
-              </div>
+                    <q-item-section class="text-body2 text-weight-medium">{{
+                      collection.title
+                    }}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-scroll-area>
             </div>
           </q-expansion-item>
           <q-separator />
@@ -575,7 +588,8 @@ export default {
       requestSuccess: "requestSuccess",
       loggedIn: "auth/loggedIn",
       myFavorites: "manage/myFavorites",
-      user: "auth/user"
+      user: "auth/user",
+      collectionTagList: "manage/collectionTagList"
     })
   },
 
@@ -713,6 +727,17 @@ export default {
           break;
       }
       return icon;
+    },
+    showCollectionList() {
+      let params = { limit: 10 };
+      this.$store.dispatch("manage/getCollectionTagList", params).then(() => {
+        if (!this.requestSuccess) {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+        }
+      });
     }
   }
 };

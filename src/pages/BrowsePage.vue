@@ -42,7 +42,8 @@
           expand-separator
           icon="view_comfy"
           label="Collections"
-          class="text-subtitle1 text-bold"
+          class="text-subtitle1 text-bold "
+          @show="showCollectionList"
         >
           <q-separator />
           <div class="q-pa-md  justify-around flex">
@@ -65,15 +66,27 @@
                 />
               </template>
             </q-input>
-            <div v-for="(item, index) in items" :key="index" class="caption">
-              <q-item clickable v-ripple class="full-width">
-                <q-item-section avatar>
-                  <q-icon color="primary" name="bluetooth" />
-                </q-item-section>
+            <q-scroll-area style="height: 300px;" class="q-mt-md full-width">
+              <q-list>
+                <q-item
+                  clickable
+                  v-ripple
+                  class="full-width"
+                  v-for="(collection, index) in collectionTagList"
+                  :key="index"
+                >
+                  <q-item-section avatar>
+                    <q-avatar>
+                      <img :src="collection.avatar" />
+                    </q-avatar>
+                  </q-item-section>
 
-                <q-item-section>Icon as avatar</q-item-section>
-              </q-item>
-            </div>
+                  <q-item-section class="text-body2 text-weight-medium">{{
+                    collection.title
+                  }}</q-item-section>
+                </q-item>
+              </q-list>
+            </q-scroll-area>
           </div>
         </q-expansion-item>
         <q-separator />
@@ -224,7 +237,10 @@
       </div>
       <q-separator />
       <div class="q-pa-md flex justify-between align-center">
-        <div class="q-pa-md">14,198 results</div>
+        <div class="q-pa-md" v-if="!loadingProducts">14,198 results</div>
+        <div class="q-pa-md" v-else>
+          <q-spinner color="grey-5" size="3em" :thickness="10" />
+        </div>
         <div class="flex">
           <q-select
             filled
@@ -244,10 +260,10 @@
         <div class="row">
           <div
             class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
-            v-for="item in 50"
-            v-bind:key="item"
+            v-for="(item, index) in publicProducts"
+            v-bind:key="'browse-product' + index"
           >
-            <ProductPackageDemoCard></ProductPackageDemoCard>
+            <ProductPackageCard></ProductPackageCard>
           </div>
         </div>
       </div>
@@ -256,11 +272,26 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "BrowsePage",
   components: {
-    ProductPackageDemoCard: () => import("../components/ProductPackageDemoCard")
+    ProductPackageCard: () => import("../components/ProductPackageCard")
   },
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      loggedIn: "auth/loggedIn",
+      currentCollection: "manage/currentCollection",
+      publicProducts: "manage/publicProducts",
+      collectionTagList: "manage/collectionTagList"
+    })
+  },
+
   data() {
     return {
       drawerLeft: false,
@@ -286,13 +317,38 @@ export default {
       btFilterCheck: false,
       mtFilterCheck: false,
       xdnFilterCheck: false,
-      currentTab: 0
+      currentTab: 0,
+      loadingProducts: false
     };
   },
   created() {
-    // this.$store.dispatch("manage/getProducts");
+    this.getProducts();
   },
-  methods: {}
+  methods: {
+    getProducts() {
+      let params = { limit: 10 };
+      this.loadingProducts = true;
+      this.$store.dispatch("manage/getProducts", params).then(() => {
+        this.$q.notify({
+          type: this.notificationType,
+          message: this.notificationText
+        });
+        this.loadingProducts = false;
+      });
+    },
+    showCollectionList() {
+      let params = { limit: 10 };
+
+      this.$store.dispatch("manage/getCollectionTagList", params).then(() => {
+        if (!this.requestSuccess) {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+        }
+      });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

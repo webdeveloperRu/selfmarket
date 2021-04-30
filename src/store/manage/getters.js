@@ -13,6 +13,10 @@ export function currentCollection(state) {
   return state.currentCollection;
 }
 
+export function collectionTagList(state) {
+  return state.collectionTagList;
+}
+
 /**
  *  ---------------------------@categories_getters ---------------------------
  **/

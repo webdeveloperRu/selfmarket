@@ -4,6 +4,7 @@ export default function() {
 
     publicCollections: [],
     publicTopCollections: [],
+    collectionTagList: [],
 
     publicProducts: [],
     currentProduct: [],

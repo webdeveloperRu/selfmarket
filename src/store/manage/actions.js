@@ -37,20 +37,60 @@ export async function getCategories(context) {
 /**
  *  ---------------------------@collections_api ---------------------------
  **/
-export async function getCollections(context) {
+export async function getCollections(context, filterParams) {
+  var qs = require("qs");
+
   context.commit("SET_IN_REQUEST", true, {
     root: true
   });
   await axios
     .get(API_URL_COLLECTIONS, {
-      headers: authHeader()
+      params: filterParams,
+      paramsSerializer: function(params) {
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      }
     })
     .then(response => {
+      console.log(response);
       if (response.status == 200) {
         context.commit("getCollectionsSuccess", response);
       }
     })
     .catch(err => {
+      console.log(err);
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function getCollectionTagList(context, filterParams) {
+  var qs = require("qs");
+
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .get(API_URL_COLLECTIONS, {
+      params: filterParams,
+      paramsSerializer: function(params) {
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      }
+    })
+    .then(response => {
+      console.log(response);
+      if (response.status == 200) {
+        context.commit("getCollectionTagListSuccess", response);
+      }
+    })
+    .catch(err => {
+      console.log(err);
       if (err.response) {
         context.commit("REQUEST_FAILED", err.response, {
           root: true
@@ -168,7 +208,6 @@ export async function getProducts(context, filterParams) {
   });
   await axios
     .get(API_URL_PRODUCTS, {
-      headers: authHeader(),
       params: filterParams,
       paramsSerializer: function(params) {
         return qs.stringify(params, { arrayFormat: "repeat" });

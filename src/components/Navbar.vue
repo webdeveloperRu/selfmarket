@@ -240,11 +240,7 @@
                 >
                   <q-item-section>
                     <div @click="logout">
-                      <q-icon
-                        name="settings_applications"
-                        size="28px"
-                        class="q-pr-sm"
-                      />
+                      <q-icon name="logout" size="28px" class="q-pr-sm" />
                       Logout
                     </div></q-item-section
                   >

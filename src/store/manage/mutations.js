@@ -24,6 +24,18 @@ export function getCollectionsSuccess(state, res) {
       state.publicCollections.length + " collections found!";
 }
 
+export function getCollectionTagListSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.collectionTagList = res.data.data;
+  if (state.collectionTagList.length == 0)
+    Store.state.notificationText = "There is no collections creatd!";
+  else
+    Store.state.notificationText =
+      state.collectionTagList.length + " collections found!";
+}
+
 export function getTopCollectionsSuccess(state, res) {
   Store.state.inRequest = false;
   Store.state.notificationText = "Top Collections successfully got!";
