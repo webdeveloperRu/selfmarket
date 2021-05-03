@@ -724,20 +724,20 @@ export default {
 
   created() {
     this.$store.dispatch("manage/getCategories");
-    this.getVirtualWorlds();
+    // this.getVirtualWorlds();
   },
   methods: {
-    getVirtualWorlds() {
-      let filter = {
-        category_id: 1
-      };
-      this.$store.dispatch("manage/getProducts", filter).then(() => {
-        this.$q.notify({
-          type: this.notificationType,
-          message: this.notificationText
-        });
-      });
-    },
+    // getVirtualWorlds() {
+    //   let filter = {
+    //     category_id: 1
+    //   };
+    //   this.$store.dispatch("manage/getProducts", filter).then(() => {
+    //     this.$q.notify({
+    //       type: this.notificationType,
+    //       message: this.notificationText
+    //     });
+    //   });
+    // },
     navigatePage(path) {
       this.selected_tab = "";
       this.$router.push(path).catch(() => {});

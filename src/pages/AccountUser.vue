@@ -218,6 +218,7 @@
                 placeholder="Filter"
                 class="q-ml-md"
                 style="width: 100%"
+                @keyup="searchCollectionByTitle"
               >
                 <template v-slot:append>
                   <q-icon v-if="filterCollectionText === ''" name="search" />
@@ -225,11 +226,15 @@
                     v-else
                     name="clear"
                     class="cursor-pointer"
-                    @click="filterCollectionText = ''"
+                    @click="removeFilterCollectionText"
                   />
                 </template>
               </q-input>
-              <q-scroll-area style="height: 300px;" class="q-mt-md full-width">
+              <q-scroll-area
+                style="height: 300px;"
+                class="q-mt-md full-width"
+                @scroll="onScrollCollectionList"
+              >
                 <q-list>
                   <q-item
                     clickable
@@ -531,12 +536,15 @@ export default {
       loggedIn: "auth/loggedIn",
       currentCollection: "manage/currentCollection",
       publicProducts: "manage/publicProducts",
-      collectionTagList: "manage/collectionTagList"
+      collectionTagList: "manage/collectionTagList",
+      offsetCollectionTagList: "manage/offsetCollectionTagList"
     })
   },
 
   created() {
     window.addEventListener("scroll", this.handleScroll);
+    this.$store.commit("manage/setOffsetCollectionTagList", 0);
+    this.$store.commit("manage/initCollectionTagList");
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -643,7 +651,7 @@ export default {
       return icon;
     },
     showCollectionList() {
-      let params = { limit: 10 };
+      let params = { limit: 10, offset: this.offsetCollectionTagList };
       this.$store.dispatch("manage/getCollectionTagList", params).then(() => {
         if (!this.requestSuccess) {
           this.$q.notify({
@@ -652,6 +660,45 @@ export default {
           });
         }
       });
+    },
+    onScrollCollectionList({ verticalPercentage }) {
+      if (verticalPercentage == 1) this.showCollectionList();
+    },
+
+    searchCollectionByTitle() {
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+      this.timer = setTimeout(() => {
+        this.$store.commit("manage/setOffsetCollectionTagList", 0);
+        this.$store.commit("manage/initCollectionTagList");
+        if (this.filterCollectionText == "") {
+          this.showCollectionList();
+        } else {
+          let params = {
+            limit: 10,
+            title: this.filterCollectionText,
+            offset: this.offsetCollectionTagList
+          };
+          this.$store
+            .dispatch("manage/getCollectionTagList", params)
+            .then(() => {
+              if (!this.requestSuccess) {
+                this.$q.notify({
+                  type: this.notificationType,
+                  message: this.notificationText
+                });
+              }
+            });
+        }
+      }, 1500);
+    },
+    removeFilterCollectionText() {
+      this.filterCollectionText = "";
+      this.$store.commit("manage/setOffsetCollectionTagList", 0);
+      this.$store.commit("manage/initCollectionTagList");
+      this.showCollectionList();
     }
   }
 };

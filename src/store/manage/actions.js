@@ -51,13 +51,11 @@ export async function getCollections(context, filterParams) {
       }
     })
     .then(response => {
-      console.log(response);
       if (response.status == 200) {
         context.commit("getCollectionsSuccess", response);
       }
     })
     .catch(err => {
-      console.log(err);
       if (err.response) {
         context.commit("REQUEST_FAILED", err.response, {
           root: true
@@ -84,13 +82,11 @@ export async function getCollectionTagList(context, filterParams) {
       }
     })
     .then(response => {
-      console.log(response);
       if (response.status == 200) {
         context.commit("getCollectionTagListSuccess", response);
       }
     })
     .catch(err => {
-      console.log(err);
       if (err.response) {
         context.commit("REQUEST_FAILED", err.response, {
           root: true

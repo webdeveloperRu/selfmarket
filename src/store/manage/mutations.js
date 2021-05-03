@@ -28,12 +28,14 @@ export function getCollectionTagListSuccess(state, res) {
   Store.state.inRequest = false;
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.collectionTagList = res.data.data;
+  state.collectionTagList = state.collectionTagList.concat(res.data.data);
+
   if (state.collectionTagList.length == 0)
     Store.state.notificationText = "There is no collections creatd!";
   else
     Store.state.notificationText =
       state.collectionTagList.length + " collections found!";
+  state.offsetCollectionTagList = state.collectionTagList.length;
 }
 
 export function getTopCollectionsSuccess(state, res) {
@@ -49,7 +51,6 @@ export function addCollectionSuccess(state, res) {
   Store.state.notificationText = "New collection succesully added!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  console.log(res.data);
   state.publicCollections.push(res.data);
 }
 export function updateCollectionSuccess(state, res) {
@@ -62,6 +63,14 @@ export function updateCollectionSuccess(state, res) {
 
 export function setCurrentCollection(state, collection) {
   state.currentCollection = collection;
+}
+
+export function setOffsetCollectionTagList(state, offset) {
+  state.offsetCollectionTagList = offset;
+}
+
+export function initCollectionTagList(state) {
+  state.collectionTagList = [];
 }
 
 /**
@@ -138,4 +147,5 @@ export function RESET_MODULE(state) {
   state.myFavorites = [];
 
   state.currentCollection = null;
+  state.offsetCollectionTagList = 0;
 }

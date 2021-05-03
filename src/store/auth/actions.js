@@ -285,7 +285,6 @@ export async function changePassword(context, [password, newpassword]) {
       }
     })
     .catch(err => {
-      console.log(err);
       if (err.response) {
         context.commit("REQUEST_FAILED", err.response, {
           root: true

@@ -27,7 +27,6 @@ const Store = new Vuex.Store({
       state.notificationType = "negative";
       if (error.status == 401) {
         if (error.data.message == "a valid token is missing") {
-          console.log("valid token missing");
           Store.dispatch("auth/logout");
         }
       }

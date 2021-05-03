@@ -5,13 +5,13 @@ export default function() {
     publicCollections: [],
     publicTopCollections: [],
     collectionTagList: [],
+    currentCollection: null,
+    offsetCollectionTagList: 0,
 
     publicProducts: [],
     currentProduct: [],
 
-    myFavorites: [],
-
-    currentCollection: null
+    myFavorites: []
   };
   return initialState;
 }

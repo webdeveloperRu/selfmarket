@@ -17,6 +17,9 @@ export function collectionTagList(state) {
   return state.collectionTagList;
 }
 
+export function offsetCollectionTagList(state) {
+  return state.offsetCollectionTagList;
+}
 /**
  *  ---------------------------@categories_getters ---------------------------
  **/
