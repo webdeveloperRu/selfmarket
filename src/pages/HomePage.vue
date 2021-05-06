@@ -199,7 +199,10 @@
           </div>
           <q-separator class="q-mt-md" />
 
-          <div class="trending-collections__items q-ma-sm">
+          <div
+            class="trending-collections__items q-ma-sm"
+            v-if="homepageData.trending_collections"
+          >
             <CollectionPackageCard
               v-for="collection in homepageData.trending_collections"
               v-bind:key="'trending-collection' + collection.id"
@@ -215,7 +218,10 @@
           </div>
           <q-separator class="q-mt-md" />
 
-          <div class="digital-art__items q-ma-sm">
+          <div
+            class="digital-art__items q-ma-sm"
+            v-if="homepageData.categories"
+          >
             <ProductPackageCard
               v-for="product in this.homepageData.categories['DIGITAL ART']"
               v-bind:key="'digital-product' + product.id"
@@ -230,7 +236,10 @@
           </div>
           <q-separator class="q-mt-md" />
 
-          <div class="virtual-world__items q-ma-sm">
+          <div
+            class="virtual-world__items q-ma-sm"
+            v-if="homepageData.categories"
+          >
             <ProductPackageCard
               v-for="product in this.homepageData.categories['Domain Names']"
               v-bind:key="'digital-product' + product.id"
@@ -244,7 +253,10 @@
             Collectibles
           </div>
           <q-separator class="q-mt-md" />
-          <div class="collectibles__items q-ma-sm">
+          <div
+            class="collectibles__items q-ma-sm"
+            v-if="homepageData.categories"
+          >
             <ProductPackageCard
               v-for="product in homepageData.categories['COLLECTIBLES']"
               v-bind:key="'collectible-product' + product.id"
