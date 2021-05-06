@@ -47,7 +47,6 @@
           class="activity-table"
           :data="collectionRankings"
           :columns="columns"
-          row-key="id"
           virtual-scroll
           flat
           hide-pagination

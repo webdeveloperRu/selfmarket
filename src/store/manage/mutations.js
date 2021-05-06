@@ -194,7 +194,8 @@ export function getRankingsStatusSuccess(state, res) {
   Store.state.notificationText = "rankings succesfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.collectionRankings = state.collectionRankings.concat(res.data.data);
+  if (res.data.data.length != 0)
+    state.collectionRankings = state.collectionRankings.concat(res.data.data);
   state.offsetRankings = state.collectionRankings.length;
 }
 
@@ -203,7 +204,8 @@ export function getRankingsCategoryIDSuccess(state, res) {
   Store.state.notificationText = "rankings succesfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.collectionRankings = state.collectionRankings.concat(res.data.data);
+  if (res.data.data.length != 0)
+    state.collectionRankings = state.collectionRankings.concat(res.data.data);
   state.offsetRankings = state.collectionRankings.length;
 }
 

@@ -51,12 +51,12 @@
         </div>
         <div class="flex full-width items-center justify-center">
           <div style="max-width: 90%" class="full-width">
-            <div class="flex full-width  q-ma-sm q-mt-xl">
+            <div class="flex full-width  q-ma-sm q-mt-xl justfy-between">
               <q-img
-                src="../../assets/images/mountains.jpg"
+                :src="currentCollection.avatar"
                 class="colleciton-logo"
               ></q-img>
-              <div class="info q-ml-lg">
+              <div class="info q-ml-lg" style="width:60%">
                 <div class="text-h4" style="font-size: 40px">
                   {{ currentCollection.title }}
                 </div>
