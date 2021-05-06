@@ -45,23 +45,16 @@
       <div>
         <q-table
           class="activity-table"
-          :data="collectionRankings.data"
+          :data="collectionRankings"
           :columns="columns"
-          row-key="index"
+          row-key="id"
           virtual-scroll
           flat
           hide-pagination
           :pagination.sync="pagination"
           :rows-per-page-options="[0]"
-          :loading="loadingRankings"
           hide-no-data
         >
-          <template v-slot:loading>
-            <q-inner-loading showing>
-              <q-spinner size="3em" color="primary" :thickness="10" />
-            </q-inner-loading>
-          </template>
-
           <template v-slot:header="props">
             <q-tr :props="props">
               <q-th
@@ -76,14 +69,9 @@
             </q-tr>
           </template>
 
-          <template v-slot:body-cell-event="props">
+          <template v-slot:body-cell-title="props">
             <q-td :props="props">
-              <q-icon
-                :name="eventIcon(props.row.event)"
-                size="1.5em"
-                class="q-pr-sm"
-              />
-              {{ props.row.event }}
+              {{ props.row.index }}{{ props.row.title }}
             </q-td>
           </template>
           <template v-slot:body-cell-price="props">
@@ -118,6 +106,20 @@
           </template></q-table
         >
       </div>
+      <div
+        class="q-my-md flex justify-center"
+        v-observe-visibility="visibilityChanged"
+      >
+        <q-spinner
+          size="3em"
+          color="primary"
+          :thickness="10"
+          v-if="loadingRankings"
+        />
+        <div class="text-body1" v-else>
+          {{ collectionRankings.length }} results
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -125,6 +127,11 @@
 <script>
 import fakeData from "./fakeData";
 import { mapGetters } from "vuex";
+import Vue from "vue";
+
+import VueObserveVisibility from "vue-observe-visibility";
+Vue.use(VueObserveVisibility);
+
 export default {
   name: "RankingsPage",
   components: {},
@@ -135,7 +142,8 @@ export default {
       notificationType: "notificationType",
       requestSuccess: "requestSuccess",
       publicCategories: "manage/publicCategories",
-      collectionRankings: "manage/collectionRankings"
+      collectionRankings: "manage/collectionRankings",
+      offsetRankings: "manage/offsetRankings"
     })
   },
 
@@ -203,29 +211,34 @@ export default {
   created() {
     this.loadData();
   },
+  mounted() {},
 
   methods: {
     setCurrentTab(tab) {
+      this.$store.commit("manage/initCollectionRankings");
       this.currentTab = tab;
-      this.getRankings();
     },
+
     loadData() {
       this.$store.dispatch("manage/getCategories");
-      this.getRankings();
+      this.setCurrentTab("all");
     },
+
     getRankings() {
       this.loadingRankings = true;
 
-      // this.$store.commit("manage/initCollectionRankings");
       if (this.currentTab == "new" || this.currentTab == "all") {
-        let params = {};
+        let params = {
+          offset: this.offsetRankings
+        };
         this.$store
           .dispatch("manage/getRankingsStatus", [this.currentTab, params])
           .then(() => {
             this.loadingRankings = false;
           });
       } else {
-        let params = {};
+        let params = { offset: this.offsetRankings };
+
         this.$store
           .dispatch("manage/getRankingsCategoryID", [this.currentTab, params])
           .then(() => {
@@ -245,6 +258,11 @@ export default {
           break;
       }
       return icon;
+    },
+    visibilityChanged(isVisible, entry) {
+      if (isVisible) {
+        this.getRankings();
+      }
     }
   }
 };

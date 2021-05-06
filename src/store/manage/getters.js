@@ -70,3 +70,7 @@ export function homepageData(state) {
 export function collectionRankings(state) {
   return state.collectionRankings;
 }
+
+export function offsetRankings(state) {
+  return state.offsetRankings;
+}

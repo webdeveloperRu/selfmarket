@@ -194,7 +194,8 @@ export function getRankingsStatusSuccess(state, res) {
   Store.state.notificationText = "rankings succesfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.collectionRankings = res.data;
+  state.collectionRankings = state.collectionRankings.concat(res.data.data);
+  state.offsetRankings = state.collectionRankings.length;
 }
 
 export function getRankingsCategoryIDSuccess(state, res) {
@@ -202,9 +203,11 @@ export function getRankingsCategoryIDSuccess(state, res) {
   Store.state.notificationText = "rankings succesfully got!";
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
-  state.collectionRankings = res.data;
+  state.collectionRankings = state.collectionRankings.concat(res.data.data);
+  state.offsetRankings = state.collectionRankings.length;
 }
 
 export function initCollectionRankings(state) {
   state.collectionRankings = [];
+  state.offsetRankings = 0;
 }

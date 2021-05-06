@@ -18,7 +18,8 @@ export default function() {
 
     homepageData: [],
 
-    collectionRankings: []
+    collectionRankings: [],
+    offsetRankings: 0
   };
   return initialState;
 }
