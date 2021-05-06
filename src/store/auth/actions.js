@@ -77,12 +77,13 @@ export async function logout(context) {
       }
     })
     .catch(err => {
+      context.commit("manage/RESET_MODULE", null, {
+        root: true
+      });
+      context.commit("RESET_MODULE");
+
       if (err.response) {
         Router.push("/login").catch(() => {});
-        context.commit("manage/RESET_MODULE", null, {
-          root: true
-        });
-        context.commit("RESET_MODULE");
 
         context.commit("REQUEST_FAILED", err.response);
       } else if (err.request) {

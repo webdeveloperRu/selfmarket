@@ -45,3 +45,28 @@ export function currentProduct(state) {
 export function myFavorites(state) {
   return state.myFavorites;
 }
+
+/**
+ *  ---------------------------@orders_getters ---------------------------
+ **/
+export function myOrders(state) {
+  return state.myOrders;
+}
+
+export function currentOrder(state) {
+  return state.currentOrder;
+}
+
+/**
+ *  ---------------------------@homepagedata_getters ---------------------------
+ **/
+export function homepageData(state) {
+  return state.homepageData;
+}
+
+/**
+ *  ---------------------------@rankings ---------------------------
+ **/
+export function collectionRankings(state) {
+  return state.collectionRankings;
+}

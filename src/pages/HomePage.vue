@@ -129,8 +129,8 @@
       <q-btn
         color="primary"
         label="Explorer"
-        size="14px"
-        class="q-px-lg q-py-xs q-mr-lg"
+        size="13px"
+        class="q-px-lg q-py-xs q-mx-lg"
         style="width: 160px"
         aria-label="Explorer"
         to="/assets"
@@ -139,8 +139,8 @@
         color="primary"
         outline
         label="Create"
-        size="14px"
-        class="q-px-lg q-py-xs"
+        size="13px"
+        class="q-px-lg q-py-xs q-mx-lg"
         style="width: 160px"
         aria-label="Create Button"
         to="/my-collection"
@@ -200,48 +200,41 @@
           <q-separator class="q-mt-md" />
 
           <div class="trending-collections__items q-ma-sm">
-            <q-card
-              class="item-card cursor-pointer"
-              flat
-              bordered
-              v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-              v-bind:key="item"
+            <CollectionPackageCard
+              v-for="collection in homepageData.trending_collections"
+              v-bind:key="'trending-collection' + collection.id"
+              :collection="collection"
             >
-              <img src="../assets/images/mountains.jpg" />
-
-              <q-card-section>
-                <div class="text-h6 text-center" style="font-weight: 300">
-                  Our Changing Planet
-                </div>
-              </q-card-section>
-            </q-card>
+            </CollectionPackageCard>
           </div>
         </div>
         <div class="digital-art q-px-sm">
           <div class="q-pl-lg" style="font-size: 14px; font-weight: 700">
             <q-icon name="palette" style="font-size: 1.5rem" />
-            DIGITAL ART
+            Digital Art
           </div>
           <q-separator class="q-mt-md" />
 
           <div class="digital-art__items q-ma-sm">
             <ProductPackageCard
-              v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-              v-bind:key="'digital' + item"
+              v-for="product in this.homepageData.categories['DIGITAL ART']"
+              v-bind:key="'digital-product' + product.id"
+              :product="product"
             ></ProductPackageCard>
           </div>
         </div>
         <div class="virtual-world q-px-sm">
           <div class="q-pl-lg" style="font-size: 14px; font-weight: 700">
             <q-icon name="landscape" style="font-size: 1.5rem" />
-            VIRTUAL WORLDS
+            Domain Names
           </div>
           <q-separator class="q-mt-md" />
 
           <div class="virtual-world__items q-ma-sm">
             <ProductPackageCard
-              v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-              v-bind:key="'virtual' + item"
+              v-for="product in this.homepageData.categories['Domain Names']"
+              v-bind:key="'digital-product' + product.id"
+              :product="product"
             ></ProductPackageCard>
           </div>
         </div>
@@ -253,8 +246,9 @@
           <q-separator class="q-mt-md" />
           <div class="collectibles__items q-ma-sm">
             <ProductPackageCard
-              v-for="item in [1, 2, 3, 4, 5, 6, 7]"
-              v-bind:key="'collectibles' + item"
+              v-for="product in homepageData.categories['COLLECTIBLES']"
+              v-bind:key="'collectible-product' + product.id"
+              :product="product"
             ></ProductPackageCard>
           </div>
         </div>
@@ -689,7 +683,9 @@ export default {
   name: "HomePage",
   components: {
     CategoryPanel,
-    ProductPackageCard: () => import("../components/ProductPackageDemoCard"),
+    ProductPackageCard: () => import("../components/ProductPackageCard"),
+    CollectionPackageCard: () => import("../components/CollectionPackageCard"),
+
     Hooper,
     Slide,
     HooperPagination
@@ -701,7 +697,8 @@ export default {
       notificationType: "notificationType",
       requestSuccess: "requestSuccess",
       loggedIn: "auth/loggedIn",
-      publicCategories: "manage/publicCategories"
+      publicCategories: "manage/publicCategories",
+      homepageData: "manage/homepageData"
     })
   },
 
@@ -724,6 +721,8 @@ export default {
 
   created() {
     this.$store.dispatch("manage/getCategories");
+    this.$store.dispatch("manage/getHomepageData");
+
     // this.getVirtualWorlds();
   },
   methods: {

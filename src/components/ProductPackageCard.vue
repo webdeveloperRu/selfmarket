@@ -1,5 +1,10 @@
 <template>
-  <q-card class="item-card cursor-pointer" flat bordered>
+  <q-card
+    class="item-card cursor-pointer"
+    flat
+    bordered
+    style="max-width: 320px"
+  >
     <q-btn
       v-if="editable"
       flat
@@ -22,11 +27,25 @@
       />
       <span class="text-subtitle1">{{ product.votes }}</span>
     </div>
-    <img
-      src="../assets/images/mountains.jpg"
-      alt="card-item"
+    <div
+      class="flex justify-center items-center full-width"
       @click="navigateProductDetails"
-    />
+    >
+      <q-icon
+        name="image"
+        style="font-size: 12.5rem"
+        color="grey-4"
+        v-if="product.images.length == 0"
+      ></q-icon>
+
+      <q-img
+        v-else
+        :src="product.images[0]"
+        alt="card-item"
+        class="full-width"
+        style="height: 200px; border-top-left-radius: 3px; border-top-right-radius:3px;"
+      />
+    </div>
 
     <q-card-section @click="navigateProductDetails">
       <div class="flex justify-between">

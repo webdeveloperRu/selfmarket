@@ -158,15 +158,17 @@
       <div class="q-pa-md" style="overflow-x:auto;  display: flex">
         <div
           class="tab-button"
-          :class="currentTab == 0 ? 'active' : ''"
-          @click="setCurrentTab(0)"
+          :class="currentTab == category.id ? 'active' : ''"
+          @click="setCurrentTab(category.id)"
+          v-for="category in publicCategories"
+          v-bind:key="'category-filter-tab' + category.id"
         >
-          <img src="../assets/images/categories/art-small.png" height="30" />
+          <!-- <img src="../assets/images/categories/art-small.png" height="30" /> -->
           <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Art
+            {{ category.title }}
           </div>
         </div>
-        <div
+        <!-- <div
           class="tab-button"
           :class="currentTab == 1 ? 'active' : ''"
           @click="setCurrentTab(1)"
@@ -238,11 +240,13 @@
           <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
             Utility
           </div>
-        </div>
+        </div> -->
       </div>
       <q-separator />
       <div class="q-pa-md flex justify-between align-center">
-        <div class="q-pa-md" v-if="!loadingProducts">14,198 results</div>
+        <div class="q-pa-md" v-if="!loadingProducts">
+          {{ publicProducts.length }} results
+        </div>
         <div class="q-pa-md" v-else>
           <q-spinner color="grey-5" size="3em" :thickness="10" />
         </div>
@@ -262,14 +266,14 @@
             class="q-pa-md"
           />
         </div>
-        <div class="row">
-          <div
-            class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
-            v-for="(item, index) in publicProducts"
-            v-bind:key="'browse-product' + index"
-          >
-            <ProductPackageCard></ProductPackageCard>
-          </div>
+      </div>
+      <div class="row q-ma-md">
+        <div
+          class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm"
+          v-for="(product, index) in publicProducts"
+          v-bind:key="'browse-product' + index"
+        >
+          <ProductPackageCard :product="product"></ProductPackageCard>
         </div>
       </div>
     </q-page-container>
@@ -294,7 +298,8 @@ export default {
       currentCollection: "manage/currentCollection",
       publicProducts: "manage/publicProducts",
       collectionTagList: "manage/collectionTagList",
-      offsetCollectionTagList: "manage/offsetCollectionTagList"
+      offsetCollectionTagList: "manage/offsetCollectionTagList",
+      publicCategories: "manage/publicCategories",
     })
   },
 
@@ -323,24 +328,39 @@ export default {
       btFilterCheck: false,
       mtFilterCheck: false,
       xdnFilterCheck: false,
-      currentTab: 0,
+      currentTab: -1,
       loadingProducts: false
     };
   },
   created() {
+    this.$store.dispatch("manage/getCategories");
     this.getProducts();
     this.$store.commit("manage/setOffsetCollectionTagList", 0);
     this.$store.commit("manage/initCollectionTagList");
   },
   methods: {
     getProducts() {
-      let params = { limit: 10 };
+      let params = {};
+      if (this.currentTab == -1) {
+        params = {
+          limit: 10,
+          offset: this.offsetCollectionTagList
+        };
+      } else {
+        params = {
+          limit: 10,
+          offset: this.offsetCollectionTagList,
+          category_id: this.currentTab
+        };
+      }
       this.loadingProducts = true;
       this.$store.dispatch("manage/getProducts", params).then(() => {
-        this.$q.notify({
-          type: this.notificationType,
-          message: this.notificationText
-        });
+        if (!this.requestSuccess) {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+        }
         this.loadingProducts = false;
       });
     },
@@ -401,6 +421,7 @@ export default {
     setCurrentTab(tabIndex) {
       if (this.currentTab == tabIndex) this.currentTab = -1;
       else this.currentTab = tabIndex;
+      this.getProducts();
     }
   }
 };

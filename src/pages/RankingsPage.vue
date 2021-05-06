@@ -1,110 +1,81 @@
 <template>
-  <div class="q-pa-sm">
-    <q-layout view="hHh Lpr lff" container style="height: 88vh">
-      <div class="text-h4 text-center q-pa-lg">
+  <div class="q-pa-sm flex justify-center">
+    <div container style="height: 90vh;" class="rankings-container full-width">
+      <div class="text-h4 text-center q-pa-lg" style="font-size: 30px">
         Top Non-Fungible Tokens
       </div>
-      <div class="text-subtitle1 text-center q-pa-md">
+      <div class="text-subtitle1 text-center ">
         Volume, Average, Price and other top statistics for non-fungible
         tokens(NFTs), updated hourly.
       </div>
       <div class="q-pa-md" style="overflow-x:auto;  display: flex">
         <div
           class="tab-button"
-          :class="currentTab == 0 ? 'active' : ''"
-          @click="currentTab = 0"
+          :class="currentTab == 'all' ? 'active' : ''"
+          @click="setCurrentTab('all')"
         >
-          <img src="../assets/images/categories/art-small.png" height="30" />
-          <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Art
-          </div>
-        </div>
-        <div
-          class="tab-button"
-          :class="currentTab == 1 ? 'active' : ''"
-          @click="currentTab = 1"
-        >
-          <img src="../assets/images/categories/domain-small.png" height="30" />
-          <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Domain Names
-          </div>
-        </div>
-        <div
-          class="tab-button"
-          :class="currentTab == 2 ? 'active' : ''"
-          @click="currentTab = 2"
-        >
-          <img
-            src="../assets/images/categories/virtual-worlds-small.png"
-            height="30"
-          />
-          <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Virtual Worlds
+          <div class=" text-subtitle2" style="font-weight: 400">
+            All
           </div>
         </div>
 
         <div
           class="tab-button"
-          :class="currentTab == 3 ? 'active' : ''"
-          @click="currentTab = 3"
+          :class="currentTab == 'new' ? 'active' : ''"
+          @click="setCurrentTab('new')"
         >
-          <img
-            src="../assets/images/categories/trading-cards-small.png"
-            height="30"
-          />
-          <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Trading Cards
+          <div class=" text-subtitle2" style="font-weight: 400">
+            New
           </div>
         </div>
+
         <div
           class="tab-button"
-          :class="currentTab == 4 ? 'active' : ''"
-          @click="currentTab = 4"
+          :class="currentTab == category.id ? 'active' : ''"
+          @click="setCurrentTab(category.id)"
+          v-for="category in publicCategories"
+          v-bind:key="'ranking-cateogry-tab' + category.id"
         >
-          <img
-            src="../assets/images/categories/collectibles-small.png"
-            height="30"
-          />
-          <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Collectibles
-          </div>
-        </div>
-        <div
-          class="tab-button"
-          :class="currentTab == 5 ? 'active' : ''"
-          @click="currentTab = 5"
-        >
-          <img src="../assets/images/categories/sports-small.png" height="30" />
-          <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Sports
-          </div>
-        </div>
-        <div
-          class="tab-button"
-          :class="currentTab == 6 ? 'active' : ''"
-          @click="currentTab = 6"
-        >
-          <img
-            src="../assets/images/categories/utility-small.png"
-            height="30"
-          />
-          <div class="q-pl-sm text-subtitle2" style="font-weight: 400">
-            Utility
+          <div class=" text-subtitle2" style="font-weight: 400">
+            {{ category.title }}
           </div>
         </div>
       </div>
       <q-separator />
-      <q-page-container>
+      <div>
         <q-table
           class="activity-table"
-          :data="data"
+          :data="collectionRankings.data"
           :columns="columns"
           row-key="index"
           virtual-scroll
+          flat
+          hide-pagination
           :pagination.sync="pagination"
           :rows-per-page-options="[0]"
-          no-data-label="No data to show"
+          :loading="loadingRankings"
+          hide-no-data
         >
+          <template v-slot:loading>
+            <q-inner-loading showing>
+              <q-spinner size="3em" color="primary" :thickness="10" />
+            </q-inner-loading>
+          </template>
+
+          <template v-slot:header="props">
+            <q-tr :props="props">
+              <q-th
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props"
+                class="text-primary"
+                style="font-size: 15px"
+              >
+                {{ col.label }}
+              </q-th>
+            </q-tr>
+          </template>
+
           <template v-slot:body-cell-event="props">
             <q-td :props="props">
               <q-icon
@@ -146,58 +117,122 @@
             </q-td>
           </template></q-table
         >
-      </q-page-container>
-    </q-layout>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import fakeData from "./fakeData";
+import { mapGetters } from "vuex";
 export default {
   name: "RankingsPage",
   components: {},
+  computed: {
+    ...mapGetters({
+      inRequest: "inRequest",
+      notificationText: "notificationText",
+      notificationType: "notificationType",
+      requestSuccess: "requestSuccess",
+      publicCategories: "manage/publicCategories",
+      collectionRankings: "manage/collectionRankings"
+    })
+  },
+
   data() {
     return {
       columns: [
         {
-          name: "event",
-          label: "Event",
+          name: "title",
+          label: "COLLECTION",
           align: "left",
-          field: "event",
+          field: "title"
+        },
+        {
+          name: "last_7_day_volume",
+          align: "left",
+          label: "7 DAY VOLUME",
+          field: "last_7_day_volume",
           sortable: true
         },
         {
-          name: "item",
+          name: "last_7_DAY_CHANGE",
+          label: "7 DAY CHANGE",
+          field: "last_7_DAY_CHANGE",
           align: "left",
-          label: "Item",
-          field: "item",
           sortable: true
         },
         {
-          name: "price",
-          label: "Unit Price",
-          field: "price",
-          sortable: true,
-          align: "left"
+          name: "TOTAL_VOLUME",
+          label: "TOTAL VOLUME",
+          field: "TOTAL_VOLUME",
+          align: "left",
+          sortable: true
         },
         {
-          name: "quantity",
-          label: "Quantity",
-          field: "quantity",
-          align: "left"
+          name: "AVG_PRICE",
+          label: "AVG PRICE",
+          field: "AVG_PRICE",
+          align: "left",
+          sortable: true
         },
-        { name: "from", label: "From", field: "from", align: "left" },
-        { name: "to", label: "To", field: "to", align: "left" },
-        { name: "date", label: "Date", field: "date", align: "left" }
+        {
+          name: "OWNERS",
+          label: "OWNERS",
+          field: "OWNERS",
+          align: "left",
+          sortable: true
+        },
+        {
+          name: "ASSETS",
+          label: "ASSETS",
+          field: "ASSETS",
+          align: "left",
+          sortable: true
+        }
       ],
       data: fakeData.activity_data,
       pagination: {
-        rowsPerPage: 15
+        rowsPerPage: 0
       },
-      currentTab: 0
+      currentTab: "all",
+      loadingRankings: false
     };
   },
+
+  created() {
+    this.loadData();
+  },
+
   methods: {
+    setCurrentTab(tab) {
+      this.currentTab = tab;
+      this.getRankings();
+    },
+    loadData() {
+      this.$store.dispatch("manage/getCategories");
+      this.getRankings();
+    },
+    getRankings() {
+      this.loadingRankings = true;
+
+      // this.$store.commit("manage/initCollectionRankings");
+      if (this.currentTab == "new" || this.currentTab == "all") {
+        let params = {};
+        this.$store
+          .dispatch("manage/getRankingsStatus", [this.currentTab, params])
+          .then(() => {
+            this.loadingRankings = false;
+          });
+      } else {
+        let params = {};
+        this.$store
+          .dispatch("manage/getRankingsCategoryID", [this.currentTab, params])
+          .then(() => {
+            this.loadingRankings = false;
+          });
+      }
+    },
     eventIcon(icon_name) {
       let icon = "";
       switch (icon_name) {
@@ -217,7 +252,6 @@ export default {
 <style lang="sass">
 .activity-table
   /* height or max-height is important */
-  height: 65vh
   .q-table__top,
   .q-table__bottom,
   thead tr:first-child th /* bg color is important for th; just specify one */
@@ -234,6 +268,10 @@ export default {
     top: 0
 </style>
 <style lang="scss" scoped>
+.rankings-container {
+  max-width: 85%;
+}
+
 .tab-button {
   display: flex;
   align-items: center;
@@ -252,5 +290,11 @@ export default {
 .tab-button.active {
   background: $grey-4;
   color: $grey-10;
+}
+
+@media only screen and (max-width: 600px) {
+  .rankings-container {
+    max-width: 100%;
+  }
 }
 </style>

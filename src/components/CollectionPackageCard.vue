@@ -20,9 +20,10 @@
       <q-img
         v-else
         :src="collection.avatar"
-        alt="card-item"
         class="full-width"
-        style="height: 200px"
+        style="height: 200px;
+        border-top-left-radius: 3px;
+        border-top-right-radius:3px;"
       />
     </div>
     <q-separator />
@@ -34,7 +35,7 @@
     </q-card-section>
   </q-card>
 </template>
-,
+
 <script>
 export default {
   name: "CollectionPackageCard",

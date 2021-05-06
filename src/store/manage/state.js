@@ -11,7 +11,14 @@ export default function() {
     publicProducts: [],
     currentProduct: [],
 
-    myFavorites: []
+    myFavorites: [],
+
+    myOrders: [],
+    currentOrder: [],
+
+    homepageData: [],
+
+    collectionRankings: []
   };
   return initialState;
 }

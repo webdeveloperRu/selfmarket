@@ -38,7 +38,6 @@
         You can also manage smart contracts that you created outside of
         Selfmarket. Learn more
       </div>
-
       <div class="row">
         <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12 q-pa-sm">
           <q-card
@@ -316,10 +315,12 @@ export default {
         }
       });
       await this.$store.dispatch("manage/getCollections").then(() => {
-        this.$q.notify({
-          type: this.notificationType,
-          message: this.notificationText
-        });
+        if (!this.requestSuccess) {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+        }
       });
       this.loadingData = false;
     },

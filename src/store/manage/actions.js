@@ -5,6 +5,36 @@ const API_URL_CATEGORIES = apiurl.API_URL + "categories/";
 const API_URL_COLLECTIONS = apiurl.API_URL + "collections/";
 const API_URL_PRODUCTS = apiurl.API_URL + "products/";
 const API_URL_FAVORITEES = apiurl.API_URL + "favorites/";
+const API_URL_ORDERS = apiurl.API_URL + "orders/";
+const API_URL_FRONTEND = apiurl.API_URL + "frontend/";
+const API_URL_RANKINGS = apiurl.API_URL + "rankings/collection/";
+
+/**
+ *  ---------------------------@homepage_api ---------------------------
+ **/
+export async function getHomepageData(context) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .get(API_URL_FRONTEND + "index")
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("getHomepageDataSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
 
 /**
  *  ---------------------------@categories_api ---------------------------
@@ -353,6 +383,131 @@ export async function removeFavorite(context, productID) {
     .then(response => {
       if (response.status == 200) {
         context.commit("removeFavoriteSuccess");
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+/**
+ *  ---------------------------@orders_api ---------------------------
+ **/
+export async function createNewOrder(context, productID) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .post(
+      API_URL_ORDERS,
+      { product_id: productID },
+      {
+        headers: authHeader()
+      }
+    )
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("createNewOrderSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function getMyOrders(context) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .get(API_URL_ORDERS, {
+      headers: authHeader()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("getMyOrdersSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+/**
+ *  ---------------------------@rankings_api ---------------------------
+ **/
+
+export async function getRankingsCategoryID(context, [categoryID, params]) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  var qs = require("qs");
+
+  await axios
+    .get(API_URL_RANKINGS + categoryID, {
+      params: params,
+      paramsSerializer: function(params) {
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      }
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("getRankingsCategoryIDSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function getRankingsStatus(context, [status, params]) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  var qs = require("qs");
+
+  await axios
+    .get(API_URL_RANKINGS + status, {
+      params: params,
+      paramsSerializer: function(params) {
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      }
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("getRankingsStatusSuccess", response);
       }
     })
     .catch(err => {

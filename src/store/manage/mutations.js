@@ -135,6 +135,26 @@ export function removeFavoriteSuccess() {
   Store.state.requestSuccess = true;
 }
 
+/**
+ *  ---------------------------@favorites_mutation ---------------------------
+ **/
+export function createNewOrderSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "product succesfully ordered!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.myOrders.push(res.data);
+  state.currentOrder = res.data;
+}
+
+export function getMyOrdersSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "orders succesfully got!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.myOrders = res.data;
+}
+
 export function RESET_MODULE(state) {
   state.publicCategories = [];
 
@@ -148,4 +168,43 @@ export function RESET_MODULE(state) {
 
   state.currentCollection = null;
   state.offsetCollectionTagList = 0;
+
+  state.currentOrder = [];
+  state.myOrders = [];
+}
+
+/**
+ *  ---------------------------@homepage_data ---------------------------
+ **/
+
+export function getHomepageDataSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "orders succesfully got!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.homepageData = res.data;
+}
+
+/**
+ *  ---------------------------@rankings ---------------------------
+ **/
+
+export function getRankingsStatusSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "rankings succesfully got!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.collectionRankings = res.data;
+}
+
+export function getRankingsCategoryIDSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "rankings succesfully got!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.collectionRankings = res.data;
+}
+
+export function initCollectionRankings(state) {
+  state.collectionRankings = [];
 }
