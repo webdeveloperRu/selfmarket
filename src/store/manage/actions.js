@@ -251,7 +251,7 @@ export async function getProducts(context, filterParams) {
         });
       } else if (err.request) {
         context.commit("NETWORK_ERROR", null, {
-          root: true
+          root: truequaa
         });
       }
     });

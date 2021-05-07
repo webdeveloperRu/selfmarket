@@ -66,12 +66,12 @@
                 ></q-btn>
               </div>
             </q-card-section> -->
-            <q-card-section classs="q-mb-lg">
+            <!-- <q-card-section classs="q-mb-lg">
               <div class="text-body1 q-mb-sm" style="font-weight: 500">
                 User Name
               </div>
               <q-input v-model="userName" placeholder="User Name" outlined />
-            </q-card-section>
+            </q-card-section> -->
             <q-card-section classs="q-mb-lg">
               <div class="text-body1 q-mb-sm" style="font-weight: 500">
                 User Email
