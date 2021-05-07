@@ -19,7 +19,12 @@
               >
               <span class="text-subtitle1">4</span>
             </div>
-            <img src="../assets/images/product-demo.png" alt="card-item" />
+            <img
+              :src="primaryImageUrl"
+              alt="card-item"
+              v-if="primaryImageUrl != ''"
+            />
+            <q-img src="../assets/images/no-product.jpg" v-else> </q-img>
           </q-card>
           <q-list bordered class="rounded-borders q-my-md">
             <q-card flat>
@@ -478,8 +483,15 @@ export default {
         }
       ],
       data: fakeData.activity_data,
-      pagination: { rowsPerPage: 15 }
+      pagination: { rowsPerPage: 15 },
+      primaryImageUrl: ""
     };
+  },
+
+  created() {
+    if (this.currentProduct.images.length != 0)
+      this.primaryImageUrl = this.currentProduct.images[0].img;
+    else this.primaryImageUrl = "";
   }
 };
 </script>

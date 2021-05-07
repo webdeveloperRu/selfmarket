@@ -85,6 +85,14 @@ export function getProductsSuccess(state, res) {
   state.publicProducts = res.data.data;
 }
 
+export function getProductByIDSuccess(state, res) {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "Products successfully got!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+  state.currentProduct = res.data;
+}
+
 export function addProductSuccess(state, res) {
   Store.state.inRequest = false;
   Store.state.notificationText = "Product successfully added!";
@@ -107,6 +115,19 @@ export function setCurrentProduct(state, product) {
   Store.state.notificationType = "positive";
   Store.state.requestSuccess = true;
   state.currentProduct = product;
+}
+
+export function addProductImageSuccess() {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "product image added!";
+  Store.state.notificationType = "positive";
+  Store.state.requestSuccess = true;
+}
+
+export function removeProductImageSuccess() {
+  Store.state.inRequest = false;
+  Store.state.notificationText = "selected image removed!";
+  Store.state.notificationType = "positive";
 }
 
 /**

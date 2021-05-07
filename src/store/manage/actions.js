@@ -257,6 +257,32 @@ export async function getProducts(context, filterParams) {
     });
 }
 
+export async function getProductByID(context, productID) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .get(API_URL_PRODUCTS + productID, {
+      headers: authHeader()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("getProductByIDSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: truequaa
+        });
+      }
+    });
+}
+
 export async function addProduct(context, product) {
   context.commit("SET_IN_REQUEST", true, {
     root: true
@@ -294,6 +320,63 @@ export async function updateProduct(context, product) {
     .then(response => {
       if (response.status == 200) {
         context.commit("updateProductSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function removeProductImage(context, imageID) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  await axios
+    .delete(API_URL_PRODUCTS + "images/" + imageID, {
+      headers: authHeader()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("removeProductImageSuccess", response);
+      }
+    })
+    .catch(err => {
+      if (err.response) {
+        context.commit("REQUEST_FAILED", err.response, {
+          root: true
+        });
+      } else if (err.request) {
+        context.commit("NETWORK_ERROR", null, {
+          root: true
+        });
+      }
+    });
+}
+
+export async function addProductImage(context, productImageData) {
+  context.commit("SET_IN_REQUEST", true, {
+    root: true
+  });
+  var FormData = require("form-data");
+  var data = new FormData();
+  data.append("file", productImageData.file);
+  data.append("alt_title", productImageData.alt_title);
+
+  await axios
+    .post(API_URL_PRODUCTS + "images/" + productImageData.productID, data, {
+      headers: authHeader()
+    })
+    .then(response => {
+      if (response.status == 200) {
+        context.commit("addProductImageSuccess", response);
       }
     })
     .catch(err => {

@@ -15,11 +15,7 @@
         <div class="text-h5">Create new item</div>
 
         <!-- <div class="text-h6 q-mt-md" style="font-size: 16px">
-          Image, Video, Audio, or 3D Model
-        </div>
-        <div class="text-body2 text-grey-8 q-mt-sm">
-          File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG,
-          GLB, GLTF. Max size: 40 MB
+          Image
         </div>
 
         <div class="product-logo" @click="getProductMediaFile">

@@ -12,43 +12,71 @@
     </q-page-sticky>
     <div class="flex full-width justify-center">
       <div style="max-width: 60%" class="full-width colleciotn-edit-form">
-        <div class="text-h5">Create new item</div>
-
-        <!-- <div class="text-h6 q-mt-md" style="font-size: 16px">
-          Image, Video, Audio, or 3D Model
+        <div class="text-h5 flex items-center">
+          Edit item
+          <q-spinner
+            class="q-px-sm"
+            color="grey-5"
+            size="2em"
+            :thickness="10"
+            v-if="updatingProduct"
+          />
         </div>
-        <div class="text-body2 text-grey-8 q-mt-sm">
-          File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG,
-          GLB, GLTF. Max size: 40 MB
-        </div>
 
-        <div class="product-logo" @click="getProductMediaFile">
-          <q-input
-            ref="productMediaFileInput"
-            style="display:none"
-            v-model="productMediaFile"
-            type="file"
-            label="Standard"
-            @change="onSelectProductMedia"
-          ></q-input>
-          <q-icon
-            name="image"
-            style="font-size: 5rem; position: absolute"
-            class="select-avatar-icon"
-          ></q-icon>
-          <q-img
-            :src="productAvatarUrl"
-            v-if="productAvatarUrl != ''"
-            height="200px"
+        <div class="text-h6 q-mt-md" style="font-size: 16px">
+          Image
+        </div>
+        <div style="overflow-x: auto; display:flex">
+          <div class="product-logo q-ma-sm" @click="getProductMediaFile">
+            <q-input
+              ref="productMediaFileInput"
+              style="display:none"
+              v-model="productMediaFile"
+              type="file"
+              label="Standard"
+              @change="onSelectProductMedia"
+            ></q-input>
+            <q-icon
+              name="image"
+              style="font-size: 5rem; position: absolute"
+              class="select-avatar-icon"
+            ></q-icon>
+            <q-img
+              :src="productAvatarUrl"
+              v-if="productAvatarUrl != ''"
+              height="200px"
+            >
+            </q-img>
+            <q-icon
+              name="image"
+              class="logo-demo-icon"
+              style="font-size: 5rem; position: absolute"
+              v-else
+            ></q-icon>
+          </div>
+          <div
+            class="product-image q-ma-sm"
+            v-for="(image, index) in currentProduct.images"
+            v-bind:key="'product-image' + index"
           >
-          </q-img>
-          <q-icon
-            name="image"
-            class="logo-demo-icon"
-            style="font-size: 5rem; position: absolute"
-            v-else
-          ></q-icon>
-        </div> -->
+            <q-img :src="image.img" height="200px"></q-img>
+            <q-btn
+              round
+              color="primary"
+              icon="check"
+              size="sm"
+              class="set-primary-image-button"
+            />
+            <q-btn
+              round
+              color="red"
+              size="sm"
+              icon="delete"
+              class="remove-image-button"
+              @click="removeProductImage(image.id)"
+            />
+          </div>
+        </div>
 
         <div class="text-h6 q-mt-lg" style="font-size: 16px">
           Name
@@ -255,7 +283,7 @@
             no-caps
             class="q-pa-sm"
             @click="updateProduct"
-            :loading="updatingProduct"
+            :loading="sendingRequest"
           ></q-btn>
         </div>
       </div>
@@ -309,7 +337,8 @@ export default {
       productSlug: "",
       productAvatarUrl: "",
       productAvatarFile: null,
-      updatingProduct: false
+      updatingProduct: false,
+      sendingRequest: false
     };
   },
   created() {
@@ -356,7 +385,7 @@ export default {
     },
 
     updateProduct() {
-      this.updatingProduct = true;
+      this.sendingRequest = true;
       let product = {
         title: this.productName,
         description: this.productDescription,
@@ -371,11 +400,48 @@ export default {
         collection_id: this.currentProduct.collection_id
       };
       this.$store.dispatch("manage/updateProduct", product).then(() => {
-        this.updatingProduct = false;
+        this.sendingRequest = false;
         this.$q.notify({
           type: this.notificationType,
           message: this.notificationText
         });
+      });
+      if (this.productAvatarFile != null) {
+        this.updateProductAvatar();
+      }
+    },
+
+    updateProductAvatar() {
+      let productImageData = {
+        file: this.productAvatarFile,
+        alt_title: "",
+        productID: this.currentProduct.id
+      };
+      this.updatingProduct = true;
+      this.$store
+        .dispatch("manage/addProductImage", productImageData)
+        .then(() => {
+          this.productAvatarUrl = "";
+          this.$store
+            .dispatch("manage/getProductByID", this.currentProduct.id)
+            .then(() => {
+              this.updatingProduct = false;
+            });
+        });
+    },
+
+    removeProductImage(imageID) {
+      this.updatingProduct = true;
+      this.$store.dispatch("manage/removeProductImage", imageID).then(() => {
+        this.$q.notify({
+          type: this.notificationType,
+          message: this.notificationText
+        });
+        this.$store
+          .dispatch("manage/getProductByID", this.currentProduct.id)
+          .then(() => {
+            this.updatingProduct = false;
+          });
       });
     }
   }
@@ -394,6 +460,7 @@ export default {
 }
 
 .product-logo {
+  position: relative;
   border: 3px dashed #cccccc;
   width: 300px;
   height: 200px;
@@ -402,6 +469,7 @@ export default {
   margin-top: 10px;
   color: $grey-4;
   display: flex;
+  min-width: 200px;
   justify-content: center;
   align-items: center;
   .select-avatar-icon {
@@ -418,6 +486,37 @@ export default {
   }
 }
 
+.product-image {
+  min-width: 200px;
+  box-shadow: #aaa 0px 0px 5px 0px;
+  position: relative;
+  width: 300px;
+  height: 200px;
+  cursor: pointer;
+  margin-top: 10px;
+  color: $grey-4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    .set-primary-image-button,
+    .remove-image-button {
+      display: block;
+    }
+  }
+}
+.set-primary-image-button {
+  position: absolute;
+  right: 50px;
+  top: 10px;
+  display: none;
+}
+.remove-image-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+}
 @media only screen and (max-width: 600px) {
   .colleciotn-edit-form {
     max-width: 90% !important;

@@ -3,7 +3,7 @@
     class="item-card cursor-pointer"
     flat
     bordered
-    style="max-width: 320px"
+    style="max-width: 320px; min-width: 2"
   >
     <q-btn
       v-if="editable"
@@ -40,10 +40,10 @@
 
       <q-img
         v-else
-        :src="product.images[0]"
+        :src="product.images[0].img"
         alt="card-item"
         class="full-width"
-        style="height: 200px; border-top-left-radius: 3px; border-top-right-radius:3px;"
+        style="height: 200px;"
       />
     </div>
 
