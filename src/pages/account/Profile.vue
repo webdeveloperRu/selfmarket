@@ -490,7 +490,7 @@
             <div
               class="offer-tab-button"
               :class="currentOfferTab == 'made' ? 'active' : ''"
-              @click="currentOfferTab = 'made'"
+              @click="getMyOrders"
             >
               Offers Made
             </div>
@@ -595,7 +595,8 @@ export default {
       myFavorites: "manage/myFavorites",
       user: "auth/user",
       collectionTagList: "manage/collectionTagList",
-      offsetCollectionTagList: "manage/offsetCollectionTagList"
+      offsetCollectionTagList: "manage/offsetCollectionTagList",
+      myOrders: "manage/myOrders"
     })
   },
 
@@ -752,6 +753,16 @@ export default {
 
     onScrollCollectionList({ verticalPercentage }) {
       if (verticalPercentage == 1) this.showCollectionList();
+    },
+
+    getMyOrders() {
+      this.currentOfferTab = "made";
+      this.$store.dispatch("manage/getMyOrders").then(() => {
+        this.$q.notify({
+          type: this.notificationType,
+          message: this.notificationText
+        });
+      });
     },
 
     searchCollectionByTitle() {

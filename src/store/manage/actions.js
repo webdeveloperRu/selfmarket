@@ -484,7 +484,7 @@ export async function removeFavorite(context, productID) {
 /**
  *  ---------------------------@orders_api ---------------------------
  **/
-export async function createNewOrder(context, productID) {
+export async function orderProduct(context, productID) {
   context.commit("SET_IN_REQUEST", true, {
     root: true
   });
@@ -498,7 +498,7 @@ export async function createNewOrder(context, productID) {
     )
     .then(response => {
       if (response.status == 200) {
-        context.commit("createNewOrderSuccess", response);
+        context.commit("orderProductSuccess", response);
       }
     })
     .catch(err => {

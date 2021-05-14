@@ -159,7 +159,7 @@ export function removeFavoriteSuccess() {
 /**
  *  ---------------------------@favorites_mutation ---------------------------
  **/
-export function createNewOrderSuccess(state, res) {
+export function orderProductSuccess(state, res) {
   Store.state.inRequest = false;
   Store.state.notificationText = "product succesfully ordered!";
   Store.state.notificationType = "positive";

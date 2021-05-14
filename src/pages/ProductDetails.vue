@@ -212,8 +212,8 @@
             >
             <span class="text-subtitle1 text-grey" v-else>3 views</span>
           </div>
-          <!-- <q-card class="q-my-md">
-            <q-card-section class="bg-red text-white">
+          <q-card class="q-my-md " flat bordered>
+            <!-- <q-card-section class="bg-red text-white">
               <div class="text-h6">
                 <q-icon
                   name="schedule"
@@ -222,25 +222,27 @@
                 ></q-icon>
                 <span class="text-subtitle1">Sale ends today in 00:04:13</span>
               </div>
-            </q-card-section>
+            </q-card-section> -->
             <q-card-section class="flex items-center">
               <div
-                class="text-h4 text-grey-9"
-                style="font-size: 28px; font-weight: 500"
+                class="text-grey-9"
+                style="font-size: 28px; font-weight: 500; font-size: 30px"
               >
-                Ξ 0.48
+                {{ currentProduct.price_type | getCurrency }}
+                {{ currentProduct.price }}
               </div>
-              <div class="text-subtitle1 text-grey q-px-sm">($1,077.20)</div>
             </q-card-section>
 
-            <q-separator />
-
-            <q-card-actions align="center">
-              <q-btn color="primary" style="width: 200px;height: 50px" no-caps
+            <q-card-actions align="left">
+              <q-btn
+                color="primary"
+                style="width: 300px;height: 50px; font-size: 16px"
+                no-caps
+                @click="orderCurrentProduct"
                 >Buy Now</q-btn
               >
             </q-card-actions>
-          </q-card> -->
+          </q-card>
           <q-list bordered class="rounded-borders">
             <q-expansion-item
               expand-separator
@@ -442,6 +444,26 @@ export default {
       currentProduct: "manage/currentProduct"
     })
   },
+  filters: {
+    getCurrency(value) {
+      let currency = "";
+      switch (value) {
+        case "USD":
+          currency = "$";
+          break;
+        case "BTC":
+          currency = "฿";
+          break;
+
+        case "ETH":
+          currency = "Ξ";
+          break;
+        case "LCD":
+          currency = "Lucyd";
+      }
+      return currency;
+    }
+  },
 
   data() {
     return {
@@ -492,6 +514,18 @@ export default {
     if (this.currentProduct.images.length != 0)
       this.primaryImageUrl = this.currentProduct.images[0].img;
     else this.primaryImageUrl = "";
+  },
+  methods: {
+    orderCurrentProduct() {
+      this.$store
+        .dispatch("manage/orderProduct", this.currentProduct.id)
+        .then(() => {
+          this.$q.notify({
+            type: this.notificationType,
+            message: this.notificationText
+          });
+        });
+    }
   }
 };
 </script>

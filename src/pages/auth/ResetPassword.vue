@@ -60,7 +60,6 @@
               square
               v-model="emailCode"
               class="q-py-sm"
-              ref="confirmPassword"
               label="Email Code"
               readonly
             >

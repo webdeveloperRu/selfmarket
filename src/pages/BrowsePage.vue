@@ -299,7 +299,7 @@ export default {
       publicProducts: "manage/publicProducts",
       collectionTagList: "manage/collectionTagList",
       offsetCollectionTagList: "manage/offsetCollectionTagList",
-      publicCategories: "manage/publicCategories",
+      publicCategories: "manage/publicCategories"
     })
   },
 
@@ -343,12 +343,10 @@ export default {
       let params = {};
       if (this.currentTab == -1) {
         params = {
-          limit: 10,
           offset: this.offsetCollectionTagList
         };
       } else {
         params = {
-          limit: 10,
           offset: this.offsetCollectionTagList,
           category_id: this.currentTab
         };
