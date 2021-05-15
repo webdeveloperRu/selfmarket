@@ -24,6 +24,7 @@ const Store = new Vuex.Store({
   mutations: {
     REQUEST_FAILED(state, error) {
       state.inRequest = false;
+      state.requestSuccess = false;
       state.notificationType = "negative";
       if (error.status == 401) {
         if (error.data.message == "a valid token is missing") {
@@ -36,6 +37,8 @@ const Store = new Vuex.Store({
     },
     // Network Error
     NETWORK_ERROR(state) {
+      state.requestSuccess = false;
+
       state.inRequest = false;
       state.notificationType = "negative";
       state.notificationText = "Network Connection Error";
